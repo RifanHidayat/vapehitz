@@ -1,10 +1,17 @@
+<head>
+  <link href="<?php echo $this->baseUrl();?>/css/select2.min.css" rel="stylesheet">
+  <link href="<?php echo $this->baseUrl();?>/css/fileinput/fileinput.min.css" rel="stylesheet">
+  <script src="<?php echo $this->baseUrl();?>/lib/select2.full.min.js"></script>
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+  <script src="<?php echo $this->baseUrl();?>/lib/jquery-ui-1.9.2.custom.min.js"></script>
+</head>
 <form id="frm_postdata" name="frm_postdata" enctype="multipart/form-data" method="POST">
 	<input type="hidden" name="currentPage" id="currentPage" size="6" maxlength="6" value="<?php echo $this->numPage;?>" class="inputbox2 narrowkey1"></input>
 		<?php 
 			$seq = substr($this->seq,6,5);
 			//var_dump($seq);
 			$seq += 1;
-			$seq=str_pad($seq, 2, '0', STR_PAD_LEFT);
+			$seq=str_pad($seq, 5, '0', STR_PAD_LEFT);
 		?>
 		<input type="hidden" id='seq' value ='<?php echo $seq;?>'>
 		<div class="panel">
@@ -14,12 +21,48 @@
 					<div class="col-sm-12">
 						<table width="100%">
 							<tr>
-								<td width="10%"><font style="font-size:12px;font-weight:bold;">ID Volume</font></td>
+								<td width="10%"><font style="font-size:12px;font-weight:bold;">Nama Supplier</font></td>
 								<td width="1%">:</td>
 								<td>
 									<table>
-										<td> <input name="id_volume" id="id_volume" type="text" maxlength="4" size="10" class="form-control input-sm" value="VL<?php echo $seq;?>" readonly> </td>
-										<td> &nbsp; <label id="id_volume-error" for="id_volume" class="error"></td>
+										<td>
+											<select id="kode_supplier" name="kode_supplier" class="form-control select_group product" width="15%" onchange="getSelectValue();">
+												<option value="0">--Pilih Supplier--</option>
+												<?php  
+													for($x=0; $x<count($this->supplier); $x++){ 
+													$kode_supplier = $this->supplier[$x]['kode_supplier'];
+													$nama_supplier = $this->supplier[$x]['nama_supplier'];
+													$alamat_supplier = $this->supplier[$x]['alamat_supplier'];
+													$tipe = $this->supplier[$x]['tipe'];
+												?>
+												<option value="<?php echo $kode_supplier;?>,<?php echo $alamat_supplier;?>,<?php echo $tipe;?>"><?php echo $nama_supplier;?></option>
+												<?php } ?>
+											</select>
+										</td>
+										<td> &nbsp; <label id="kode_supplier-error" for="kode_supplier" class="error"></td>
+										<td> <input type='hidden' id='kode_supplier2' name='kode_supplier2' value=''></td>
+									</table>
+								</td>
+							</tr>
+							<tr><td>&nbsp;</td></tr>
+							<tr>
+								<td width="10%"><font style="font-size:12px;font-weight:bold;">Alamat Supplier</font></td>
+								<td width="1%">:</td>
+								<td>
+									<table>
+										<td> <input name="alamat_supplier" id="alamat_supplier" type="text" maxlength="100" size="100" class="form-control input-sm" value="" readonly> </td>
+										<td> </td>
+									</table>
+								</td>
+							</tr> 
+							<tr><td>&nbsp;</td></tr>
+							<tr>
+								<td width="10%"><font style="font-size:12px;font-weight:bold;">Status Supplier</font></td>
+								<td width="1%">:</td>
+								<td>
+									<table>
+										<td> <input name="tipe" id="tipe" type="text" maxlength="10" size="10" class="form-control input-sm" value="" readonly> </td>
+										<td> </td>
 									</table>
 								</td>
 							</tr> 
@@ -29,8 +72,208 @@
 								<td width="1%">:</td>
 								<td>
 									<table>
-										<td> <input name="volume" id="volume" type="text" maxlength="5" size="10" class="form-control input-sm" value=""> </td>
+										<td> 
+											<select id="volume" name="volume" class="form-control select_group product" width="15%" onchange="getKode();">
+												<option value="0">--Pilih Volume--</option>
+												<?php  
+													for($x=0; $x<count($this->vol); $x++){ 
+													$volume = $this->vol[$x]['volume'];
+												?>
+												<option value="<?php echo $volume;?>"><?php echo $volume;?></option>
+												<?php } ?>
+											</select>
+										</td>
 										<td> &nbsp; <label id="volume-error" for="volume" class="error"></td>
+									</table>
+								</td>
+							</tr> 
+							<tr><td>&nbsp;</td></tr>
+							<tr>
+								<td width="10%"><font style="font-size:12px;font-weight:bold;">Kode Liquid</font></td>
+								<td width="1%">:</td>
+								<td>
+									<table>
+										<td> 
+											<input name="kode_barang" id="kode_barang" type="text" maxlength="50" size="20" class="form-control input-sm" value="" readonly> 
+											<input type="hidden" name="id_kode_barang" id="id_kode_barang" value="">
+											<input type="hidden" name="seq_kode_barang" id="seq_kode_barang" value="">
+										</td>
+										<td> &nbsp; <label id="kode_barang-error" for="kode_barang" class="error"></td>
+									</table>
+								</td>
+							</tr> 
+							<tr><td>&nbsp;</td></tr>
+							<tr>
+								<td width="10%"><font style="font-size:12px;font-weight:bold;">Merk Liquid</font></td>
+								<td width="1%">:</td>
+								<td>
+									<table>
+										<td> <input name="merk_barang" id="merk_barang" type="text" maxlength="50" size="20" class="form-control input-sm" value=""> </td>
+										<td> &nbsp; <label id="merk_barang-error" for="merk_barang" class="error"></td>
+									</table>
+								</td>
+							</tr>
+							<tr><td>&nbsp;</td></tr>
+							<tr>
+								<td width="10%"><font style="font-size:12px;font-weight:bold;">Nama Liquid</font></td>
+								<td width="1%">:</td>
+								<td>
+									<table>
+										<td> <input name="nama_barang" id="nama_barang" type="text" maxlength="50" size="50" class="form-control input-sm" value=""> </td>
+										<td> &nbsp; <label id="nama_barang-error" for="nama_barang" class="error"></td>
+									</table>
+								</td>
+							</tr>
+							<tr><td>&nbsp;</td></tr>
+							<tr>
+								<td width="10%"><font style="font-size:12px;font-weight:bold;">Rasa</font></td>
+								<td width="1%">:</td>
+								<td>
+									<table>
+										<td> 
+											<select id="kode_rasa" name="kode_rasa" class="form-control select_group product" width="15%">
+												<option value="0">--Pilih Rasa--</option>
+												<?php  
+													for($x=0; $x<count($this->rasa); $x++){ 
+												?>
+												<option value="<?php echo $this->rasa[$x]['kode_rasa'];?>"><?php echo $this->rasa[$x]['rasa'];?></option>
+												<?php } ?>
+											</select>
+										</td>
+										<td> &nbsp; <label id="kode_rasa-error" for="kode_rasa" class="error"></td>
+									</table>
+								</td>
+							</tr>
+							<tr><td>&nbsp;</td></tr>
+							<tr>
+								<td width="10%"><font style="font-size:12px;font-weight:bold;">Nicotin</font></td>
+								<td width="1%">:</td>
+								<td>
+									<table>
+										<td> <input name="nic" id="nic" type="text" maxlength="10" size="5" class="form-control input-sm" value=""> </td>
+										<td> &nbsp; Miligram (Mgr)</td>
+										<td> &nbsp; <label id="nic-error" for="nic" class="error"></td>
+									</table>
+								</td>
+							</tr>
+							<tr><td>&nbsp;</td></tr>
+							<tr>
+								<td width="10%"><font style="font-size:12px;font-weight:bold;">Berat</font></td>
+								<td width="1%">:</td>
+								<td>
+									<table>
+										<td> <input name="berat" id="berat" type="text" maxlength="10" size="5" class="form-control input-sm" value=""> </td>
+										<td> &nbsp; Gram (Gr)</td>
+										<td> &nbsp; <label id="berat-error" for="berat" class="error"></td>
+									</table>
+								</td>
+							</tr>
+							<tr><td>&nbsp;</td></tr>
+							<tr>
+								<td width="10%"><font style="font-size:12px;font-weight:bold;">Stok Gudang Pusat</font></td>
+								<td width="1%">:</td>
+								<td>
+									<table>
+										<td> <input name="stok_pusat" id="stok_pusat" type="text" maxlength="50" size="15" class="form-control input-sm" value="" onkeypress="javascript:return isNumber(event)"> </td>
+										<td> &nbsp; pcs.</td>
+										<td> &nbsp; <label id="stok_pusat-error" for="stok_pusat" class="error"></td>
+									</table>
+								</td>
+							</tr>
+							<tr><td>&nbsp;</td></tr>
+							<tr>
+								<td width="10%"><font style="font-size:12px;font-weight:bold;">Stok Gudang Retail</font></td>
+								<td width="1%">:</td>
+								<td>
+									<table>
+										<td> <input name="stok_retail" id="stok_retail" type="text" maxlength="50" size="15" class="form-control input-sm" value="" onkeypress="javascript:return isNumber(event)"> </td>
+										<td> &nbsp; pcs.</td>
+										<td> &nbsp; <label id="stok_retail-error" for="stok_retail" class="error"></td>
+									</table>
+								</td>
+							</tr>
+							<tr><td>&nbsp;</td></tr>
+							<tr>
+								<td width="10%"><font style="font-size:12px;font-weight:bold;">Stok Gudang Studio</font></td>
+								<td width="1%">:</td>
+								<td>
+									<table>
+										<td> <input name="stok_studio" id="stok_studio" type="text" maxlength="50" size="15" class="form-control input-sm" value="" onkeypress="javascript:return isNumber(event)"> </td>
+										<td> &nbsp; pcs.</td>
+										<td> &nbsp; <label id="stok_studio-error" for="stok_studio" class="error"></td>
+									</table>
+								</td>
+							</tr>
+							<tr><td>&nbsp;</td></tr>
+							<tr>
+								<td width="10%"><font style="font-size:12px;font-weight:bold;">Bad Stock (BS)</font></td>
+								<td width="1%">:</td>
+								<td>
+									<table>
+										<td> <input name="bad_stock" id="bad_stock" type="text" maxlength="50" size="15" class="form-control input-sm" value="" onkeypress="javascript:return isNumber(event)"> </td>
+										<td> &nbsp; pcs.</td>
+										<td> &nbsp; <label id="bad_stock-error" for="bad_stock" class="error"></td>
+									</table>
+								</td>
+							</tr>
+							<tr><td>&nbsp;</td></tr>
+							<tr>
+								<td width="10%"><font style="font-size:12px;font-weight:bold;">Harga Beli Rp.</font></td>
+								<td width="1%">:</td>
+								<td>
+									<table>
+										<td> <input name="harga_beli" id="harga_beli" type="text" maxlength="50" size="20" class="form-control input-sm" value="" onkeypress="javascript:return isNumber(event)" onkeyup="currency()"> </td>
+										<td> &nbsp; <label id="harga_beli-error" for="harga_beli" class="error"></td>
+									</table>
+								</td>
+							</tr>
+							<tr><td>&nbsp;</td></tr>
+							<tr>
+								<td width="10%"><font style="font-size:12px;font-weight:bold;">Harga Jual Agn Rp.</font></td>
+								<td width="1%">:</td>
+								<td>
+									<table>
+										<td> <input name="hj_agen" id="hj_agen" type="text" maxlength="50" size="20" class="form-control input-sm" value="" onkeypress="javascript:return isNumber(event)" onkeyup="currency()"> </td>
+										<td> &nbsp; <label id="hj_agen-error" for="hj_agen" class="error"></td>
+									</table>
+								</td>
+							</tr>
+							<tr><td>&nbsp;</td></tr>
+							<tr>
+								<td width="10%"><font style="font-size:12px;font-weight:bold;">Harga Jual Ret Rp.</font></td>
+								<td width="1%">:</td>
+								<td>
+									<table>
+										<td> <input name="hj_retail" id="hj_retail" type="text" maxlength="50" size="20" class="form-control input-sm" value="" onkeypress="javascript:return isNumber(event)" onkeyup="currency()"> </td>
+										<td> &nbsp; <label id="hj_retail-error" for="hj_retail" class="error"></td>
+									</table>
+								</td>
+							</tr>
+							<tr><td>&nbsp;</td></tr>
+							<tr>
+								<td width="10%"><font style="font-size:12px;font-weight:bold;">Harga Jual WS Rp.</font></td>
+								<td width="1%">:</td>
+								<td>
+									<table>
+										<td> <input name="hj_whs" id="hj_whs" type="text" maxlength="50" size="20" class="form-control input-sm" value="" onkeypress="javascript:return isNumber(event)" onkeyup="currency()"> </td>
+										<td> &nbsp; <label id="hj_whs-error" for="hj_whs" class="error"></td>
+									</table>
+								</td>
+							</tr>
+							<tr><td>&nbsp;</td></tr>
+							<tr>
+								<td width="10%"><font style="font-size:12px;font-weight:bold;">Status</font></td>
+								<td width="1%">:</td>
+								<td>
+									<table>
+										<td> 
+											<select id="status" name="status" class="form-control select_group product" width="15%">
+												<option value="">--Pilih Status--</option>
+												<option value="1">Active</option>
+												<option value="0">Inactive</option>
+											</select>
+										</td>
+										<td> &nbsp; <label id="status-error" for="status" class="error"></td>
 									</table>
 								</td>
 							</tr>
@@ -39,8 +282,11 @@
 					</div>				
 			</fieldset>
 		</div>
-		<div class="col-lg-12">
-			<div class="form-group form-group-bottom" align="right">
+		
+	</div>
+</div>
+<div class="col-lg-12">
+<div class="form-group form-group-bottom" align="right">
 						<input type="hidden" id="proses" name="proses" value="<?php echo $this->proses?>">	
 						<br><br>
 							
@@ -53,13 +299,13 @@
 							</button>
 							
 			</div>
-		</div>
+</div>
 </form>
-  <script src="<?php echo $this->baseUrl();?>/lib/jquery/jquery.min.js"></script>
-  <script src="<?php echo $this->baseUrl();?>/lib/bootstrap/js/bootstrap.min.js"></script>
   <script src="<?php echo $this->baseUrl();?>/lib/jquery.form.js"></script>
   <link rel="stylesheet" type="text/css" href="<?php echo $this->baseUrl();?>/css/sweetalert.css">
-  <script src="<?php echo $this->baseUrl();?>/lib/sweetalert.min.js"></script>
+  <script src="<?php echo $this->baseUrl();?>/lib/sweetalert.min.js"></script>   
+  <script src="<?php echo $this->baseUrl();?>/lib/jquery.scrollTo.min.js"></script>
+  <script src="<?php echo $this->baseUrl();?>/lib/jquery.nicescroll.js" type="text/javascript"></script>
 <script>
 	function getSelectValue(){
 		var selectedValue = document.getElementById("kode_supplier").value;
@@ -298,3 +544,6 @@
 		document.getElementById("hj_whs").value=hj_whs3;
 	}
 </script>
+  <script>
+   $(".product").select2();
+  </script>
