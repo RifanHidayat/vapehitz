@@ -1,0 +1,182 @@
+
+	<input type="hidden" name="currentPage" id="currentPage" size="6" maxlength="6" value="<?php echo $this->numPage;?>" class="inputbox2 narrowkey1"></input>
+		<?php 
+			$seq = $this->seq;
+			//var_dump($seq);
+			$seq += 1;
+			$seq2=str_pad($seq, 2, '0', STR_PAD_LEFT);
+		?>
+		<input type="hidden" id='seq' name='seq' value ='<?php echo $seq;?>'>
+		<input type="hidden" id='action' name='action' value ='<?php $this->data[0]['id_transaksi'] ?>'>
+		<div class="panel">
+            <fieldset class="panel-dt">	
+				<h4 align="left">Detail Transaksi </h4>
+				<hr style="width: 100%">
+
+					<div>
+					<p align="left" style="margin-left: 20px;"><font style="font-size:20px;font-weight:bold;"><b><?php echo "Sumber Dana ".$this->data[0]['nama_akun'];?></b> </font></p>
+					
+					</div>
+				<div class="col-lg-12">
+					<div class="form-group form-group-bottom" align="right">
+						<input type="hidden" id="proses" name="proses" value="<?php echo $this->proses?>">	
+					
+							
+
+									<?php 
+
+									$cashin=$this->transaksi[0]['cashin'];
+									$cashout=$this->transaksi[0]['cashout'];
+									$opening_balance=$this->transaksi[0]['opening_balance'];
+									$balance=$opening_balance+$cashin-$cashout;
+
+									?>
+									<table style="font-size:12px;" class="table table-striped table-bordered table-hover" id="dataTables">
+							<!-- baris judul -->
+							<thead>
+								<tr bgcolor="#4ECDC4">
+								<td width="10%"><font style="font-size:12px;font-weight:bold;">Opening Balance</font></td>
+							
+								<td width="14%"><font style="font-size:12px;font-weight:bold;">Total Cash In</font></td>
+							
+								<td width="14%"><font style="font-size:12px;font-weight:bold;">Total Cash Out</font></td>
+							
+								<td width="18%"><font style="font-size:12px;font-weight:bold;">Balance</font></td>
+							
+							
+								</thead>
+								
+							</tr> 
+
+						<!-- 	Baris input -->
+
+							<tr>
+
+						
+								<td width="16%"> 
+									<input disabled="" name="opening_balance" type="text" maxlength="30" size="30" class="form-control input-sm" placeholder="0" disabled="" onkeyup='masking("saldo_awal")' value="Rp. <?php echo number_format($opening_balance,0,",",".") ?>"> 
+								</td>
+								<td width="20%">
+									<input disabled="" name="cashin"  type="text" maxlength="30" size="30" class="form-control input-sm" value="Rp. <?php echo number_format($cashin,0,",",".") ?>"> 
+								</td>
+
+								
+								<td width="16%">
+									<input disabled="" name="cashout" type="text" maxlength="30" size="30" class="form-control input-sm" value="Rp. <?php echo number_format($cashout,0,",",".") ?>" > 
+
+								</td>
+
+							
+								<td width="16%">
+									<input disabled="" name="nama_cabang_pembuka" id="nama_cabang_pembuka" type="text" maxlength="30" size="30" class="form-control input-sm" value="Rp. <?php echo number_format($balance,0,",",".") ?>" > 
+									
+								</td>
+							</tr> 
+						
+						
+							
+						</table>
+						<br>
+							<table style="font-size:12px;" class="table table-striped table-bordered table-hover" id="dataTables-detail">
+							<thead>
+							<tr bgcolor="#4ECDC4">
+								<th width="3%" style="text-align:center;">No</th>
+								<th width="7%" style="text-align:center;">Tanggal</th>
+								<th width="10%" style="text-align:center;">Type</th>
+								<th width="10%" style="text-align:center;">Description</th>
+								<th width="10%" style="text-align:center;">Catatan</th>
+								<th width="10%" style="text-align:center;">Cash In</th>
+								<th width="10%" style="text-align:center;">Cash Out</th>
+								<th width="10%" style="text-align:center;">Saldo</th>
+								
+							</tr>
+							</thead>
+							<tbody>
+							<?php
+							$saldo=$opening_balance;
+								 for($x=0; $x<count($this->data); $x++){
+
+										$nomer		= $x+1;
+										$tgl_transaksi 	= $this->data[$x]['tgl_transaksi'];
+									
+										$nominal 	= $this->data[$x]['nominal'];
+										$catatan 	= $this->data[$x]['catatan'];
+										$nama_akun 	= $this->data[$x]['nama_akun'];
+										$no_akun 	= $this->data[$x]['no_akun'];
+										$type 	= $this->data[$x]['type_transaksi'];
+										$id 	= $this->data[$x]['id_akun'];
+										$deskripsi 	= $this->data[$x]['deskripsi'];
+
+										if ($type=="Cash In"){
+											$saldo+=$nominal;
+
+										}else{
+											$saldo-=$nominal;
+
+										}
+
+
+										if ($this->data[$x]['type_transaksi']=="Cash In"){
+											
+											$cashin='Rp. '.number_format($this->data[$x]['nominal'],0,",",".");
+											$cashout="-";
+											$type="Income";
+
+										}else{
+											
+											$cashout='Rp. '.number_format($this->data[$x]['nominal'],0,",",".");
+											$cashin="-";
+												 if ($deskripsi!=''){
+											 	$type="Cost";
+
+											 }else{
+											 	$type="Expense";
+
+											 }
+
+
+										}
+									
+									?>	
+											<td align="center"><?php echo $nomer;?></td>	  
+											<td align="center"><?php echo $tgl_transaksi;?></td>
+											<td align="center"><?php echo $type;?></td>
+											<td ><?php echo $deskripsi?>
+											<td ><?php echo $catatan?></td>
+											<td ><?php echo $cashin ?></td>
+											<td ><?php echo  $cashout ?></td>
+											<td ><?php echo  "Rp. ".number_format($saldo,0,",",".") ?></td>
+											
+                                          	
+										</tr>	
+									<?php 
+										}
+									?>
+								
+							</tbody>
+						</table>
+						<br>
+
+							<button type="button" class="btn btn-theme02">
+								<span class="fa fa-backward"></span> &nbsp;Kembali
+							</button></a>
+							
+					</div>
+				</div>
+			</fieldset>
+		</div>
+<script>
+	$(document).ready(function () {
+		setTimeout(() => {
+			$('#dataTables-detail').dataTable({
+			"bPaginate": true,
+			"bLengthChange": true,
+			"bFilter": true,
+			"bInfo": true,
+			"bAutoWidth": true});
+		}, 200)
+	});
+
+
+	 
+</script>

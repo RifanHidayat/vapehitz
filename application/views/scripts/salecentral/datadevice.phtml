@@ -1,0 +1,176 @@
+<script>
+	$(document).ready(function () {
+		$('#dataTables-emp').dataTable({
+			"bPaginate": true,
+			"bLengthChange": true,
+			"bFilter": true,
+			"bInfo": true,
+			"bAutoWidth": true});
+	});
+	 
+	function pilihEmp(kode_barang,nama_barang,merk_barang,berat,on_hand,stok_pusat,hj_retail,hj_retail2){
+		  
+		  var count_table_tbody_tr = document.getElementById("counterx").value;
+		  
+		  var table = document.getElementById("myTable");	  
+		  var row = table.insertRow(-1);
+		  var cell1 = row.insertCell(0);
+		  var cell2 = row.insertCell(1);
+		  var cell3 = row.insertCell(2);
+		  var cell4 = row.insertCell(3);
+		  var cell5 = row.insertCell(4);
+		  var cell6 = row.insertCell(5);
+		  var cell7 = row.insertCell(6);
+		  var cell8 = row.insertCell(7);
+		  var cell9 = row.insertCell(8);
+		  var cell10 = row.insertCell(9);
+		  
+		  var rows = parseInt(count_table_tbody_tr) + 1;
+		  
+		  document.getElementById("counterx").value=rows;
+		  
+		  cell1.innerHTML = "<input type='text' class='form-control input-sm' name='kode_barang[]' value='"+kode_barang+"' readonly/>";
+		  cell2.innerHTML = "<input type='text' class='form-control input-sm' name='nama_barang[]' value='"+merk_barang+""+nama_barang+"' readonly/> <input type='hidden' name='kode[]' value='kode_device' readonly/>";
+		  cell3.innerHTML = "<input type='text' class='form-control input-sm' id='berat"+rows+"' name='berat[]' value='"+berat+"' readonly/> <input type='hidden' name='nama_tabel[]' value='device' readonly/>";
+		  cell4.innerHTML = "<input type='text' class='form-control input-sm' id='on_hand"+rows+"' name='on_hand[]' value='"+on_hand+"' readonly/> <input type='hidden' id='on_hands"+rows+"' name='on_hands[]' value='"+on_hand+"' readonly/>";
+		  cell5.innerHTML = "<input type='text' class='form-control input-sm' id='stok_gudang"+rows+"' name='stok_gudang[]' value='"+stok_pusat+"' readonly/>";
+		  cell6.innerHTML = "<input type='text' class='form-control input-sm' id='hj_retail"+rows+"' name='hj_retail[]' value='"+hj_retail+"' onkeyup='coba("+rows+")' onchange='jual("+rows+")'/> <input type='hidden' id='hj_retail_lama"+rows+"' name='hj_retail_lama[]' value='"+hj_retail2+"' readonly/> <input type='hidden' id='hj_retail_baru"+rows+"' name='hj_retail_baru[]' value='"+hj_retail2+"' readonly/>";
+		  cell7.innerHTML = "<input type='text' class='form-control input-sm' id='qty"+rows+"' name='qty[]' value='1' onkeyup='jual("+rows+")'/>";
+		  cell8.innerHTML = "<input type='text' class='form-control input-sm' id='free"+rows+"' name='free[]' value='0' onkeyup='jual("+rows+")'/>";
+		  cell9.innerHTML = "<input type='text' class='form-control input-sm' id='sub_total"+rows+"' name='sub_total[]' value='"+hj_retail+"' readonly/><input type='hidden' class='form-control input-sm' id='sub_total_berat"+rows+"' name='sub_total_berat[]' value='"+berat+"' readonly/>";
+		  cell10.innerHTML = "<input type='button' id='delete' class='btn btn-danger btn-sm mar-ed-button' name='delete' onclick='deleterow(this,"+rows+")' value='Hapus'/>";
+		
+		var total_biaya = document.getElementById("total_biaya").value;
+		var total_biaya2 = total_biaya.replaceAll(".", "");
+		var biaya_kirim = document.getElementById("biaya_kirim").value;
+		var biaya_kirim2 = biaya_kirim.replaceAll(".", "");
+		var diskon = document.getElementById("diskon").value;
+		var diskon2 = diskon.replaceAll(".", "");
+		var jml_bayar = document.getElementById("jml_bayar").value;
+		var jml_bayar2 = jml_bayar.replaceAll(".", "");
+		
+		var hj_retail2 = hj_retail.replaceAll(".", "");
+		var hitung_total = parseInt(total_biaya2)+parseInt(hj_retail2);
+		var hitung_total2 = hitung_total.toString().replaceAll(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1.");
+		document.getElementById("total_biaya").value=hitung_total2;
+		
+		var total_berat = document.getElementById("total_berat").value;
+		var total_berat2 = total_berat.replaceAll(".", "");
+		var berat2 = berat.replaceAll(".", "");
+		var hitung_total_berat = parseInt(total_berat2)+parseInt(berat2);
+		var hitung_total_berat2 = hitung_total_berat.toString().replaceAll(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1.");
+		document.getElementById("total_berat").value=hitung_total_berat2;
+		
+		var hitung_net_total = hitung_total + parseInt(biaya_kirim2) - parseInt(diskon2);
+		var hitung_net_total2 = hitung_net_total.toString().replaceAll(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1.");
+		document.getElementById("net_total").value=hitung_net_total2;
+		
+		var hitung_sisa_bayar = hitung_net_total - parseInt(jml_bayar2);
+		var hitung_sisa_bayar2 = hitung_sisa_bayar.toString().replaceAll(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1.");
+		document.getElementById("sisa_bayar").value=hitung_sisa_bayar2;
+		
+		closeDetil();
+	}  
+</script>
+
+<form action="" method="post" name="emplist" id="emplist">
+	<div id="popupContact" style="width:75%; min-height:600px">
+		<table width="100%">
+			<tr>
+				<td>
+					<button class="btn btn-danger btn-circle right" type="button" onclick="closeDetil()"><i class="glyphicon glyphicon-remove"></i></button>
+				</td>
+			</tr>
+		</table>
+	<center>
+	<div id="popupContactx">	
+	<div class="panel panel-info" style="margin-right: 25px;margin-left: 25px;">
+		<div class="panel-heading"><h3 class="title title-custom">List Data Perlengkapan (Device)</h3></div>	
+		<div class="panel-body">
+			<div class="col-lg-3 col-md-3 col-sm-12">	
+				<select class = "form-control input-sm" width="15%" onclick="pilih_barang(this)">
+					<option value="0">--Pilih Barang--</option>
+					<option value="Liquid">Isi Ulang (Liquid)</option>
+					<option value="Device">Perlengkapan (Device)</option>
+					<option value="Aksesoris">Aksesoris</option>
+					<option value="Atomizer">Atomizer</option>
+				</select>
+			</div>
+		<div class="col-lg-12 col-md-12 col-sm-12">
+			<br>
+			<form action="" method="post" name="insdata" id="insdata">
+				<div class="table-responsive">
+					<div style="overflow:auto;height:440px;">
+					<table style="font-size:12px;" class="table table-striped table-bordered table-hover" id="dataTables-emp" width="200%">
+						<thead>
+						<tr bgcolor="#4ECDC4">		
+							<th width="15%">Kode Device</th>
+							<th width="7%">Kategori</th>
+							<th width="30%">Nama Device</th>
+							<th width="8%">Warna</th>
+							<th width="5%">On Hand</th>
+							<th width="5%">Stok Pusat</th>
+							<th width="5%">Stok Retail</th>
+							<th width="5%">Stok Studio</th>
+							<th width="5%">Berat (gr)</th>
+							<th width="15%">Harga Jual Retail</th>
+						</tr>
+						</thead>
+						<tbody>
+						<?php
+								 for($x=0; $x<count($this->data); $x++){
+									 
+										$kode_device 	= $this->data[$x]['kode_device'];
+										$merk_device 	= $this->data[$x]['merk_device'];
+										$nama_device 	= $this->data[$x]['nama_device'];
+										$jenis_device 	= $this->data[$x]['jenis_device'];
+										$nama_warna 	= $this->data[$x]['nama_warna'];
+										$ket 			= $this->data[$x]['ket'];
+										$on_hand 		= $this->data[$x]['on_hand'];
+										$stok_pusat 	= number_format($this->data[$x]['stok_pusat'],0,",",".");
+										$stok_retail 	= number_format($this->data[$x]['stok_retail'],0,",",".");
+										$stok_studio 	= number_format($this->data[$x]['stok_studio'],0,",",".");
+										//$bad_stock	 	= number_format($this->data[$x]['bad_stock'],0,",",".");
+										$berat		 	= number_format($this->data[$x]['berat'],0,",",".");
+										//$harga_beli	 	= number_format($this->data[$x]['harga_beli'],0,",",".");
+										//$harga_beli2	= $this->data[$x]['harga_beli'];
+										//$hj_agen	 	= number_format($this->data[$x]['hj_agen'],0,",",".");
+										$hj_retail	 	= number_format($this->data[$x]['hj_retail'],0,",",".");
+										$hj_retail2		= $this->data[$x]['hj_retail'];
+										//$hj_whs		 	= number_format($this->data[$x]['hj_whs'],0,",",".");
+										//$kode_supplier 	= $this->data[$x]['kode_supplier'];
+										
+										if($jenis_device == 'MDO'){ $kategori = 'Mod Only';}else
+										if($jenis_device == 'MDK'){ $kategori = 'Mod Kit';}else
+										if($jenis_device == 'DPO'){ $kategori = 'Pod Only';}else
+										if($jenis_device == 'DPK'){ $kategori = 'Pod Kit';}
+									?>																		
+											<td align="left"><a href="#" onclick="javascript:pilihEmp('<?php echo $kode_device; ?>','<?php echo $nama_device; ?>','<?php echo $merk_device; ?>','<?php echo $berat; ?>','<?php echo $on_hand; ?>','<?php echo $stok_pusat; ?>','<?php echo $hj_retail; ?>','<?php echo $hj_retail2; ?>')"><?php echo $kode_device;?></a></td>
+											<td align="left"><?php echo $kategori;?></td>
+											<td align="left"><?php echo $merk_device;?> - <?php echo $nama_device;?></td>
+											<td align="left"><?php echo $nama_warna;?></td>
+											<td align="left"><?php echo $on_hand;?></td>
+											<td align="left"><?php echo $stok_pusat;?></td>
+											<td align="left"><?php echo $stok_retail;?></td>
+											<td align="left"><?php echo $stok_studio;?></td>
+											<td align="left"><?php echo $berat;?></td>
+											<td align="left"><?php echo $hj_retail;?></td>
+										</tr>	
+									<?php 
+										}
+									?>
+						</tbody>
+					</table>
+					</div>
+				</div>
+			</form>
+			</div>			
+			<div id='popuptarget'></div>
+		</div>
+	</div>		
+</div>
+</center>
+</div>
+<div id='myDIVx'></div>
+<div id="backgroundPopup"></div>
+</form>

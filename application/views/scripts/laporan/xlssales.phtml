@@ -1,0 +1,95 @@
+<?php
+/* require_once 'Zend/View.php';
+require_once 'share/oa_page.php';
+   
+$halaman = new oa_page();
+$ctrlFrm = new Zend_View();
+
+require_once "service/procurement/Matreqreport_Service.php";
+$this->pur_serv = Matreqreport_Service::getInstance();	
+	
+ini_set('memory_limit', '2688M');
+ini_set('max_execution_time', 1800);	
+$file_type = "vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+$file_ending = "xls";
+header("Content-Type: application/xls");
+header("Content-Disposition: attachment; filename=FPBJ_Report.xls");
+header("Pragma: no-cache");
+header("Expires: 0");  */
+
+//header("Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet; charset=utf-8");
+//header("Content-Disposition: attachment; filename=FPBJ_Report");  
+
+//header('Content-type: application/vnd.ms-excel');
+//header('Content-Disposition: attachment; filename="Report.xlsx"');
+
+$file_type = "vnd.ms-excel";
+$file_ending = "xls";
+header("Content-Type: application/$file_type");
+header("Content-Disposition: attachment; filename=Master Data Sales.$file_ending");
+header("Pragma: no-cache");
+header("Expires: 0");
+
+
+/* $n_dcr = $this->n_dcr;
+$n_doc_number = $this->n_doc_number;
+$e_title = $this->e_title; */
+
+//header("Expires: 0");
+//header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
+//header("Cache-Control: private",false);
+
+$html = "<h3>Report - Master Data Sales</h3>";	
+
+		$html .= "<table class=tbl  middle width='99%' valign=top border=1 cellpadding=2 cellspacing=1>
+								<tr>
+							    <th>No</th>
+							    <th>Kode Sales</th>
+							    <th>Nama Sales</th>
+								<th>Alamat</th>
+								<th>No Tlp</th>
+								<th>No Handphone</th>
+								<th>Email</th>
+							    <th>Status</th>
+							  </tr>
+			";
+
+			if(!count($this->data2)){ 
+				?>
+				<tr>
+					<td colspan=11><i> </i></td>
+				</tr>
+				<?php 
+			}else{
+				for($x=0; $x<count($this->data2); $x++){
+
+										$nomer			= $x+1;
+										$kode_sales 	= $this->data2[$x]['kode_sales'];
+										$nama_sales 	= $this->data2[$x]['nama_sales'];
+										$alamat_sales   = $this->data2[$x]['alamat_sales'];
+										$no_tlp 		= $this->data2[$x]['no_tlp'];
+										$no_hp 			= $this->data2[$x]['no_hp'];
+										$email 			= $this->data2[$x]['email'];
+										$status 		= $this->data2[$x]['status'];
+										if($status=='1'){
+											$stat = 'Active';
+										} else {
+											$stat = 'Inactive';
+										}
+									 	
+
+			$html .= "	<tr>	
+				<td>".$nomer."</td>			
+				<td class='clright'>".$kode_sales."</td> 			
+				<td class='clright'>".$nama_sales."</td> 	
+				<td class='clright'>".$alamat_sales."</td> 	
+				<td class='clright'>".$no_tlp."</td> 	
+				<td class='clright'>".$no_hp."</td> 	
+				<td class='clright'>".$email."</td> 	
+				<td class='clright'>".$stat."</td>
+			</tr>";
+			}
+			}
+		$html .= "</table>";
+	echo $html;		
+?>

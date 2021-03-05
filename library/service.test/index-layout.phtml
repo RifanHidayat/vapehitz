@@ -1,0 +1,276 @@
+<?php require("partial/header.php"); ?>
+<?php require("partial/menu.php"); ?>
+
+
+<!-- Top-Header -->
+<div class="top-content" id="top-content">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 box-content text-center">
+                <span class="top-content-title-1">Selamat Datang di Pengaduan</span></br>
+                <span class="top-content-title-2">PT DIRGANTARA INDONESIA</span>
+                <div class="btn-highlight">
+                    <a class="btn btn-link-1 scroll-link wow fadeInLeft" href="#tentang-wbs">Tentang WBS</a>
+                    <a class="btn btn-link-2 scroll-link wow fadeInRight" href="pengaduan">Tulis
+                        Pengaduan</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Akhir Top-Header -->
+
+<!-- Content Information -->
+<!-- Tentang WBS -->
+<?php $dataabout1=$this->aboutdata1;?>
+<section class="tentang-wbs-container container section-padding section-wbs" id="tentang-wbs">
+    <div class="row tentangwbs">
+        <div class="offset-2 col-8">
+            <div class="container text-center">
+                <h2 class="wow fadeInUp"><?php echo $this->aboutdata1->N_WBLS_ABOUT; ?></h2>
+                <hr class="divider divider-lg bg-blue">
+                <p class="wow fadeInUp"><?php echo $this->aboutdata1->E_WBLS_ABOUT; ?></p>
+            </div>
+        </div>
+    </div>
+    <div class="row section-tujuan">
+    <?php 
+		$datapurpose= $this->purposedata ;
+		//var_dump($datapurpose);
+		$index=0;
+		foreach($datapurpose as $data){
+			$index++;
+			if ($index==1) $slide="fadeInLeft";
+			else if ($index==2) $slide="fadeInDown";
+			else if ($index==3) $slide="fadeInRight";
+			
+		?>
+			<div class="col-xs-12 col-sm-4 wow <?php echo $slide;?>">
+				<div class="box">
+					<div class="box-icon">
+						<img src="<?php echo $this->baseUrl()?>/assets/images/icon/portfolio-icon-<?php echo $index;?>.png" alt="">
+					</div>
+					<h4><?php echo $data->N_WBLS_PURPOSE; ?></h4>
+					<p class="box-title"><?php echo $data->E_WBLS_PURPOSE; ?></p>
+				</div>
+			</div>
+	<?php
+		}
+	?>	
+
+    </div>
+</section>
+<!-- Akhir Tentang WBS -->
+
+<!-- Siapa saja yang dapat menjadi Pelapor -->
+<div class="section-pelapor">
+    <h2 class="text-center wow fadeInDown">Siapa saja yang dapat menjadi pelapor dalam WBS ?</h2>
+    <hr class="divider divider-lg bg-blue">
+</div>
+<section class="container-fluid bg-blue">
+    <div class="row">
+        <div class="col-lg-3 pelapor-box">
+            <div class="img-box wow fadeInLeft">
+                <img src="assets/images/icon/icon1.png">
+            </div>
+            <h4 class="judul-deskripsi wow fadeInLeft">Karyawan (Internal)</h4>
+            <p></p>
+        </div>
+        <div class="col-lg-3 pelapor-box">
+            <div class="img-box wow fadeInDown">
+                <img src="assets/images/icon/icon2.png">
+            </div>
+            <h4 class="judul-deskripsi wow fadeInDown">Pemasok / Supplier</h4>
+        </div>
+        <div class="col-lg-3 pelapor-box">
+            <div class="img-box wow fadeInUp">
+                <img src="assets/images/icon/icon3.png">
+            </div>
+            <h4 class="judul-deskripsi wow fadeInUp">Pelanggan / Customer</h4>
+        </div>
+        <div class="col-lg-3 pelapor-box">
+            <div class="img-box wow fadeInRight">
+                <img src="assets/images/icon/icon4.png">
+            </div>
+            <h4 class="judul-deskripsi wow fadeInRight">Masyarakat</h4>
+        </div>
+    </div>
+</section>
+<!-- Akhir Pelapor -->
+
+<!-- Waktu Penggunaan WBS -->
+<section class="container-fluid section-padding section-waktupenggunaan text-center border-top" id="waktupenggunaanwbs">
+    <h2><?php echo $this->aboutdata2->N_WBLS_ABOUT; ?></h2>
+    <hr class="divider divider-lg bg-blue">
+    <div class="container">
+        <p class="text-center"><?php echo $this->aboutdata2->E_WBLS_ABOUT; ?></p>
+    </div>
+</section>
+<!-- Akhir Waktu Penggunaan WBS -->
+
+<!-- Jenis Pelanggaran -->
+<section class="bg-parralax section-padding" id="service-page">
+    <div class="container">
+
+        <h2 class="text-center section-title-white">Jenis Pelanggaran</h2>
+        <hr class="divider divider-lg bg-silver">
+        <div class="row row-box">
+            <div class="col-xs-12 col-sm-3 col-box">
+                <div class="jenis-box">
+                    <i class="fas fa-hand-holding-usd icon-white icon-box"></i>
+                    <h6>KORUPSI</h6>
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-3">
+                <div class="jenis-box">
+                    <i class="fas fa-money-bill-wave icon-white icon-box"></i>
+                    <h6>SUAP</h6>
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-3">
+                <div class="jenis-box">
+                    <i class="fas fa-gift icon-white icon-box"></i>
+                    <h6>GRATIFIKASI</h6>
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-3">
+                <div class="jenis-box">
+                    <i class="fas fa-people-carry icon-white icon-box"></i>
+                    <h6>BENTURAN KEPENTINGAN</h6>
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-3">
+                <div class="jenis-box">
+                    <i class="fas fa-mask icon-white icon-box"></i>
+                    <h6>PENCURIAN</h6>
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-3">
+                <div class="jenis-box">
+                    <i class="fas fa-theater-masks icon-white icon-box"></i>
+                    <h6>KECURANGAN (FRAUD)</h6>
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-3">
+                <div class="jenis-box">
+                    <i class="fas fa-gavel icon-white icon-box"></i>
+                    <h6>PELANGGARAN HUKUM</h6>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Akhir Jenis Pelanggaran -->
+
+<!-- Syarat Laporan -->
+<section class="section-padding syarat-laporan">
+    <div class="container">
+        <div class="judul-section text-center">
+            <h2>Syarat melaporkan dugaan pelanggaran & Termasuk Bukti</h2>
+            <hr class="divider divider-lg bg-blue">
+        </div>
+        <div class="row">
+			<?php 
+				$datareq= $this->reqdata ;
+				//var_dump($datareq);
+				$index=0;
+				foreach($datareq as $data){
+					$index++;
+			?>
+				<div class="col-lg-6 box-syaratlaporan1">
+					<img class="syarat-img" src="assets/images/icon/icon6.png">
+					<h4 class="syarat-judul-deskripsi bg-blue"><?php echo $data->N_WBLS_REQ; ?></h4>
+					<p class="isi-deskripsi"><?php echo $data->E_WBLS_REQ; ?></p>
+				</div>
+			<?php 
+				}
+			?>
+        </div>
+    </div>
+</section>
+<!-- Akhir Syarat Laporan -->
+
+<!-- Perlindungan Pelapor -->
+<section class="section-perlindungan section-padding">
+    <div class="container">
+        <h2>Perlindungan Terhadap Pelapor</h2>
+        <hr class="divider divider-lg bg-blue">
+        <div class="row">
+			<?php 
+				$dataprotect = $this->protectdata;
+				//var_dump($dataprotect);
+				$index=0;
+				foreach($dataprotect as $data){
+					$index++;
+			?>
+            <div class="col-lg-6 perlindungan-box">
+                <h5><?php echo $data->N_WBLS_PROTECT ?></h5>
+                <p><?php echo $data->E_WBLS_PROTECT?></p>
+            </div>
+			<?php 
+				}
+			?>
+        </div>
+    </div>
+</section>
+
+<!-- Akhir Perlindungan Pelapor -->
+
+<!-- Cara Melapor -->
+<div class="cara-pengaduan-container section-padding section-caramelapor" id="cara-pengaduan">
+    <div class="container">
+        <h2 class="text-center">Cara Melapor</h2>
+        <hr class="divider divider-lg bg-blue">
+		
+		<ul class="nav nav-tabs justify-content-center" role="tablist">
+			<?php 
+				$dataproc = $this->procdata;
+				//var_dump($dataprotect);
+				$index=0;
+				foreach($dataproc as $data){
+					$index++;
+					if ($index==1) $class="active";
+					else  $class="";
+			?>
+					<li class="nav-item">
+					  <a class="nav-link <?php echo $class;?>" data-toggle="pill" href="#step<?php echo $index;?>">Step #<?php echo $index;?></a>
+					</li>
+			<?php 
+				}
+			?>
+		</ul>
+		
+			<!-- Tab panes -->
+			<div class="tab-content">
+				<?php 
+					$dataproc = $this->procdata;
+					//var_dump($dataprotect);
+					$index=0;
+					foreach($dataproc as $proc){
+						$index++;
+						if ($index==1) $class="active";
+						else  $class="";
+				?>
+				<div id="step<?php echo $index;?>" class="container tab-pane <?php echo $class;?>"><br>
+				<h3><?php echo $proc->N_WBLS_PROC ?></h3>
+				<p><?php echo $proc->E_WBLS_PROC ?></p>
+			</div>
+		  </div>
+	</div>
+</div>
+<!-- Akhir Cara Laporan -->
+
+<div class='scrolltop'>
+    <div class='scroll icon'>
+        <div class="scroll-icon">
+            <i class="fa fa-4x fa-angle-up"></i>
+        </div>
+        <div class="scroll-title">
+            <p>UP</p>
+        </div>
+    </div>
+</div>
+
+<?php
+require("partial/main-footer.php");
+?>

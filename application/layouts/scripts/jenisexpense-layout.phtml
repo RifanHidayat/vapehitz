@@ -1,0 +1,236 @@
+<?php require('partial/header.php');?>
+<?php require('partial/menu.php');?>    
+<script>
+	$(document).ready(function () {
+		$('#dataTables-emp').dataTable({
+			"bPaginate": true,
+			"bLengthChange": true,
+			"bFilter": true,
+			"bInfo": true,
+			"bAutoWidth": true});
+	});
+	 
+</script>
+    <!-- **********************************************************************************************************************************************************
+        MAIN CONTENT
+        *********************************************************************************************************************************************************** -->
+    <!--main content start-->
+    <section id="main-content">
+      <section class="wrapper" style="min-height:522px">
+        <h3><i class="fa fa-angle-right"></i> Data Jenis Expense</h3>
+        <div class="row mb">
+          <!-- page start-->
+          <div class="content-panel">
+            <div class="adv-table">
+			<div id="listprogram" align="center"  class="col-xs-12">
+				<br>
+					<div id="page-content">
+						<div class="form-group form-group-bottom" align="left" id="tambah">
+							<button class="right btn btn-success  btn-xs" onClick="tambahdata()"><i class="fa fa-plus"></i>&nbsp;&nbsp;Tambah Data</button>		
+						</div>
+						
+						
+	<form id="frm_postdata" name="frm_postdata" enctype="multipart/form-data" method="POST">
+	<input type="hidden" name="currentPage" id="currentPage" size="6" maxlength="6" value="<?php echo $this->numPage;?>" class="inputbox2 narrowkey1"></input>
+		<input type="hidden" id='action' name='action' value =''>
+		<div class="panel">
+            <fieldset class="panel-dt">	
+				<h4 align="left"><u>Tambah Data</u></h4>
+				<br>
+					<div class="col-sm-12">
+						<table width="100%">
+							<tr>
+								<td width="10%"><font style="font-size:12px;font-weight:bold;">Jenis Expense</font></td>
+								<td width="1%">:</td>
+								<td>
+									<table>
+										<td> <input name="keterangan" id="keterangan" type="text" maxlength="30" size="40" class="form-control input-sm" value=""> </td>
+										<td> &nbsp; <label id="keterangan-error" for="nama_warna" class="error"></td>
+									</table>
+								</td>
+							</tr>
+							<tr><td>&nbsp;</td></tr>
+							<tr>
+								<td width="10%"><font style="font-size:12px;font-weight:bold;">Status</font></td>
+								<td width="1%">:</td>
+								<td>
+									<table>
+										<td> 
+											<select id="status" name="status" class = "form-control input-sm" width="15%">
+												<option value="">--Pilih Status--</option>
+												<option value="1">Active</option>
+												<option value="0">Inactive</option>
+											</select>
+										</td>
+										<td> &nbsp; <label id="status-error" for="status" class="error"></td>
+									</table>
+								</td>
+							</tr>
+							<tr><td>&nbsp;</td></tr>
+						</table>
+					</div>
+				<div class="col-lg-12">
+					<div class="form-group form-group-bottom" align="right">
+						<input type="hidden" id="proses" name="proses" value="<?php echo $this->proses?>">	
+						<br><br>
+							<a href="jenisexpense">
+							<button type="button" class="btn btn-theme02">
+								<span class="fa fa-backward"></span> &nbsp;Kembali
+							</button></a>
+							<button type="button" class="btn btn-theme03" onCLick="PostData()">
+								<span class="fa fa-save"></span> &nbsp;Simpan
+							</button>
+					</div>
+				</div>
+			</fieldset>
+		</div>
+	</form>			
+						
+						<table style="font-size:12px;" class="table table-striped table-bordered table-hover" id="dataTables-emp">
+							<thead>
+							<tr bgcolor="#4ECDC4">
+								<th width="3%" style="text-align:center;">No</th>
+								<th width="7%" style="text-align:center;">Jenis Expense</th>
+								<th width="10%" style="text-align:center;">Status</th>
+								<th width="10%" style="text-align:center;">Edit</th>
+								<th width="10%" style="text-align:center;">Hapus</th>
+							</tr>
+							</thead>
+							<tbody>
+							<?php
+								 for($x=0; $x<count($this->data); $x++){
+
+										$nomer		 = $x+1;
+										$keterangan 	 = $this->data[$x]['keterangan'];
+										$status 	 = $this->data[$x]['status'];
+										$id	 = $this->data[$x]['id'];
+										if($status=='1'){
+											$stat = 'Active';
+										} else {
+											$stat = 'Inactive';
+										}
+									?>	
+											<td align="center"><?php echo $nomer;?></td>	  
+											<td align="center"><?php echo $keterangan;?></td>
+											<td align="center"><?php echo $stat;?></td>
+											<td width="10%">
+                                                <a href="#" title="Edit" onClick="editdata('<?php echo $id;?>')" class="btn-warning btn-sm mar-ed-button"><i class="fa fa-edit pad-ico-button"></i>Edit</a>
+                                            </td>
+                                            <td width="10%">
+												<a href="#" title="Hapus" onclick="hapusdata('<?php echo $id; ?>')" class="btn-danger btn-sm mar-ed-button"><i class="fa fa-trash-o pad-ico-button"></i>Hapus</a>
+                                            </td>	
+										</tr>	
+									<?php 
+										}
+									?>
+								
+							</tbody>
+						</table>
+					  </div>
+				</div>
+            </div>
+          </div>
+          <!-- page end-->
+        </div>
+        <!-- /row -->
+      </section>
+      <!-- /wrapper -->
+    </section>
+    <!--main content end-->
+    <?php require('partial/main-footer.php');?> 
+  </section>
+   <!-- js placed at the end of the document so the pages load faster -->
+  <script src="lib/jquery/jquery.min.js"></script>
+  <script type="text/javascript" language="javascript" src="lib/advanced-datatable/js/jquery.js"></script>
+  <script src="lib/bootstrap/js/bootstrap.min.js"></script>
+  <script class="include" type="text/javascript" src="lib/jquery.dcjqaccordion.2.7.js"></script>
+  <script src="lib/jquery.scrollTo.min.js"></script>
+  <script src="lib/jquery.nicescroll.js" type="text/javascript"></script>
+  <script type="text/javascript" language="javascript" src="lib/advanced-datatable/js/jquery.dataTables.js"></script>
+  <script type="text/javascript" src="lib/advanced-datatable/js/DT_bootstrap.js"></script>
+  
+		<script src="<?php echo $this->baseUrl();?>/lib/jquery.form.js"></script>
+		<link rel="stylesheet" type="text/css" href="<?php echo $this->baseUrl();?>/css/sweetalert.css">
+		<script src="<?php echo $this->baseUrl();?>/lib/sweetalert.min.js"></script>
+  
+  <!--common script for all pages-->
+  <script src="lib/common-scripts.js"></script>
+  <!--script for this page-->
+  <script type="text/javascript">
+  $("#frm_postdata").hide();
+  
+  function tambahdata(){
+	  $("#frm_postdata").show();
+	  $("#tambah").hide();
+	  document.getElementById('action').value="tambah";
+  }
+  
+  function editdata(id){
+		$("#frm_postdata").show();
+		$("#tambah").hide();
+		
+		var url = "<?php echo $this->baseUrl; ?>/jenisexpense/editdata";
+		var opt = {id:id};
+		jQuery.get(url,opt, function(data) { 
+			document.getElementById('frm_postdata').innerHTML = data;
+			document.getElementById('action').value="edit";
+		});
+  }
+	function hapusdata(id){
+			var r = confirm("Anda yakin akan menghapus data ini ?"+id);
+			if (r == true) {
+					var url = "<?php echo $this->basePath; ?>/jenisexpense/hapusdata";
+					var opt = {id:id}
+					
+					jQuery.get(url,opt, function(data) {	
+						location.reload(true)
+						//jQuery("div#example1").html(data);
+						//jQuery("#page-content").html(data);
+					})
+					//open_url_to_div('<?php echo $this->baseUrl(); ?>/pengaduan/index');
+					//location.reload(true)
+			} else {
+				close();
+			}
+		}
+	
+	function PostData(){
+		//alert('Testing2');
+        $("#frm_postdata").ajaxSubmit(post_data);
+    }
+	
+	var post_data = {
+		target:'',
+		beforeSubmit: function() {	
+			var keterangan = document.getElementById('keterangan').value;
+			var status = document.getElementById('status').value;
+				if (!keterangan) {
+					document.getElementById('keterangan-error').innerHTML ="<span style='color: red;'>Jenis Harus Diisi.</span>";
+					document.getElementById('keterangan').focus();
+					exit;
+				}else document.getElementById('keterangan-error').innerHTML ='';
+				if (status=='') {
+					document.getElementById('status-error').innerHTML ="<span style='color: red;'>Status Harus Dipilih.</span>";
+					document.getElementById('status').focus();
+					exit;
+				}else document.getElementById('status-error').innerHTML ='';
+			}, 
+		success:function(){	
+			swal({
+				    title: 'Tambah Jenis Expense Berhasil !',
+				    text: 'Auto Close...',
+				    icon: 'success',
+				    timer: 4000,
+				    showConfirmButton: false,
+				})
+			//location.href="#";		
+			location.reload(true);
+		},
+		url: '<?php echo $this->baseUrl();?>/jenisexpense/kirimdata',
+		type: 'post',
+		resetForm: false
+	};
+  </script>
+</body>
+
+</html>

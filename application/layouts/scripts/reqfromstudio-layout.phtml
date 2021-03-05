@@ -1,0 +1,115 @@
+<?php require('partial/header.php');?>
+<?php require('partial/menu.php');?>    
+<script>
+	$(document).ready(function () {
+		$('#dataTables-emp').dataTable({
+			"bPaginate": true,
+			"bLengthChange": true,
+			"bFilter": true,
+			"bInfo": true,
+			"bAutoWidth": true});
+	});
+	 
+</script>
+    <!-- **********************************************************************************************************************************************************
+        MAIN CONTENT
+        *********************************************************************************************************************************************************** -->
+    <!--main content start-->
+	<?php $serialize_permission = unserialize($this->permission);?>
+    <section id="main-content">
+      <section class="wrapper" style="min-height:522px">
+        <h3><b>#PERMINTAAN BARANG DARI GUDANG STUDIO</b></h3>
+        <div class="row mb">
+          <!-- page start-->
+          <div class="content-panel">
+            <div class="adv-table">
+			<div id="listprogram" align="center"  class="col-xs-12">
+				<br>
+					<div id="page-content">
+						<table style="font-size:12px;" class="table table-striped table-bordered table-hover" id="dataTables-emp">
+							<thead>
+							<tr bgcolor="#4ECDC4">
+								<th width="5%" style="text-align:center;">No</th>
+								<th width="40%" style="text-align:center;">Nomor Proses</th>
+								<th width="20%" style="text-align:center;">Tanggal Proses</th>
+								<th width="20%" style="text-align:center;">Status</th>
+								<th width="10%" style="text-align:center;">Action</th>
+							</tr>
+							</thead>
+							<tbody>
+							<?php
+								 for($x=0; $x<count($this->data); $x++){
+										$nomer			= $x+1;
+										$no_request 		= $this->data[$x]['no_request'];
+										$status 		= $this->data[$x]['status'];
+										$tgl_request	 	= date_create($this->data[$x]['tgl_request']);
+										$tgl_request		= date_format($tgl_request,"d-m-Y");
+									?>	
+										<tr>
+											<td align="center"><?php echo $nomer;?></td>	  
+											<td align="center"><?php echo $no_request;?></td>
+											<td align="center"><?php echo $tgl_request;?></td>
+											<td align="center"><?php echo $status;?></td>
+											<td width="7%" align="center">
+												<?php if($status == 'Approve' OR $status == 'Not-Approve'){ ?>
+													<a href="#" title="Detail" onclick="open_url_to_div('/reqfromstudio/detail?id=<?php echo $no_request;?>')" class="btn-warning btn-sm mar-ed-button">Detail</a>
+												<?php } else { ?>
+													<?php if($serialize_permission) { if(in_array('approvalApprvCentral', $serialize_permission)) { ?>
+														<a href="#" title="approval" onclick="open_url_to_div('/reqfromstudio/approval?id=<?php echo $no_request;?>')" class="btn-warning btn-sm mar-ed-button">Appoval</a>
+													<?php } } ?>
+												<?php } ?> 
+                                            </td>
+										</tr>	
+									<?php 
+										}
+									?>
+								
+							</tbody>
+						</table>
+					  </div>
+				</div>
+            </div>
+          </div>
+          <!-- page end-->
+        </div>
+        <!-- /row -->
+      </section>
+      <!-- /wrapper -->
+    </section>
+    <!--main content end-->
+    <?php require('partial/main-footer.php');?> 
+  </section>
+   <!-- js placed at the end of the document so the pages load faster -->
+  <script src="<?php echo $this->baseUrl();?>/lib/jquery/jquery.min.js"></script>
+  <script type="text/javascript" language="javascript" src="<?php echo $this->baseUrl();?>/lib/advanced-datatable/js/jquery.js"></script>
+  <script src="<?php echo $this->baseUrl();?>/lib/bootstrap/js/bootstrap.min.js"></script>
+  <script class="include" type="text/javascript" src="<?php echo $this->baseUrl();?>/lib/jquery.dcjqaccordion.2.7.js"></script>
+  <script src="<?php echo $this->baseUrl();?>/lib/jquery.scrollTo.min.js"></script>
+  <script src="<?php echo $this->baseUrl();?>/lib/jquery.nicescroll.js" type="text/javascript"></script>
+  <script type="text/javascript" language="javascript" src="<?php echo $this->baseUrl();?>/lib/advanced-datatable/js/jquery.dataTables.js"></script>
+  <script type="text/javascript" src="<?php echo $this->baseUrl();?>/lib/advanced-datatable/js/DT_bootstrap.js"></script>
+  <!--common script for all pages-->
+  <script src="<?php echo $this->baseUrl();?>/lib/common-scripts.js"></script>
+  <!--script for this page-->
+  <script type="text/javascript">
+	function hapusdata(no_request){
+			var r = confirm("Anda yakin akan menghapus data ini ?");
+			if (r == true) {
+					var url = "<?php echo $this->basePath; ?>/reqfromstudio/hapusdata";
+					var opt = {no_request:no_request}
+					
+					jQuery.get(url,opt, function(data) {	
+						location.reload(true)
+						//jQuery("div#example1").html(data);
+						//jQuery("#page-content").html(data);
+					})
+					//open_url_to_div('<?php echo $this->baseUrl(); ?>/pengaduan/index');
+					//location.reload(true)
+			} else {
+				close();
+			}
+		}
+  </script>
+</body>
+
+</html>

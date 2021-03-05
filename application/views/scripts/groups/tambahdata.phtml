@@ -1,0 +1,872 @@
+<form id="frm_postdata" name="frm_postdata" enctype="multipart/form-data" method="POST">
+	<input type="hidden" name="currentPage" id="currentPage" size="6" maxlength="6" value="<?php echo $this->numPage;?>" class="inputbox2 narrowkey1"></input>
+		<?php 
+			$seq = substr($this->seq,6,5);
+			//var_dump($seq);
+			$seq += 1;
+			$seq=str_pad($seq, 5, '0', STR_PAD_LEFT);
+		?>
+		<input type="hidden" id='seq' value ='<?php echo $seq;?>'>
+		<div class="panel">
+            <fieldset class="panel-dt">							
+				<h4><i class="fa fa-angle-right"></i> Tambah Group</h4>
+						<br>
+					<div class="col-sm-12">
+						<table width="100%">
+							<tr>
+								<td width="10%"><font style="font-size:12px;font-weight:bold;">Nama Group</font></td>
+								<td width="1%">:</td>
+								<td>
+									<table>
+										<td> <input name="group_name" id="group_name" type="text" maxlength="50" size="50" class="form-control input-sm" value=""> </td>
+										<td> <label id="group_name-error" for="group_name" class="error"> </td>
+									</table>
+								</td>
+							</tr> 
+							<tr><td>&nbsp;</td></tr>
+							<tr>
+								<td width="10%"><font style="font-size:12px;font-weight:bold;">Permission</font></td>
+								<td width="1%">:</td>
+								<td></td>
+							</tr> 
+							<tr><td>&nbsp;</td></tr>
+						</table>
+						<table class="table table-responsive">
+										<thead>
+										  <tr>
+											<th></th>
+											<th  style="text-align:center;">All</th>
+											<th  style="text-align:center;">View</th>
+											<th  style="text-align:center;">Tambah</th>
+											<th  style="text-align:center;">Edit</th>
+											<th  style="text-align:center;">Hapus</th>
+											<th  style="text-align:center;">Laporan</th>
+											<th  style="text-align:center;">Approval</th>
+										  </tr>
+										</thead>
+										<tbody>
+										  <tr>
+											<td><b>MASTER DATA</b></td>
+										  </tr>
+										  <tr>
+											<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Master Data Supplier</td>
+											<td align="center"><input type="checkbox" class="chk_supplier" label="check all"  /></td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="viewSupplier" class="supplier"></td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="tambahSupplier" class="supplier"></td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="editSupplier" class="supplier"></td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="hapusSupplier" class="supplier"></td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="laporanSupplier" class="supplier"></td>
+											<td align="center"></td>
+										  </tr>
+										  <tr>
+											<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Master Data Sales</td>
+											<td align="center"><input type="checkbox" class="chk_sales" label="check all"  /></td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="viewSales" class="sales"></td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="tambahSales" class="sales"></td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="editSales" class="sales"></td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="hapusSales" class="sales"></td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="laporanSales" class="sales"></td>
+											<td align="center"></td>
+										  </tr>
+										  <tr>
+											<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Master Data Customer</td>
+											<td align="center"><input type="checkbox" class="chk_customer" label="check all"  /></td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="viewCustomer" class="customer"></td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="tambahCustomer" class="customer"></td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="editCustomer" class="customer"></td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="hapusCustomer" class="customer"></td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="laporanCustomer" class="customer"></td>
+											<td align="center"></td>
+										  </tr>
+										  <tr>
+											<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Master Data Isi Ulang Liquid</td>
+											<td align="center"><input type="checkbox" class="chk_liquid" label="check all"  /></td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="viewLiquid" class="liquid"></td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="tambahLiquid" class="liquid"></td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="editLiquid" class="liquid"></td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="hapusLiquid" class="liquid"></td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="laporanLiquid" class="liquid"></td>
+											<td align="center"></td>
+										  </tr>
+										  <tr>
+											<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Master Data Perlengkapan</td>
+											<td align="center"><input type="checkbox" class="chk_perlengkapan" label="check all"  /></td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="viewPerlengkapan" class="perlengkapan"></td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="tambahPerlengkapan" class="perlengkapan"></td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="editPerlengkapan" class="perlengkapan"></td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="hapusPerlengkapan" class="perlengkapan"></td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="laporanPerlengkapan" class="perlengkapan"></td>
+											<td align="center"></td>
+										  </tr>
+										  <tr>
+											<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Master Data Aksesoris</td>
+											<td align="center"><input type="checkbox" class="chk_aksesoris" label="check all"  /></td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="viewAksesoris" class="aksesoris"></td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="tambahAksesoris" class="aksesoris"></td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="editAksesoris" class="aksesoris"></td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="hapusAksesoris" class="aksesoris"></td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="laporanAksesoris" class="aksesoris"></td>
+											<td align="center"></td>
+										  </tr>
+										  <tr>
+											<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Master Data Atomizer</td>
+											<td align="center"><input type="checkbox" class="chk_atomizer" label="check all"  /></td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="viewAtomizer" class="atomizer"></td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="tambahAtomizer" class="atomizer"></td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="editAtomizer" class="atomizer"></td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="hapusAtomizer" class="atomizer"></td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="laporanAtomizer" class="atomizer"></td>
+											<td align="center"></td>
+										  </tr>
+										  
+										  <tr>
+											<td><b>TRANSAKSI PUSAT</b></td>
+										  </tr>
+										  <tr>
+											<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Pembelian Barang</td>
+											<td align="center"><input type="checkbox" class="chk_OrderCentral" label="check all"  /></td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="viewOrderCentral" class="OrderCentral"></td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="tambahOrderCentral" class="OrderCentral"></td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="editOrderCentral" class="OrderCentral"></td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="hapusOrderCentral" class="OrderCentral"></td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="laporanOrderCentral" class="OrderCentral"></td>
+											<td align="center"></td>
+										  </tr>
+										  <tr>
+											<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Pembayaran Supplier</td>
+											<td align="center"><input type="checkbox" class="chk_PembayaranSupplier" label="check all"  /></td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="viewPembayaranSupplier" class="PembayaranSupplier"></td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="tambahPembayaranSupplier" class="PembayaranSupplier"></td>
+											<td align="center"></td>
+											<td align="center"></td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="laporanPembayaranSupplier" class="PembayaranSupplier"></td>
+											<td align="center"></td>
+										  </tr>
+										  <tr>
+											<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Retur Barang Pembelian</td>
+											<td align="center"><input type="checkbox" class="chk_ReturSupplier" label="check all"  /></td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="viewReturSupplier" class="ReturSupplier"></td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="tambahReturSupplier" class="ReturSupplier"></td>
+											<td align="center"></td>
+											<td align="center"></td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="laporanReturSupplier" class="ReturSupplier"></td>
+											<td align="center"></td>
+										  </tr>
+										  <tr>
+											<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Penyelesaian Retur Pembelian</td>
+											<td align="center"><input type="checkbox" class="chk_PenyelesaianPembelian" label="check all" /></td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="viewPenyelesaianPembelian" class="PenyelesaianPembelian"></td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="tambahPenyelesaianPembelian" class="PenyelesaianPembelian"></td>
+											<td align="center"></td>
+											<td align="center"></td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="laporanPenyelesaianPembelian" class="PenyelesaianPembelian">
+											</td>
+											<td align="center"></td>
+										  </tr>
+										  <tr>
+											<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Penjualan Barang</td>
+											<td align="center"><input type="checkbox" class="chk_SaleCentral" label="check all"  /></td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="viewSaleCentral" class="SaleCentral"></td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="tambahSaleCentral" class="SaleCentral"></td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="editSaleCentral" class="SaleCentral"></td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="hapusSaleCentral" class="SaleCentral"></td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="laporanSaleCentral" class="SaleCentral"></td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="approvalSaleCentral" class="SaleCentral"></td>
+										  </tr>
+										  <tr>
+											<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Pembayaran Pelanggan</td>
+											<td align="center"><input type="checkbox" class="chk_PembayaranCustomer" label="check all"  /></td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="viewPembayaranCustomer" class="PembayaranCustomer"></td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="tambahPembayaranCustomer" class="PembayaranCustomer"></td>
+											<td align="center"></td>
+											<td align="center"></td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="laporanPembayaranCustomer" class="PembayaranCustomer"></td>
+											<td align="center"></td>
+										  </tr>
+										  <tr>
+											<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Retur Barang Penjualan</td>
+											<td align="center"><input type="checkbox" class="chk_ReturCustomer" label="check all"  /></td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="viewReturCustomer" class="ReturCustomer"></td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="tambahReturCustomer" class="ReturCustomer"></td>
+											<td align="center"></td>
+											<td align="center"></td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="laporanReturCustomer" class="ReturCustomer"></td>
+											<td align="center"></td>
+										  </tr>
+										  <tr>
+											<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Penyelesaian Retur Penjualan</td>
+											<td align="center"><input type="checkbox" class="chk_PenyelesaianPenjualan" label="check all" /></td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="viewPenyelesaianPenjualan" class="PenyelesaianPenjualan"></td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="tambahPenyelesaianPenjualan" class="PenyelesaianPenjualan"></td>
+											<td align="center"></td>
+											<td align="center"></td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="laporanPenyelesaianPenjualan" class="PenyelesaianPenjualan"></td>
+											<td align="center"></td>
+										  </tr>
+										  <tr>
+											<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Stock Opname</td>
+											<td align="center"><input type="checkbox" class="chk_SopGudang" label="check all"  /></td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="viewSopGudang" class="SopGudang"></td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="tambahSopGudang" class="SopGudang"></td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="editSopGudang" class="SopGudang"></td>
+											<td align="center"></td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="laporanSopGudang" class="SopGudang"></td>
+											<td align="center"></td>
+										  </tr>
+										  <tr>
+											<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Pengeluaran Bad Stock</td>
+											<td align="center"><input type="checkbox" class="chk_BadstockGudang" label="check all"  /></td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="viewBadstockGudang" class="BadstockGudang"></td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="tambahBadstockGudang" class="BadstockGudang"></td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="editBadstockGudang" class="BadstockGudang"></td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="hapusBadstockGudang" class="BadstockGudang"></td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="laporanBadstockGudang" class="BadstockGudang"></td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="approvalBadstockGudang" class="BadstockGudang"></td>
+										  </tr>
+										  <tr>
+											<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Permintaan ke G.Retail</td>
+											<td align="center"><input type="checkbox" class="chk_ReqtoRetail" label="check all"  /></td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="viewReqtoRetail" class="ReqtoRetail"></td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="tambahReqtoRetail" class="ReqtoRetail"></td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="editReqtoRetail" class="ReqtoRetail"></td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="hapusReqtoRetail" class="ReqtoRetail"></td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="laporanReqtoRetail" class="ReqtoRetail"></td>
+											<td align="center"></td>
+										  </tr>
+										  <tr>
+											<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Permintaan ke G.Studio</td>
+											<td align="center"><input type="checkbox" class="chk_ReqtoStudio" label="check all"  /></td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="viewReqtoStudio" class="ReqtoStudio"></td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="tambahReqtoStudio" class="ReqtoStudio"></td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="editReqtoStudio" class="ReqtoStudio"></td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="hapusReqtoStudio" class="ReqtoStudio"></td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="laporanReqtoStudio" class="ReqtoStudio"></td>
+											<td align="center"></td>
+										  </tr>
+										  <tr>
+											<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Approval Permintaan</td>
+											<td align="center"><input type="checkbox" class="chk_ApprvCentral" label="check all"  /></td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="viewApprvCentral" class="ApprvCentral"></td>
+											<td align="center"></td>
+											<td align="center"></td>
+											<td align="center"></td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="laporanApprvCentral" class="ApprvCentral"></td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="approvalApprvCentral" class="ApprvCentral"></td>
+										  </tr>
+										  
+										  <tr>
+											<td><b>TRANSAKSI RETAIL</b></td>
+										  </tr>
+										  <tr>
+											<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Permintaan ke G.Pusat</td>
+											<td align="center"><input type="checkbox" class="chk_ReqretailToCentral" label="check all"  /></td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="viewReqretailToCentral" class="ReqretailToCentral"></td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="tambahReqretailToCentral" class="ReqretailToCentral"></td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="editReqretailToCentral" class="ReqretailToCentral"></td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="hapusReqretailToCentral" class="ReqretailToCentral"></td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="laporanReqretailToCentral" class="ReqretailToCentral"></td>
+											<td align="center"></td>
+										  </tr>
+										  <tr>
+											<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Penjualan Barang</td>
+											<td align="center"><input type="checkbox" class="chk_SaleRetail" label="check all"  /></td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="viewSaleRetail" class="SaleRetail"></td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="tambahSaleRetail" class="SaleRetail"></td>
+											<td align="center"></td>
+											<td align="center"></td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="laporanSaleRetail" class="SaleRetail"></td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="approvalSaleRetail" class="SaleRetail"></td>
+										  </tr>
+										  <tr>
+											<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Retur Barang Penjualan</td>
+											<td align="center"><input type="checkbox" class="chk_ReturSaleRetail" label="check all"  /></td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="viewReturSaleRetail" class="ReturSaleRetail"></td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="tambahReturSaleRetail" class="ReturSaleRetail"></td>
+											<td align="center"></td>
+											<td align="center"></td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="laporanReturSaleRetail" class="ReturSaleRetail"></td>
+											<td align="center"></td>
+										  </tr>
+										  <tr>
+											<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Stock Opname</td>
+											<td align="center"><input type="checkbox" class="chk_SopRetail" label="check all"  /></td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="viewSopRetail" class="SopRetail"></td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="tambahSopRetail" class="SopRetail"></td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="editSopRetail" class="SopRetail"></td>
+											<td align="center"></td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="laporanSopRetail" class="SopRetail"></td>
+											<td align="center"></td>
+										  </tr>
+										  <tr>
+											<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Approval Permintaan</td>
+											<td align="center"><input type="checkbox" class="chk_ApprvRetail" label="check all"  /></td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="viewApprvCentral" class="ApprvRetail"></td>
+											<td align="center"></td>
+											<td align="center"></td>
+											<td align="center"></td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="laporanApprvRetail" class="ApprvRetail"></td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="approvalApprvRetail" class="ApprvRetail"></td>
+										  </tr>
+										  
+										  <tr>
+											<td><b>TRANSAKSI STUDIO</b></td>
+										  </tr>
+										  <tr>
+											<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Permintaan ke G.Pusat</td>
+											<td align="center"><input type="checkbox" class="chk_ReqstudioToCentral" label="check all"  /></td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="viewReqstudioToCentral" class="ReqstudioToCentral"></td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="tambahReqstudioToCentral" class="ReqstudioToCentral"></td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="editReqstudioToCentral" class="ReqstudioToCentral"></td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="hapusReqstudioToCentral" class="ReqstudioToCentral"></td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="laporanReqstudioToCentral" class="ReqstudioToCentral"></td>
+											<td align="center"></td>
+										  </tr>
+										  <tr>
+											<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Penjualan Barang</td>
+											<td align="center"><input type="checkbox" class="chk_SaleStudio" label="check all"  /></td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="viewSaleStudio" class="SaleStudio"></td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="tambahSaleStudio" class="SaleStudio"></td>
+											<td align="center"></td>
+											<td align="center"></td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="laporanSaleStudio" class="SaleStudio"></td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="approvalSaleStudio" class="SaleStudio"></td>
+										  </tr>
+										  <tr>
+											<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Retur Barang Penjualan</td>
+											<td align="center"><input type="checkbox" class="chk_ReturSaleStudio" label="check all"  /></td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="viewReturSaleStudio" class="ReturSaleStudio"></td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="tambahReturSaleStudio" class="ReturSaleStudio"></td>
+											<td align="center"></td>
+											<td align="center"></td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="laporanReturSaleStudio" class="ReturSaleStudio"></td>
+											<td align="center"></td>
+										  </tr>
+										  <tr>
+											<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Stock Opname</td>
+											<td align="center"><input type="checkbox" class="chk_SopStudio" label="check all"  /></td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="viewSopStudio" class="SopStudio"></td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="tambahSopStudio" class="SopStudio"></td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="editSopStudio" class="SopStudio"></td>
+											<td align="center"></td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="laporanSopStudio" class="SopStudio"></td>
+											<td align="center"></td>
+										  </tr>
+										  <tr>
+											<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Approval Permintaan</td>
+											<td align="center"><input type="checkbox" class="chk_ApprvStudio" label="check all"  /></td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="viewApprvStudio" class="ApprvStudio"></td>
+											<td align="center"></td>
+											<td align="center"></td>
+											<td align="center"></td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="laporanApprvStudio" class="ApprvStudio"></td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="approvalApprvStudio" class="ApprvStudio"></td>
+										  </tr>
+										  
+										  <tr>
+											<td><b>PARAMETER</b></td>
+										  </tr>
+										  <tr>
+											<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Data Isi Volume Liquid</td>
+											<td align="center"><input type="checkbox" class="chk_VolLiquid" label="check all"  /></td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="viewVolLiquid" class="VolLiquid"></td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="tambahVolLiquid" class="VolLiquid"></td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="editVolLiquid" class="VolLiquid"></td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="hapusVolLiquid" class="VolLiquid"></td>
+											<td align="center"></td>
+											<td align="center"></td>
+										  </tr>
+										  <tr>
+											<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Data Jenis Device</td>
+											<td align="center"><input type="checkbox" class="chk_JenisDevice" label="check all"  /></td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="viewJenisDevice" class="JenisDevice"></td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="tambahJenisDevice" class="JenisDevice"></td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="editJenisDevice" class="JenisDevice"></td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="hapusJenisDevice" class="JenisDevice"></td>
+											<td align="center"></td>
+											<td align="center"></td>
+										  </tr>
+										  <tr>
+											<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Data Jenis Aksesoris</td>
+											<td align="center"><input type="checkbox" class="chk_JenisAcc" label="check all"  /></td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="viewJenisAcc" class="JenisAcc"></td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="tambahJenisAcc" class="JenisAcc"></td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="editJenisAcc" class="JenisAcc"></td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="hapusJenisAcc" class="JenisAcc"></td>
+											<td align="center"></td>
+											<td align="center"></td>
+										  </tr>
+										  <tr>
+											<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Data Jenis Atomizer</td>
+											<td align="center"><input type="checkbox" class="chk_JenisAtomizer" label="check all"  /></td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="viewJenisAtomizer" class="JenisAtomizer"></td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="tambahJenisAtomizer" class="JenisAtomizer"></td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="editJenisAtomizer" class="JenisAtomizer"></td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="hapusJenisAtomizer" class="JenisAtomizer"></td>
+											<td align="center"></td>
+											<td align="center"></td>
+										  </tr>
+										  <tr>
+											<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Data Bank Pembayaran</td>
+											<td align="center"><input type="checkbox" class="chk_Rekening" label="check all"  /></td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="viewRekening" class="Rekening"></td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="tambahRekening" class="Rekening"></td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="editRekening" class="Rekening"></td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="hapusRekening" class="Rekening"></td>
+											<td align="center"></td>
+											<td align="center"></td>
+										  </tr>
+										  <tr>
+											<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Data Rasa Liquid</td>
+											<td align="center"><input type="checkbox" class="chk_RasaLiquid" label="check all"  /></td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="viewRasaLiquid" class="RasaLiquid"></td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="tambahRasaLiquid" class="RasaLiquid"></td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="editRasaLiquid" class="RasaLiquid"></td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="hapusRasaLiquid" class="RasaLiquid"></td>
+											<td align="center"></td>
+											<td align="center"></td>
+										  </tr>
+										  <tr>
+											<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Data Warna</td>
+											<td align="center"><input type="checkbox" class="chk_Warna" label="check all"  /></td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="viewWarna" class="Warna"></td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="tambahWarna" class="Warna"></td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="editWarna" class="Warna"></td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="hapusWarna" class="Warna"></td>
+											<td align="center"></td>
+											<td align="center"></td>
+										  </tr>
+										  <tr>
+											<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Kategori Retur Barang</td>
+											<td align="center"><input type="checkbox" class="chk_KatRetur" label="check all"  /></td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="viewKatRetur" class="KatRetur"></td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="tambahKatRetur" class="KatRetur"></td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="editKatRetur" class="KatRetur"></td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="hapusKatRetur" class="KatRetur"></td>
+											<td align="center"></td>
+											<td align="center"></td>
+										  </tr>
+										  <tr>
+											<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Batas Waktu Transaksi</td>
+											<td align="center"><input type="checkbox" class="chk_DateLine" label="check all"  /></td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="viewDateLine" class="DateLine"></td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="tambahDateLine" class="DateLine"></td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="editDateLine" class="DateLine"></td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="hapusDateLine" class="DateLine"></td>
+											<td align="center"></td>
+											<td align="center"></td>
+										  </tr>
+										  
+										  <tr>
+											<td><b>ADMINISTRATOR</b></td>
+										  </tr>
+										  <tr>
+											<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Data Group</td>
+											<td align="center"><input type="checkbox" class="chk_Groups" label="check all"  /></td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="viewGroups" class="Groups"></td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="tambahGroups" class="Groups"></td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="editGroups" class="Groups"></td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="hapusGroups" class="Groups"></td>
+											<td align="center"></td>
+											<td align="center"></td>
+										  </tr>
+										  <tr>
+											<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Data Users</td>
+											<td align="center"><input type="checkbox" class="chk_Users" label="check all"  /></td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="viewUsers" class="Users"></td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="tambahUsers" class="Users"></td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="editUsers" class="Users"></td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="hapusUsers" class="Users"></td>
+											<td align="center"></td>
+											<td align="center"></td>
+										  </tr>
+										  <tr>
+											<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Ganti Password</td>
+											<td align="center"><input type="checkbox" class="chk_GntPassword" label="check all"  /></td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="viewGntPassword" class="GntPassword"></td>
+											<td align="center"></td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="editGntPassword" class="GntPassword"></td>
+											<td align="center"></td>
+											<td align="center"></td>
+											<td align="center"></td>
+										  </tr>
+										</tbody>
+									</table>
+					</div>				
+			</fieldset>
+		</div>
+		
+	</div>
+</div>
+<div class="col-lg-12">
+<div class="form-group form-group-bottom" align="right">
+						<input type="hidden" id="proses" name="proses" value="<?php echo $this->proses?>">	
+						<br><br>
+							
+							<a href="groups">
+							<button type="button" class="btn btn-theme02">
+								<span class="fa fa-backward"></span> &nbsp;Kembali
+							</button></a>
+							<button type="button" class="btn btn-theme03" onCLick="PostData()">
+								<span class="fa fa-save"></span> &nbsp;Simpan
+							</button>
+							
+			</div>
+</div>
+</form>
+  <script src="<?php echo $this->baseUrl();?>/lib/jquery/jquery.min.js"></script>
+  <script src="<?php echo $this->baseUrl();?>/lib/bootstrap/js/bootstrap.min.js"></script>
+  <script src="<?php echo $this->baseUrl();?>/lib/jquery.form.js"></script>
+  <link rel="stylesheet" href="<?php echo $this->baseUrl();?>/bootstrap-select/dist/css/bootstrap-select.min.css" />
+  <link rel="stylesheet" type="text/css" href="<?php echo $this->baseUrl();?>/css/sweetalert.css">
+  <script src="<?php echo $this->baseUrl();?>/lib/sweetalert.min.js"></script>
+  <script src="<?php echo $this->baseUrl();?>/bootstrap-select/dist/js/bootstrap-select.min.js"></script>
+  <script src="<?php echo $this->baseUrl();?>/lib/jquery.scrollTo.min.js"></script>
+  <script src="<?php echo $this->baseUrl();?>/lib/jquery.nicescroll.js" type="text/javascript"></script>
+<script>
+	$(function() {
+		$('.chk_supplier').click(function() {
+			$('.supplier').prop('checked', this.checked);
+		});
+	});
+	$(function() {
+		$('.chk_sales').click(function() {
+			$('.sales').prop('checked', this.checked);
+		});
+	});
+	$(function() {
+		$('.chk_customer').click(function() {
+			$('.customer').prop('checked', this.checked);
+		});
+	});
+	$(function() {
+		$('.chk_liquid').click(function() {
+			$('.liquid').prop('checked', this.checked);
+		});
+	});
+	$(function() {
+		$('.chk_perlengkapan').click(function() {
+			$('.perlengkapan').prop('checked', this.checked);
+		});
+	});
+	$(function() {
+		$('.chk_aksesoris').click(function() {
+			$('.aksesoris').prop('checked', this.checked);
+		});
+	});
+	$(function() {
+		$('.chk_atomizer').click(function() {
+			$('.atomizer').prop('checked', this.checked);
+		});
+	});
+	$(function() {
+		$('.chk_OrderCentral').click(function() {
+			$('.OrderCentral').prop('checked', this.checked);
+		});
+	});
+	$(function() {
+		$('.chk_PembayaranSupplier').click(function() {
+			$('.PembayaranSupplier').prop('checked', this.checked);
+		});
+	});
+	$(function() {
+		$('.chk_ReturSupplier').click(function() {
+			$('.ReturSupplier').prop('checked', this.checked);
+		});
+	});
+	$(function() {
+		$('.chk_SaleCentral').click(function() {
+			$('.SaleCentral').prop('checked', this.checked);
+		});
+	});
+	$(function() {
+		$('.chk_PembayaranCustomer').click(function() {
+			$('.PembayaranCustomer').prop('checked', this.checked);
+		});
+	});
+	$(function() {
+		$('.chk_ReturCustomer').click(function() {
+			$('.ReturCustomer').prop('checked', this.checked);
+		});
+	});
+	$(function() {
+		$('.chk_SopGudang').click(function() {
+			$('.SopGudang').prop('checked', this.checked);
+		});
+	});
+	
+	$(function() {
+		$('.chk_BadstockGudang').click(function() {
+			$('.BadstockGudang').prop('checked', this.checked);
+		});
+	});
+	$(function() {
+		$('.chk_ReqtoRetail').click(function() {
+			$('.ReqtoRetail').prop('checked', this.checked);
+		});
+	});
+	$(function() {
+		$('.chk_ReqtoStudio').click(function() {
+			$('.ReqtoStudio').prop('checked', this.checked);
+		});
+	});
+	$(function() {
+		$('.chk_ApprvCentral').click(function() {
+			$('.ApprvCentral').prop('checked', this.checked);
+		});
+	});
+	
+	$(function() {
+		$('.chk_ReqretailToCentral').click(function() {
+			$('.ReqretailToCentral').prop('checked', this.checked);
+		});
+	});
+	$(function() {
+		$('.chk_SaleRetail').click(function() {
+			$('.SaleRetail').prop('checked', this.checked);
+		});
+	});
+	$(function() {
+		$('.chk_ReturSaleRetail').click(function() {
+			$('.ReturSaleRetail').prop('checked', this.checked);
+		});
+	});
+	$(function() {
+		$('.chk_SopRetail').click(function() {
+			$('.SopRetail').prop('checked', this.checked);
+		});
+	});
+	$(function() {
+		$('.chk_ApprvRetail').click(function() {
+			$('.ApprvRetail').prop('checked', this.checked);
+		});
+	});
+	
+	$(function() {
+		$('.chk_ReqstudioToCentral').click(function() {
+			$('.ReqstudioToCentral').prop('checked', this.checked);
+		});
+	});
+	$(function() {
+		$('.chk_SaleStudio').click(function() {
+			$('.SaleStudio').prop('checked', this.checked);
+		});
+	});
+	$(function() {
+		$('.chk_ReturSaleStudio').click(function() {
+			$('.ReturSaleStudio').prop('checked', this.checked);
+		});
+	});
+	$(function() {
+		$('.chk_SopStudio').click(function() {
+			$('.SopStudio').prop('checked', this.checked);
+		});
+	});
+	$(function() {
+		$('.chk_ApprvStudio').click(function() {
+			$('.ApprvStudio').prop('checked', this.checked);
+		});
+	});
+	
+	$(function() {
+		$('.chk_VolLiquid').click(function() {
+			$('.VolLiquid').prop('checked', this.checked);
+		});
+	});
+	$(function() {
+		$('.chk_JenisDevice').click(function() {
+			$('.JenisDevice').prop('checked', this.checked);
+		});
+	});
+	$(function() {
+		$('.chk_JenisAcc').click(function() {
+			$('.JenisAcc').prop('checked', this.checked);
+		});
+	});
+	$(function() {
+		$('.chk_JenisAtomizer').click(function() {
+			$('.JenisAtomizer').prop('checked', this.checked);
+		});
+	});
+	$(function() {
+		$('.chk_Rekening').click(function() {
+			$('.Rekening').prop('checked', this.checked);
+		});
+	});
+	$(function() {
+		$('.chk_RasaLiquid').click(function() {
+			$('.RasaLiquid').prop('checked', this.checked);
+		});
+	});
+	$(function() {
+		$('.chk_Warna').click(function() {
+			$('.Warna').prop('checked', this.checked);
+		});
+	});
+	$(function() {
+		$('.chk_KatRetur').click(function() {
+			$('.KatRetur').prop('checked', this.checked);
+		});
+	});
+	$(function() {
+		$('.chk_DateLine').click(function() {
+			$('.DateLine').prop('checked', this.checked);
+		});
+	});
+	
+	$(function() {
+		$('.chk_Groups').click(function() {
+			$('.Groups').prop('checked', this.checked);
+		});
+	});
+	$(function() {
+		$('.chk_Users').click(function() {
+			$('.Users').prop('checked', this.checked);
+		});
+	});
+	$(function() {
+		$('.chk_GntPassword').click(function() {
+			$('.GntPassword').prop('checked', this.checked);
+		});
+	});
+
+	function getSelectValue(){
+		var selectedValue = document.getElementById("kode_supplier").value;
+		var res = selectedValue.split(",");
+		var kode_supplier = res[0];
+		var alamat = res[1];
+		var tipe = res[2];
+		var res2 = tipe.substring(0,1);
+		var jenis_aksesoris = document.getElementById("jenis_aksesoris").value;
+		var seq = document.getElementById("seq").value;
+		
+		//var kode = res2+'-'+jenis_aksesoris+'-'+seq;
+		//document.getElementById("kode_aksesoris").value = kode;
+		//document.getElementById("test").innerHTML = kode;
+		
+		var id_kode_barang = res2+'-'+jenis_aksesoris;
+		var url = "<?php echo $this->baseUrl; ?>/groups/cekseq";
+			var opt = {id_kode_barang:id_kode_barang};
+		
+			jQuery.get(url,opt, function(data) {	
+			//alert(data);
+				if(data == ''){
+					data2='0';
+				} else {
+					data2=data;
+				}
+				var hasilseq = parseInt(data2) + parseInt(1);
+				var str = "" + hasilseq
+				var pad = "00000"
+				var ans = pad.substring(0, pad.length - str.length) + str
+				
+				var kode = id_kode_barang+'-'+ans;
+				document.getElementById("kode_aksesoris").value = kode;
+				
+				document.getElementById("id_kode_barang").value = id_kode_barang;
+				document.getElementById("seq_kode_barang").value = hasilseq;
+			});
+		
+		document.getElementById("kode_supplier2").value = kode_supplier;
+		document.getElementById("alamat_supplier").value = alamat;
+		document.getElementById("tipe").value = tipe;
+	}
+	
+	function getKode(){
+		var tipe = document.getElementById("tipe").value;
+		var res = tipe.substring(0,1);
+		var jenis_aksesoris = document.getElementById("jenis_aksesoris").value;
+		var seq = document.getElementById("seq").value;
+		
+		//var kode = res+'-'+jenis_aksesoris+'-'+seq;
+		//document.getElementById("kode_aksesoris").value = kode;
+		//document.getElementById("test").innerHTML = kode;
+		
+		var id_kode_barang = res+'-'+jenis_aksesoris;
+		var url = "<?php echo $this->baseUrl; ?>/groups/cekseq";
+			var opt = {id_kode_barang:id_kode_barang};
+		
+			jQuery.get(url,opt, function(data) {	
+			//alert(data);
+				if(data == ''){
+					data2='0';
+				} else {
+					data2=data;
+				}
+				var hasilseq = parseInt(data2) + parseInt(1);
+				var str = "" + hasilseq
+				var pad = "00000"
+				var ans = pad.substring(0, pad.length - str.length) + str
+				
+				var kode = id_kode_barang+'-'+ans;
+				document.getElementById("kode_aksesoris").value = kode;
+				
+				document.getElementById("id_kode_barang").value = id_kode_barang;
+				document.getElementById("seq_kode_barang").value = hasilseq;
+			});
+		
+	}
+                                                                                                                                     
+	
+	function PostData(){
+		//alert('Testing2');
+        $("#frm_postdata").ajaxSubmit(post_data);
+    }
+	
+	var post_data = {
+		target:'',
+		beforeSubmit: function() {	
+			var group_name 	  = document.getElementById("group_name").value;
+			
+				if (!group_name) {
+					document.getElementById('group_name-error').innerHTML ="<span style='color: red;'>Nama Group Harus Diisi.</span>";
+					document.getElementById('group_name').focus();
+					exit;
+				}else document.getElementById('group_name-error').innerHTML ='';
+				
+			}, 
+		success:function(){	
+			swal({
+				    title: 'Tambah Data Berhasil !',
+				    text: 'Auto Close...',
+				    icon: 'success',
+				    timer: 4000,
+				    showConfirmButton: false,
+				})
+			location.href="#";		
+			location.reload(true)
+		},
+		url: '<?php echo $this->baseUrl();?>/groups/kirimdata',
+		type: 'post',
+		resetForm: false
+	};
+	
+	function isNumber(evt) {
+        var iKeyCode = (evt.which) ? evt.which : evt.keyCode
+        if (iKeyCode != 46 && iKeyCode > 31 && (iKeyCode < 48 || iKeyCode > 57))
+            return false;
+
+        return true;
+    } 
+	
+	function currency(){
+		var harga_beli = document.getElementById("harga_beli").value;
+		var harga_beli2 = harga_beli.replaceAll(".", "");
+		var harga_beli3 = harga_beli2.toString().replaceAll(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1.");
+		document.getElementById("harga_beli").value=harga_beli3;
+		
+		var hj_agen = document.getElementById("hj_agen").value;
+		var hj_agen2 = hj_agen.replaceAll(".", "");
+		var hj_agen3 = hj_agen2.toString().replaceAll(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1.");
+		document.getElementById("hj_agen").value=hj_agen3;
+		
+		var hj_retail = document.getElementById("hj_retail").value;
+		var hj_retail2 = hj_retail.replaceAll(".", "");
+		var hj_retail3 = hj_retail2.toString().replaceAll(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1.");
+		document.getElementById("hj_retail").value=hj_retail3;
+		
+		var hj_whs = document.getElementById("hj_whs").value;
+		var hj_whs2 = hj_whs.replaceAll(".", "");
+		var hj_whs3 = hj_whs2.toString().replaceAll(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1.");
+		document.getElementById("hj_whs").value=hj_whs3;
+	}
+</script>

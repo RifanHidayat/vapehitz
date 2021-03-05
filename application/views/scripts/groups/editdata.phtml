@@ -1,0 +1,1376 @@
+<form id="frm_postdata" name="frm_postdata" enctype="multipart/form-data" method="POST">
+	<input type="hidden" name="id" id="id" value="<?php echo $this->data[0]['id'];?>"></input>
+		<?php $serialize_permission = unserialize($this->data[0]['permission']); ?>
+		<div class="panel">
+            <fieldset class="panel-dt">							
+				<h4><i class="fa fa-angle-right"></i> Edit Group</h4>
+						<br>
+					<div class="col-sm-12">
+						<table width="100%">
+							<tr>
+								<td width="10%"><font style="font-size:12px;font-weight:bold;">Nama Group</font></td>
+								<td width="1%">:</td>
+								<td>
+									<table>
+										<td> <input name="group_name" id="group_name" type="text" maxlength="50" size="50" class="form-control input-sm" value="<?php echo $this->data[0]['group_name'];?>"> </td>
+										<td> <label id="group_name-error" for="group_name" class="error"> </td>
+									</table>
+								</td>
+							</tr> 
+							<tr><td>&nbsp;</td></tr>
+							<tr>
+								<td width="10%"><font style="font-size:12px;font-weight:bold;">Permission</font></td>
+								<td width="1%">:</td>
+								<td></td>
+							</tr> 
+							<tr><td>&nbsp;</td></tr>
+						</table>
+						<table class="table table-responsive">
+										<thead>
+										  <tr>
+											<th></th>
+											<th  style="text-align:center;">All</th>
+											<th  style="text-align:center;">View</th>
+											<th  style="text-align:center;">Tambah</th>
+											<th  style="text-align:center;">Edit</th>
+											<th  style="text-align:center;">Hapus</th>
+											<th  style="text-align:center;">Laporan</th>
+											<th  style="text-align:center;">Approval</th>
+										  </tr>
+										</thead>
+										<tbody>
+										  <tr>
+											<td><b>MASTER DATA</b></td>
+										  </tr>
+										  <tr>
+											<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Master Data Supplier</td>
+											<td align="center"><input type="checkbox" class="chk_supplier" label="check all"  
+												<?php if($serialize_permission) { if(in_array('viewSupplier', $serialize_permission)&& 
+																					 in_array('tambahSupplier', $serialize_permission)&&
+																					 in_array('editSupplier', $serialize_permission)&& 
+																					 in_array('hapusSupplier', $serialize_permission)&& 
+																					 in_array('laporanSupplier', $serialize_permission)) { echo "checked"; } } ?> ></td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="viewSupplier" class="supplier" 
+												<?php if($serialize_permission) { if(in_array('viewSupplier', $serialize_permission)) { echo "checked"; } } ?> >
+											</td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="tambahSupplier" class="supplier"
+												<?php if($serialize_permission) { if(in_array('tambahSupplier', $serialize_permission)) { echo "checked"; } } ?> >
+											</td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="editSupplier" class="supplier"
+												<?php if($serialize_permission) { if(in_array('editSupplier', $serialize_permission)) { echo "checked"; } } ?> >
+											</td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="hapusSupplier" class="supplier"
+												<?php if($serialize_permission) { if(in_array('hapusSupplier', $serialize_permission)) { echo "checked"; } } ?> >
+											</td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="laporanSupplier" class="supplier"
+												<?php if($serialize_permission) { if(in_array('laporanSupplier', $serialize_permission)) { echo "checked"; } } ?> >
+											</td>
+											<td align="center"></td>
+										  </tr>
+										  <tr>
+											<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Master Data Sales</td>
+											<td align="center"><input type="checkbox" class="chk_sales" label="check all"
+												<?php if($serialize_permission) { if(in_array('viewSales', $serialize_permission)&& 
+																					 in_array('tambahSales', $serialize_permission)&&
+																					 in_array('editSales', $serialize_permission)&& 
+																					 in_array('hapusSales', $serialize_permission)&& 
+																					 in_array('laporanSales', $serialize_permission)) { echo "checked"; } } ?> ></td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="viewSales" class="sales"
+												<?php if($serialize_permission) { if(in_array('viewSales', $serialize_permission)) { echo "checked"; } } ?> >
+											</td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="tambahSales" class="sales"
+												<?php if($serialize_permission) { if(in_array('tambahSales', $serialize_permission)) { echo "checked"; } } ?> >
+											</td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="editSales" class="sales"
+												<?php if($serialize_permission) { if(in_array('editSales', $serialize_permission)) { echo "checked"; } } ?> >
+											</td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="hapusSales" class="sales"
+												<?php if($serialize_permission) { if(in_array('hapusSales', $serialize_permission)) { echo "checked"; } } ?> >
+											</td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="laporanSales" class="sales"
+												<?php if($serialize_permission) { if(in_array('laporanSales', $serialize_permission)) { echo "checked"; } } ?> >
+											</td>
+											<td align="center"></td>
+										  </tr>
+										  <tr>
+											<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Master Data Customer</td>
+											<td align="center"><input type="checkbox" class="chk_customer" label="check all" 
+												<?php if($serialize_permission) { if(in_array('viewCustomer', $serialize_permission)&& 
+																					 in_array('tambahCustomer', $serialize_permission)&&
+																					 in_array('editCustomer', $serialize_permission)&& 
+																					 in_array('hapusCustomer', $serialize_permission)&& 
+																					 in_array('laporanCustomer', $serialize_permission)) { echo "checked"; } } ?> ></td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="viewCustomer" class="customer"
+												<?php if($serialize_permission) { if(in_array('viewCustomer', $serialize_permission)) { echo "checked"; } } ?> >
+											</td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="tambahCustomer" class="customer"
+												<?php if($serialize_permission) { if(in_array('tambahCustomer', $serialize_permission)) { echo "checked"; } } ?> >
+											</td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="editCustomer" class="customer"
+												<?php if($serialize_permission) { if(in_array('editCustomer', $serialize_permission)) { echo "checked"; } } ?> >
+											</td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="hapusCustomer" class="customer"
+												<?php if($serialize_permission) { if(in_array('hapusCustomer', $serialize_permission)) { echo "checked"; } } ?> >
+											</td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="laporanCustomer" class="customer"
+												<?php if($serialize_permission) { if(in_array('laporanCustomer', $serialize_permission)) { echo "checked"; } } ?> >
+											</td>
+											<td align="center"></td>
+										  </tr>
+										  <tr>
+											<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Master Data Isi Ulang Liquid</td>
+											<td align="center"><input type="checkbox" class="chk_liquid" label="check all" 
+												<?php if($serialize_permission) { if(in_array('viewLiquid', $serialize_permission)&& 
+																					 in_array('tambahLiquid', $serialize_permission)&&
+																					 in_array('editLiquid', $serialize_permission)&& 
+																					 in_array('hapusLiquid', $serialize_permission)&& 
+																					 in_array('laporanLiquid', $serialize_permission)) { echo "checked"; } } ?> ></td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="viewLiquid" class="liquid"
+												<?php if($serialize_permission) { if(in_array('viewLiquid', $serialize_permission)) { echo "checked"; } } ?> >
+											</td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="tambahLiquid" class="liquid"
+												<?php if($serialize_permission) { if(in_array('tambahLiquid', $serialize_permission)) { echo "checked"; } } ?> >
+											</td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="editLiquid" class="liquid"
+												<?php if($serialize_permission) { if(in_array('editLiquid', $serialize_permission)) { echo "checked"; } } ?> >
+											</td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="hapusLiquid" class="liquid"
+												<?php if($serialize_permission) { if(in_array('hapusLiquid', $serialize_permission)) { echo "checked"; } } ?> >
+											</td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="laporanLiquid" class="liquid"
+												<?php if($serialize_permission) { if(in_array('laporanLiquid', $serialize_permission)) { echo "checked"; } } ?> >
+											</td>
+											<td align="center"></td>
+										  </tr>
+										  <tr>
+											<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Master Data Perlengkapan</td>
+											<td align="center"><input type="checkbox" class="chk_perlengkapan" label="check all"  
+												<?php if($serialize_permission) { if(in_array('viewPerlengkapan', $serialize_permission)&& 
+																					 in_array('tambahPerlengkapan', $serialize_permission)&&
+																					 in_array('editPerlengkapan', $serialize_permission)&& 
+																					 in_array('hapusPerlengkapan', $serialize_permission)&& 
+																					 in_array('laporanPerlengkapan', $serialize_permission)) { echo "checked"; } } ?> ></td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="viewPerlengkapan" class="perlengkapan"
+												<?php if($serialize_permission) { if(in_array('viewPerlengkapan', $serialize_permission)) { echo "checked"; } } ?> >
+											</td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="tambahPerlengkapan" class="perlengkapan"
+												<?php if($serialize_permission) { if(in_array('tambahPerlengkapan', $serialize_permission)) { echo "checked"; } } ?> >
+											</td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="editPerlengkapan" class="perlengkapan"
+												<?php if($serialize_permission) { if(in_array('editPerlengkapan', $serialize_permission)) { echo "checked"; } } ?> >
+											</td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="hapusPerlengkapan" class="perlengkapan"
+												<?php if($serialize_permission) { if(in_array('hapusPerlengkapan', $serialize_permission)) { echo "checked"; } } ?> >
+											</td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="laporanPerlengkapan" class="perlengkapan"
+												<?php if($serialize_permission) { if(in_array('laporanPerlengkapan', $serialize_permission)) { echo "checked"; } } ?> >
+											</td>
+											<td align="center"></td>
+										  </tr>
+										  <tr>
+											<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Master Data Aksesoris</td>
+											<td align="center"><input type="checkbox" class="chk_aksesoris" label="check all"  
+												<?php if($serialize_permission) { if(in_array('viewAksesoris', $serialize_permission)&& 
+																					 in_array('tambahAksesoris', $serialize_permission)&&
+																					 in_array('editAksesoris', $serialize_permission)&& 
+																					 in_array('hapusAksesoris', $serialize_permission)&& 
+																					 in_array('laporanAksesoris', $serialize_permission)) { echo "checked"; } } ?> ></td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="viewAksesoris" class="aksesoris"
+												<?php if($serialize_permission) { if(in_array('viewAksesoris', $serialize_permission)) { echo "checked"; } } ?> >
+											</td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="tambahAksesoris" class="aksesoris"
+												<?php if($serialize_permission) { if(in_array('tambahAksesoris', $serialize_permission)) { echo "checked"; } } ?> >
+											</td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="editAksesoris" class="aksesoris"
+												<?php if($serialize_permission) { if(in_array('editAksesoris', $serialize_permission)) { echo "checked"; } } ?> >
+											</td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="hapusAksesoris" class="aksesoris"
+												<?php if($serialize_permission) { if(in_array('hapusAksesoris', $serialize_permission)) { echo "checked"; } } ?> >
+											</td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="laporanAksesoris" class="aksesoris"
+												<?php if($serialize_permission) { if(in_array('laporanAksesoris', $serialize_permission)) { echo "checked"; } } ?> >
+											</td>
+											<td align="center"></td>
+										  </tr>
+										  <tr>
+											<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Master Data Atomizer</td>
+											<td align="center"><input type="checkbox" class="chk_atomizer" label="check all"  
+												<?php if($serialize_permission) { if(in_array('viewAtomizer', $serialize_permission)&& 
+																					 in_array('tambahAtomizer', $serialize_permission)&&
+																					 in_array('editAtomizer', $serialize_permission)&& 
+																					 in_array('hapusAtomizer', $serialize_permission)&& 
+																					 in_array('laporanAtomizer', $serialize_permission)) { echo "checked"; } } ?> ></td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="viewAtomizer" class="atomizer"
+												<?php if($serialize_permission) { if(in_array('viewAtomizer', $serialize_permission)) { echo "checked"; } } ?> >
+											</td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="tambahAtomizer" class="atomizer"
+												<?php if($serialize_permission) { if(in_array('tambahAtomizer', $serialize_permission)) { echo "checked"; } } ?> >
+											</td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="editAtomizer" class="atomizer"
+												<?php if($serialize_permission) { if(in_array('editAtomizer', $serialize_permission)) { echo "checked"; } } ?> >
+											</td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="hapusAtomizer" class="atomizer"
+												<?php if($serialize_permission) { if(in_array('hapusAtomizer', $serialize_permission)) { echo "checked"; } } ?> >
+											</td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="laporanAtomizer" class="atomizer"
+												<?php if($serialize_permission) { if(in_array('laporanAtomizer', $serialize_permission)) { echo "checked"; } } ?> >
+											</td>
+											<td align="center"></td>
+										  </tr>
+										  
+										  <tr>
+											<td><b>TRANSAKSI PUSAT</b></td>
+										  </tr>
+										  <tr>
+											<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Pembelian Barang</td>
+											<td align="center"><input type="checkbox" class="chk_OrderCentral" label="check all"  
+												<?php if($serialize_permission) { if(in_array('viewOrderCentral', $serialize_permission)&& 
+																					 in_array('tambahOrderCentral', $serialize_permission)&&
+																					 in_array('editOrderCentral', $serialize_permission)&& 
+																					 in_array('hapusOrderCentral', $serialize_permission)&& 
+																					 in_array('laporanOrderCentral', $serialize_permission)) { echo "checked"; } } ?> ></td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="viewOrderCentral" class="OrderCentral"
+												<?php if($serialize_permission) { if(in_array('viewOrderCentral', $serialize_permission)) { echo "checked"; } } ?> >
+											</td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="tambahOrderCentral" class="OrderCentral"
+												<?php if($serialize_permission) { if(in_array('tambahOrderCentral', $serialize_permission)) { echo "checked"; } } ?> >
+											</td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="editOrderCentral" class="OrderCentral"
+												<?php if($serialize_permission) { if(in_array('editOrderCentral', $serialize_permission)) { echo "checked"; } } ?> >
+											</td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="hapusOrderCentral" class="OrderCentral"
+												<?php if($serialize_permission) { if(in_array('hapusOrderCentral', $serialize_permission)) { echo "checked"; } } ?> >
+											</td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="laporanOrderCentral" class="OrderCentral"
+												<?php if($serialize_permission) { if(in_array('laporanOrderCentral', $serialize_permission)) { echo "checked"; } } ?> >
+											</td>
+											<td align="center"></td>
+										  </tr>
+										  <tr>
+											<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Pembayaran Supplier</td>
+											<td align="center"><input type="checkbox" class="chk_PembayaranSupplier" label="check all"  
+												<?php if($serialize_permission) { if(in_array('viewPembayaranSupplier', $serialize_permission)&& 
+																					 in_array('tambahPembayaranSupplier', $serialize_permission)&&
+																					 in_array('laporanPembayaranSupplier', $serialize_permission)) { echo "checked"; } } ?> ></td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="viewPembayaranSupplier" class="PembayaranSupplier"
+												<?php if($serialize_permission) { if(in_array('viewPembayaranSupplier', $serialize_permission)) { echo "checked"; } } ?> >
+											</td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="tambahPembayaranSupplier" class="PembayaranSupplier"
+												<?php if($serialize_permission) { if(in_array('tambahPembayaranSupplier', $serialize_permission)) { echo "checked"; } } ?> >
+											</td>
+											<td align="center"></td>
+											<td align="center"></td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="laporanPembayaranSupplier" class="PembayaranSupplier"
+												<?php if($serialize_permission) { if(in_array('laporanPembayaranSupplier', $serialize_permission)) { echo "checked"; } } ?> >
+											</td>
+											<td align="center"></td>
+										  </tr>
+										  <tr>
+											<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Retur Barang Pembelian</td>
+											<td align="center"><input type="checkbox" class="chk_ReturSupplier" label="check all"  
+												<?php if($serialize_permission) { if(in_array('viewReturSupplier', $serialize_permission)&& 
+																					 in_array('tambahReturSupplier', $serialize_permission)&&
+																					 in_array('laporanReturSupplier', $serialize_permission)) { echo "checked"; } } ?> ></td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="viewReturSupplier" class="ReturSupplier"
+												<?php if($serialize_permission) { if(in_array('viewReturSupplier', $serialize_permission)) { echo "checked"; } } ?> >
+											</td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="tambahReturSupplier" class="ReturSupplier"
+												<?php if($serialize_permission) { if(in_array('tambahReturSupplier', $serialize_permission)) { echo "checked"; } } ?> >
+											</td>
+											<td align="center"></td>
+											<td align="center"></td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="laporanReturSupplier" class="ReturSupplier"
+												<?php if($serialize_permission) { if(in_array('laporanReturSupplier', $serialize_permission)) { echo "checked"; } } ?> >
+											</td>
+											<td align="center"></td>
+										  </tr>
+										  <tr>
+											<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Penyelesaian Retur Pembelian</td>
+											<td align="center"><input type="checkbox" class="chk_PenyelesaianPembelian" label="check all"  
+												<?php if($serialize_permission) { if(in_array('viewPenyelesaianPembelian', $serialize_permission)&& 
+																					 in_array('tambahPenyelesaianPembelian', $serialize_permission)&&
+																					 in_array('laporanPenyelesaianPembelian', $serialize_permission)) { echo "checked"; } } ?> ></td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="viewPenyelesaianPembelian" class="PenyelesaianPembelian"
+												<?php if($serialize_permission) { if(in_array('viewPenyelesaianPembelian', $serialize_permission)) { echo "checked"; } } ?> >
+											</td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="tambahPenyelesaianPembelian" class="PenyelesaianPembelian"
+												<?php if($serialize_permission) { if(in_array('tambahPenyelesaianPembelian', $serialize_permission)) { echo "checked"; } } ?> >
+											</td>
+											<td align="center"></td>
+											<td align="center"></td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="laporanPenyelesaianPembelian" class="PenyelesaianPembelian"
+												<?php if($serialize_permission) { if(in_array('laporanPenyelesaianPembelian', $serialize_permission)) { echo "checked"; } } ?> >
+											</td>
+											<td align="center"></td>
+										  </tr>
+										  <tr>
+											<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Penjualan Barang</td>
+											<td align="center"><input type="checkbox" class="chk_SaleCentral" label="check all"  
+												<?php if($serialize_permission) { if(in_array('viewSaleCentral', $serialize_permission)&& 
+																					 in_array('tambahSaleCentral', $serialize_permission)&&
+																					 in_array('editSaleCentral', $serialize_permission)&& 
+																					 in_array('hapusSaleCentral', $serialize_permission)&& 
+																					 in_array('laporanSaleCentral', $serialize_permission)&& 
+																					 in_array('approvalSaleCentral', $serialize_permission)) { echo "checked"; } } ?> ></td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="viewSaleCentral" class="SaleCentral"
+												<?php if($serialize_permission) { if(in_array('viewSaleCentral', $serialize_permission)) { echo "checked"; } } ?> >
+											</td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="tambahSaleCentral" class="SaleCentral"
+												<?php if($serialize_permission) { if(in_array('tambahSaleCentral', $serialize_permission)) { echo "checked"; } } ?> >
+											</td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="editSaleCentral" class="SaleCentral"
+												<?php if($serialize_permission) { if(in_array('editSaleCentral', $serialize_permission)) { echo "checked"; } } ?> >
+											</td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="hapusSaleCentral" class="SaleCentral"
+												<?php if($serialize_permission) { if(in_array('hapusSaleCentral', $serialize_permission)) { echo "checked"; } } ?> >
+											</td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="laporanSaleCentral" class="SaleCentral"
+												<?php if($serialize_permission) { if(in_array('laporanSaleCentral', $serialize_permission)) { echo "checked"; } } ?> >
+											</td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="approvalSaleCentral" class="SaleCentral"
+												<?php if($serialize_permission) { if(in_array('approvalSaleCentral', $serialize_permission)) { echo "checked"; } } ?> >
+											</td>
+										  </tr>
+										  <tr>
+											<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Pembayaran Pelanggan</td>
+											<td align="center"><input type="checkbox" class="chk_PembayaranCustomer" label="check all"  
+												<?php if($serialize_permission) { if(in_array('viewPembayaranCustomer', $serialize_permission)&& 
+																					 in_array('tambahPembayaranCustomer', $serialize_permission)&&
+																					 in_array('laporanPembayaranCustomer', $serialize_permission)) { echo "checked"; } } ?> ></td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="viewPembayaranCustomer" class="PembayaranCustomer"
+												<?php if($serialize_permission) { if(in_array('viewPembayaranCustomer', $serialize_permission)) { echo "checked"; } } ?> >
+											</td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="tambahPembayaranCustomer" class="PembayaranCustomer"
+												<?php if($serialize_permission) { if(in_array('tambahPembayaranCustomer', $serialize_permission)) { echo "checked"; } } ?> >
+											</td>
+											<td align="center"></td>
+											<td align="center"></td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="laporanPembayaranCustomer" class="PembayaranCustomer"
+												<?php if($serialize_permission) { if(in_array('laporanPembayaranCustomer', $serialize_permission)) { echo "checked"; } } ?> >
+											</td>
+											<td align="center"></td>
+										  </tr>
+										  <tr>
+											<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Retur Barang Penjualan</td>
+											<td align="center"><input type="checkbox" class="chk_ReturCustomer" label="check all"  
+												<?php if($serialize_permission) { if(in_array('viewReturCustomer', $serialize_permission)&& 
+																					 in_array('tambahReturCustomer', $serialize_permission)&&
+																					 in_array('laporanReturCustomer', $serialize_permission)) { echo "checked"; } } ?> ></td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="viewReturCustomer" class="ReturCustomer"
+												<?php if($serialize_permission) { if(in_array('viewReturCustomer', $serialize_permission)) { echo "checked"; } } ?> >
+											</td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="tambahReturCustomer" class="ReturCustomer"
+												<?php if($serialize_permission) { if(in_array('tambahReturCustomer', $serialize_permission)) { echo "checked"; } } ?> >
+											</td>
+											<td align="center"></td>
+											<td align="center"></td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="laporanReturCustomer" class="ReturCustomer"
+												<?php if($serialize_permission) { if(in_array('laporanReturCustomer', $serialize_permission)) { echo "checked"; } } ?> >
+											</td>
+											<td align="center"></td>
+										  </tr>
+										  <tr>
+											<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Penyelesaian Retur Penjualan</td>
+											<td align="center"><input type="checkbox" class="chk_PenyelesaianPenjualan" label="check all"  
+												<?php if($serialize_permission) { if(in_array('viewPenyelesaianPenjualan', $serialize_permission)&& 
+																					 in_array('tambahPenyelesaianPenjualan', $serialize_permission)&&
+																					 in_array('laporanPenyelesaianPenjualan', $serialize_permission)) { echo "checked"; } } ?> ></td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="viewPenyelesaianPenjualan" class="PenyelesaianPenjualan"
+												<?php if($serialize_permission) { if(in_array('viewPenyelesaianPenjualan', $serialize_permission)) { echo "checked"; } } ?> >
+											</td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="tambahPenyelesaianPenjualan" class="PenyelesaianPenjualan"
+												<?php if($serialize_permission) { if(in_array('tambahPenyelesaianPenjualan', $serialize_permission)) { echo "checked"; } } ?> >
+											</td>
+											<td align="center"></td>
+											<td align="center"></td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="laporanPenyelesaianPenjualan" class="PenyelesaianPenjualan"
+												<?php if($serialize_permission) { if(in_array('laporanPenyelesaianPenjualan', $serialize_permission)) { echo "checked"; } } ?> >
+											</td>
+											<td align="center"></td>
+										  </tr>
+										  <tr>
+											<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Stock Opname</td>
+											<td align="center"><input type="checkbox" class="chk_SopGudang" label="check all"  
+												<?php if($serialize_permission) { if(in_array('viewSopGudang', $serialize_permission)&& 
+																					 in_array('tambahSopGudang', $serialize_permission)&&
+																					 in_array('editSopGudang', $serialize_permission)&& 
+																					 in_array('laporanSopGudang', $serialize_permission)) { echo "checked"; } } ?> ></td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="viewSopGudang" class="SopGudang"
+												<?php if($serialize_permission) { if(in_array('viewSopGudang', $serialize_permission)) { echo "checked"; } } ?> >
+											</td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="tambahSopGudang" class="SopGudang"
+												<?php if($serialize_permission) { if(in_array('tambahSopGudang', $serialize_permission)) { echo "checked"; } } ?> >
+											</td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="editSopGudang" class="SopGudang"
+												<?php if($serialize_permission) { if(in_array('editSopGudang', $serialize_permission)) { echo "checked"; } } ?> >
+											</td>
+											<td align="center"></td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="laporanSopGudang" class="SopGudang"
+												<?php if($serialize_permission) { if(in_array('laporanSopGudang', $serialize_permission)) { echo "checked"; } } ?> >
+											</td>
+											<td align="center"></td>
+										  </tr>
+										  <tr>
+											<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Pengeluaran Bad Stock</td>
+											<td align="center"><input type="checkbox" class="chk_BadstockGudang" label="check all"  
+												<?php if($serialize_permission) { if(in_array('viewBadstockGudang', $serialize_permission)&& 
+																					 in_array('tambahBadstockGudang', $serialize_permission)&&
+																					 in_array('editBadstockGudang', $serialize_permission)&& 
+																					 in_array('hapusBadstockGudang', $serialize_permission)&& 
+																					 in_array('laporanBadstockGudang', $serialize_permission)&& 
+																					 in_array('approvalBadstockGudang', $serialize_permission)) { echo "checked"; } } ?> ></td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="viewBadstockGudang" class="BadstockGudang"
+												<?php if($serialize_permission) { if(in_array('viewBadstockGudang', $serialize_permission)) { echo "checked"; } } ?> >
+											</td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="tambahBadstockGudang" class="BadstockGudang"
+												<?php if($serialize_permission) { if(in_array('tambahBadstockGudang', $serialize_permission)) { echo "checked"; } } ?> >
+											</td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="editBadstockGudang" class="BadstockGudang"
+												<?php if($serialize_permission) { if(in_array('editBadstockGudang', $serialize_permission)) { echo "checked"; } } ?> >
+											</td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="hapusBadstockGudang" class="BadstockGudang"
+												<?php if($serialize_permission) { if(in_array('hapusBadstockGudang', $serialize_permission)) { echo "checked"; } } ?> >
+											</td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="laporanBadstockGudang" class="BadstockGudang"
+												<?php if($serialize_permission) { if(in_array('laporanBadstockGudang', $serialize_permission)) { echo "checked"; } } ?> >
+											</td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="approvalBadstockGudang" class="BadstockGudang"
+												<?php if($serialize_permission) { if(in_array('approvalBadstockGudang', $serialize_permission)) { echo "checked"; } } ?> >
+											</td>
+										  </tr>
+										  <tr>
+											<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Permintaan ke G.Retail</td>
+											<td align="center"><input type="checkbox" class="chk_ReqtoRetail" label="check all"  
+												<?php if($serialize_permission) { if(in_array('viewReqtoRetail', $serialize_permission)&& 
+																					 in_array('tambahReqtoRetail', $serialize_permission)&&
+																					 in_array('editReqtoRetail', $serialize_permission)&& 
+																					 in_array('hapusReqtoRetail', $serialize_permission)&& 
+																					 in_array('laporanReqtoRetail', $serialize_permission)) { echo "checked"; } } ?> ></td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="viewReqtoRetail" class="ReqtoRetail"
+												<?php if($serialize_permission) { if(in_array('viewReqtoRetail', $serialize_permission)) { echo "checked"; } } ?> >
+											</td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="tambahReqtoRetail" class="ReqtoRetail"
+												<?php if($serialize_permission) { if(in_array('tambahReqtoRetail', $serialize_permission)) { echo "checked"; } } ?> >
+											</td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="editReqtoRetail" class="ReqtoRetail"
+												<?php if($serialize_permission) { if(in_array('editReqtoRetail', $serialize_permission)) { echo "checked"; } } ?> >
+											</td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="hapusReqtoRetail" class="ReqtoRetail"
+												<?php if($serialize_permission) { if(in_array('hapusReqtoRetail', $serialize_permission)) { echo "checked"; } } ?> >
+											</td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="laporanReqtoRetail" class="ReqtoRetail"
+												<?php if($serialize_permission) { if(in_array('laporanReqtoRetail', $serialize_permission)) { echo "checked"; } } ?> >
+											</td>
+											<td align="center"></td>
+										  </tr>
+										  <tr>
+											<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Permintaan ke G.Studio</td>
+											<td align="center"><input type="checkbox" class="chk_ReqtoStudio" label="check all"  
+												<?php if($serialize_permission) { if(in_array('viewReqtoStudio', $serialize_permission)&& 
+																					 in_array('tambahReqtoStudio', $serialize_permission)&&
+																					 in_array('editReqtoStudio', $serialize_permission)&& 
+																					 in_array('hapusReqtoStudio', $serialize_permission)&& 
+																					 in_array('laporanReqtoStudio', $serialize_permission)) { echo "checked"; } } ?> ></td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="viewReqtoStudio" class="ReqtoStudio"
+												<?php if($serialize_permission) { if(in_array('viewReqtoStudio', $serialize_permission)) { echo "checked"; } } ?> >
+											</td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="tambahReqtoStudio" class="ReqtoStudio"
+												<?php if($serialize_permission) { if(in_array('tambahReqtoStudio', $serialize_permission)) { echo "checked"; } } ?> >
+											</td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="editReqtoStudio" class="ReqtoStudio"
+												<?php if($serialize_permission) { if(in_array('editReqtoStudio', $serialize_permission)) { echo "checked"; } } ?> >
+											</td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="hapusReqtoStudio" class="ReqtoStudio"
+												<?php if($serialize_permission) { if(in_array('hapusReqtoStudio', $serialize_permission)) { echo "checked"; } } ?> >
+											</td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="laporanReqtoStudio" class="ReqtoStudio"
+												<?php if($serialize_permission) { if(in_array('laporanReqtoStudio', $serialize_permission)) { echo "checked"; } } ?> >
+											</td>
+											<td align="center"></td>
+										  </tr>
+										  <tr>
+											<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Approval Permintaan</td>
+											<td align="center"><input type="checkbox" class="chk_ApprvCentral" label="check all"  
+												<?php if($serialize_permission) { if(in_array('viewApprvCentral', $serialize_permission)&& 
+																					 in_array('laporanApprvCentral', $serialize_permission)&&
+																					 in_array('approvalApprvCentral', $serialize_permission)) { echo "checked"; } } ?> ></td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="viewApprvCentral" class="ApprvCentral"
+												<?php if($serialize_permission) { if(in_array('viewApprvCentral', $serialize_permission)) { echo "checked"; } } ?> >
+											</td>
+											<td align="center"></td>
+											<td align="center"></td>
+											<td align="center"></td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="laporanApprvCentral" class="ApprvCentral"
+												<?php if($serialize_permission) { if(in_array('laporanApprvCentral', $serialize_permission)) { echo "checked"; } } ?> >
+											</td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="approvalApprvCentral" class="ApprvCentral"
+												<?php if($serialize_permission) { if(in_array('approvalApprvCentral', $serialize_permission)) { echo "checked"; } } ?> >
+											</td>
+										  </tr>
+										  
+										  <tr>
+											<td><b>TRANSAKSI RETAIL</b></td>
+										  </tr>
+										  <tr>
+											<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Permintaan ke G.Pusat</td>
+											<td align="center"><input type="checkbox" class="chk_ReqretailToCentral" label="check all"  
+												<?php if($serialize_permission) { if(in_array('viewReqretailToCentral', $serialize_permission)&& 
+																					 in_array('tambahReqretailToCentral', $serialize_permission)&&
+																					 in_array('editReqretailToCentral', $serialize_permission)&& 
+																					 in_array('hapusReqretailToCentral', $serialize_permission)&& 
+																					 in_array('laporanReqretailToCentral', $serialize_permission)) { echo "checked"; } } ?> ></td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="viewReqretailToCentral" class="ReqretailToCentral"
+												<?php if($serialize_permission) { if(in_array('viewReqretailToCentral', $serialize_permission)) { echo "checked"; } } ?> >
+											</td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="tambahReqretailToCentral" class="ReqretailToCentral"
+												<?php if($serialize_permission) { if(in_array('tambahReqretailToCentral', $serialize_permission)) { echo "checked"; } } ?> >
+											</td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="editReqretailToCentral" class="ReqretailToCentral"
+												<?php if($serialize_permission) { if(in_array('editReqretailToCentral', $serialize_permission)) { echo "checked"; } } ?> >
+											</td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="hapusReqretailToCentral" class="ReqretailToCentral"
+												<?php if($serialize_permission) { if(in_array('hapusReqretailToCentral', $serialize_permission)) { echo "checked"; } } ?> >
+											</td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="laporanReqretailToCentral" class="ReqretailToCentral"
+												<?php if($serialize_permission) { if(in_array('laporanReqretailToCentral', $serialize_permission)) { echo "checked"; } } ?> >
+											</td>
+											<td align="center"></td>
+										  </tr>
+										  <tr>
+											<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Penjualan Barang</td>
+											<td align="center"><input type="checkbox" class="chk_SaleRetail" label="check all"  
+												<?php if($serialize_permission) { if(in_array('viewSaleRetail', $serialize_permission)&& 
+																					 in_array('tambahSaleRetail', $serialize_permission)&&
+																					 in_array('laporanSaleRetail', $serialize_permission)) { echo "checked"; } } ?> ></td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="viewSaleRetail" class="SaleRetail"
+												<?php if($serialize_permission) { if(in_array('viewSaleRetail', $serialize_permission)) { echo "checked"; } } ?> >
+											</td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="tambahSaleRetail" class="SaleRetail"
+												<?php if($serialize_permission) { if(in_array('tambahSaleRetail', $serialize_permission)) { echo "checked"; } } ?> >
+											</td>
+											<td align="center"></td>
+											<td align="center"></td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="laporanSaleRetail" class="SaleRetail"
+												<?php if($serialize_permission) { if(in_array('laporanSaleRetail', $serialize_permission)) { echo "checked"; } } ?> >
+											</td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="approvalSaleRetail" class="SaleRetail"
+												<?php if($serialize_permission) { if(in_array('approvalSaleRetail', $serialize_permission)) { echo "checked"; } } ?> >
+											</td>
+										  </tr>
+										  <tr>
+											<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Retur Barang Penjualan</td>
+											<td align="center"><input type="checkbox" class="chk_ReturSaleRetail" label="check all"  
+												<?php if($serialize_permission) { if(in_array('viewReturSaleRetail', $serialize_permission)&& 
+																					 in_array('tambahReturSaleRetail', $serialize_permission)&&
+																					 in_array('laporanReturSaleRetail', $serialize_permission)) { echo "checked"; } } ?> ></td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="viewReturSaleRetail" class="ReturSaleRetail"
+												<?php if($serialize_permission) { if(in_array('viewReturSaleRetail', $serialize_permission)) { echo "checked"; } } ?> >
+											</td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="tambahReturSaleRetail" class="ReturSaleRetail"
+												<?php if($serialize_permission) { if(in_array('tambahReturSaleRetail', $serialize_permission)) { echo "checked"; } } ?> >
+											</td>
+											<td align="center"></td>
+											<td align="center"></td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="laporanReturSaleRetail" class="ReturSaleRetail"
+												<?php if($serialize_permission) { if(in_array('laporanReturSaleRetail', $serialize_permission)) { echo "checked"; } } ?> >
+											</td>
+											<td align="center"></td>
+										  </tr>
+										  <tr>
+											<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Stock Opname</td>
+											<td align="center"><input type="checkbox" class="chk_SopRetail" label="check all"  
+												<?php if($serialize_permission) { if(in_array('viewSopRetail', $serialize_permission)&& 
+																					 in_array('tambahSopRetail', $serialize_permission)&&
+																					 in_array('editSopRetail', $serialize_permission)&& 
+																					 in_array('laporanSopRetail', $serialize_permission)) { echo "checked"; } } ?> ></td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="viewSopRetail" class="SopRetail"
+												<?php if($serialize_permission) { if(in_array('viewSopRetail', $serialize_permission)) { echo "checked"; } } ?> >
+											</td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="tambahSopRetail" class="SopRetail"
+												<?php if($serialize_permission) { if(in_array('tambahSopRetail', $serialize_permission)) { echo "checked"; } } ?> >
+											</td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="editSopRetail" class="SopRetail"
+												<?php if($serialize_permission) { if(in_array('editSopRetail', $serialize_permission)) { echo "checked"; } } ?> >
+											</td>
+											<td align="center"></td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="laporanSopRetail" class="SopRetail"
+												<?php if($serialize_permission) { if(in_array('laporanSopRetail', $serialize_permission)) { echo "checked"; } } ?> >
+											</td>
+											<td align="center"></td>
+										  </tr>
+										  <tr>
+											<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Approval Permintaan</td>
+											<td align="center"><input type="checkbox" class="chk_ApprvRetail" label="check all"  
+												<?php if($serialize_permission) { if(in_array('viewApprvRetail', $serialize_permission)&& 
+																					 in_array('laporanApprvRetail', $serialize_permission)&&
+																					 in_array('approvalApprvRetail', $serialize_permission)) { echo "checked"; } } ?> ></td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="viewApprvRetail" class="ApprvRetail"
+												<?php if($serialize_permission) { if(in_array('viewApprvRetail', $serialize_permission)) { echo "checked"; } } ?> >
+											</td>
+											<td align="center"></td>
+											<td align="center"></td>
+											<td align="center"></td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="laporanApprvRetail" class="ApprvRetail"
+												<?php if($serialize_permission) { if(in_array('laporanApprvRetail', $serialize_permission)) { echo "checked"; } } ?> >
+											</td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="approvalApprvRetail" class="ApprvRetail"
+												<?php if($serialize_permission) { if(in_array('approvalApprvRetail', $serialize_permission)) { echo "checked"; } } ?> >
+											</td>
+										  </tr>
+										  
+										  <tr>
+											<td><b>TRANSAKSI STUDIO</b></td>
+										  </tr>
+										  <tr>
+											<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Permintaan ke G.Pusat</td>
+											<td align="center"><input type="checkbox" class="chk_ReqstudioToCentral" label="check all"  
+												<?php if($serialize_permission) { if(in_array('viewReqstudioToCentral', $serialize_permission)&& 
+																					 in_array('tambahReqstudioToCentral', $serialize_permission)&&
+																					 in_array('editReqstudioToCentral', $serialize_permission)&& 
+																					 in_array('hapusReqstudioToCentral', $serialize_permission)&& 
+																					 in_array('laporanReqstudioToCentral', $serialize_permission)) { echo "checked"; } } ?> ></td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="viewReqstudioToCentral" class="ReqstudioToCentral"
+												<?php if($serialize_permission) { if(in_array('viewReqstudioToCentral', $serialize_permission)) { echo "checked"; } } ?> >
+											</td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="tambahReqstudioToCentral" class="ReqstudioToCentral"
+												<?php if($serialize_permission) { if(in_array('tambahReqstudioToCentral', $serialize_permission)) { echo "checked"; } } ?> >
+											</td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="editReqstudioToCentral" class="ReqstudioToCentral"
+												<?php if($serialize_permission) { if(in_array('editReqstudioToCentral', $serialize_permission)) { echo "checked"; } } ?> >
+											</td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="hapusReqstudioToCentral" class="ReqstudioToCentral"
+												<?php if($serialize_permission) { if(in_array('hapusReqstudioToCentral', $serialize_permission)) { echo "checked"; } } ?> >
+											</td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="laporanReqstudioToCentral" class="ReqstudioToCentral"
+												<?php if($serialize_permission) { if(in_array('laporanReqstudioToCentral', $serialize_permission)) { echo "checked"; } } ?> >
+											</td>
+											<td align="center"></td>
+										  </tr>
+										  <tr>
+											<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Penjualan Barang</td>
+											<td align="center"><input type="checkbox" class="chk_SaleStudio" label="check all"  
+												<?php if($serialize_permission) { if(in_array('viewSaleStudio', $serialize_permission)&& 
+																					 in_array('tambahSaleStudio', $serialize_permission)&&
+																					 in_array('laporanSaleStudio', $serialize_permission)) { echo "checked"; } } ?> ></td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="viewSaleStudio" class="SaleStudio"
+												<?php if($serialize_permission) { if(in_array('viewSaleStudio', $serialize_permission)) { echo "checked"; } } ?> >
+											</td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="tambahSaleStudio" class="SaleStudio"
+												<?php if($serialize_permission) { if(in_array('tambahSaleStudio', $serialize_permission)) { echo "checked"; } } ?> >
+											</td>
+											<td align="center"></td>
+											<td align="center"></td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="laporanSaleStudio" class="SaleStudio"
+												<?php if($serialize_permission) { if(in_array('laporanSaleStudio', $serialize_permission)) { echo "checked"; } } ?> >
+											</td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="approvalSaleStudio" class="SaleStudio"
+												<?php if($serialize_permission) { if(in_array('approvalSaleStudio', $serialize_permission)) { echo "checked"; } } ?> >
+											</td>
+										  </tr>
+										  <tr>
+											<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Retur Barang Penjualan</td>
+											<td align="center"><input type="checkbox" class="chk_ReturSaleStudio" label="check all"  
+												<?php if($serialize_permission) { if(in_array('viewReturSaleStudio', $serialize_permission)&& 
+																					 in_array('tambahReturSaleStudio', $serialize_permission)&&
+																					 in_array('laporanReturSaleStudio', $serialize_permission)) { echo "checked"; } } ?> ></td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="viewReturSaleStudio" class="ReturSaleStudio"
+												<?php if($serialize_permission) { if(in_array('viewReturSaleStudio', $serialize_permission)) { echo "checked"; } } ?> >
+											</td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="tambahReturSaleStudio" class="ReturSaleStudio"
+												<?php if($serialize_permission) { if(in_array('tambahReturSaleStudio', $serialize_permission)) { echo "checked"; } } ?> >
+											</td>
+											<td align="center"></td>
+											<td align="center"></td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="laporanReturSaleStudio" class="ReturSaleStudio"
+												<?php if($serialize_permission) { if(in_array('laporanReturSaleStudio', $serialize_permission)) { echo "checked"; } } ?> >
+											</td>
+											<td align="center"></td>
+										  </tr>
+										  <tr>
+											<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Stock Opname</td>
+											<td align="center"><input type="checkbox" class="chk_SopStudio" label="check all"  
+												<?php if($serialize_permission) { if(in_array('viewSopStudio', $serialize_permission)&& 
+																					 in_array('tambahSopStudio', $serialize_permission)&&
+																					 in_array('editSopStudio', $serialize_permission)&& 
+																					 in_array('laporanSopStudio', $serialize_permission)) { echo "checked"; } } ?> ></td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="viewSopStudio" class="SopStudio"
+												<?php if($serialize_permission) { if(in_array('viewSopStudio', $serialize_permission)) { echo "checked"; } } ?> >
+											</td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="tambahSopStudio" class="SopStudio"
+												<?php if($serialize_permission) { if(in_array('tambahSopStudio', $serialize_permission)) { echo "checked"; } } ?> >
+											</td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="editSopStudio" class="SopStudio"
+												<?php if($serialize_permission) { if(in_array('editSopStudio', $serialize_permission)) { echo "checked"; } } ?> >
+											</td>
+											<td align="center"></td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="laporanSopStudio" class="SopStudio"
+												<?php if($serialize_permission) { if(in_array('laporanSopStudio', $serialize_permission)) { echo "checked"; } } ?> >
+											</td>
+											<td align="center"></td>
+										  </tr>
+										  <tr>
+											<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Approval Permintaan</td>
+											<td align="center"><input type="checkbox" class="chk_ApprvStudio" label="check all"  
+												<?php if($serialize_permission) { if(in_array('viewApprvStudio', $serialize_permission)&& 
+																					 in_array('laporanApprvStudio', $serialize_permission)&&
+																					 in_array('approvalApprvStudio', $serialize_permission)) { echo "checked"; } } ?> ></td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="viewApprvStudio" class="ApprvStudio"
+												<?php if($serialize_permission) { if(in_array('viewApprvStudio', $serialize_permission)) { echo "checked"; } } ?> >
+											</td>
+											<td align="center"></td>
+											<td align="center"></td>
+											<td align="center"></td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="laporanApprvStudio" class="ApprvStudio"
+												<?php if($serialize_permission) { if(in_array('laporanApprvStudio', $serialize_permission)) { echo "checked"; } } ?> >
+											</td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="approvalApprvStudio" class="ApprvStudio"
+												<?php if($serialize_permission) { if(in_array('approvalApprvStudio', $serialize_permission)) { echo "checked"; } } ?> >
+											</td>
+										  </tr>
+										  
+										  <tr>
+											<td><b>PARAMETER</b></td>
+										  </tr>
+										  <tr>
+											<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Data Isi Volume Liquid</td>
+											<td align="center"><input type="checkbox" class="chk_VolLiquid" label="check all"  
+												<?php if($serialize_permission) { if(in_array('viewVolLiquid', $serialize_permission)&& 
+																					 in_array('tambahVolLiquid', $serialize_permission)&&
+																					 in_array('editVolLiquid', $serialize_permission)&& 
+																					 in_array('hapusVolLiquid', $serialize_permission)) { echo "checked"; } } ?> ></td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="viewVolLiquid" class="VolLiquid"
+												<?php if($serialize_permission) { if(in_array('viewVolLiquid', $serialize_permission)) { echo "checked"; } } ?> >
+											</td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="tambahVolLiquid" class="VolLiquid"
+												<?php if($serialize_permission) { if(in_array('tambahVolLiquid', $serialize_permission)) { echo "checked"; } } ?> >
+											</td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="editVolLiquid" class="VolLiquid"
+												<?php if($serialize_permission) { if(in_array('editVolLiquid', $serialize_permission)) { echo "checked"; } } ?> >
+											</td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="hapusVolLiquid" class="VolLiquid"
+												<?php if($serialize_permission) { if(in_array('hapusVolLiquid', $serialize_permission)) { echo "checked"; } } ?> >
+											</td>
+											<td align="center"></td>
+											<td align="center"></td>
+										  </tr>
+										  <tr>
+											<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Data Jenis Device</td>
+											<td align="center"><input type="checkbox" class="chk_JenisDevice" label="check all"  
+												<?php if($serialize_permission) { if(in_array('viewJenisDevice', $serialize_permission)&& 
+																					 in_array('tambahJenisDevice', $serialize_permission)&&
+																					 in_array('editJenisDevice', $serialize_permission)&& 
+																					 in_array('hapusJenisDevice', $serialize_permission)) { echo "checked"; } } ?> ></td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="viewJenisDevice" class="JenisDevice"
+												<?php if($serialize_permission) { if(in_array('viewJenisDevice', $serialize_permission)) { echo "checked"; } } ?> >
+											</td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="tambahJenisDevice" class="JenisDevice"
+												<?php if($serialize_permission) { if(in_array('tambahJenisDevice', $serialize_permission)) { echo "checked"; } } ?> >
+											</td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="editJenisDevice" class="JenisDevice"
+												<?php if($serialize_permission) { if(in_array('editJenisDevice', $serialize_permission)) { echo "checked"; } } ?> >
+											</td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="hapusJenisDevice" class="JenisDevice"
+												<?php if($serialize_permission) { if(in_array('hapusJenisDevice', $serialize_permission)) { echo "checked"; } } ?> >
+											</td>
+											<td align="center"></td>
+											<td align="center"></td>
+										  </tr>
+										  <tr>
+											<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Data Jenis Aksesoris</td>
+											<td align="center"><input type="checkbox" class="chk_JenisAcc" label="check all"  
+												<?php if($serialize_permission) { if(in_array('viewJenisAcc', $serialize_permission)&& 
+																					 in_array('tambahJenisAcc', $serialize_permission)&&
+																					 in_array('editJenisAcc', $serialize_permission)&& 
+																					 in_array('hapusJenisAcc', $serialize_permission)) { echo "checked"; } } ?> ></td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="viewJenisAcc" class="JenisAcc"
+												<?php if($serialize_permission) { if(in_array('viewJenisAcc', $serialize_permission)) { echo "checked"; } } ?> >
+											</td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="tambahJenisAcc" class="JenisAcc"
+												<?php if($serialize_permission) { if(in_array('tambahJenisAcc', $serialize_permission)) { echo "checked"; } } ?> >
+											</td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="editJenisAcc" class="JenisAcc"
+												<?php if($serialize_permission) { if(in_array('editJenisAcc', $serialize_permission)) { echo "checked"; } } ?> >
+											</td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="hapusJenisAcc" class="JenisAcc"
+												<?php if($serialize_permission) { if(in_array('hapusJenisAcc', $serialize_permission)) { echo "checked"; } } ?> >
+											</td>
+											<td align="center"></td>
+											<td align="center"></td>
+										  </tr>
+										  <tr>
+											<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Data Jenis Atomizer</td>
+											<td align="center"><input type="checkbox" class="chk_JenisAtomizer" label="check all"  
+												<?php if($serialize_permission) { if(in_array('viewJenisAtomizer', $serialize_permission)&& 
+																					 in_array('tambahJenisAtomizer', $serialize_permission)&&
+																					 in_array('editJenisAtomizer', $serialize_permission)&& 
+																					 in_array('hapusJenisAtomizer', $serialize_permission)) { echo "checked"; } } ?> ></td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="viewJenisAtomizer" class="JenisAtomizer"
+												<?php if($serialize_permission) { if(in_array('viewJenisAtomizer', $serialize_permission)) { echo "checked"; } } ?> >
+											</td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="tambahJenisAtomizer" class="JenisAtomizer"
+												<?php if($serialize_permission) { if(in_array('tambahJenisAtomizer', $serialize_permission)) { echo "checked"; } } ?> >
+											</td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="editJenisAtomizer" class="JenisAtomizer"
+												<?php if($serialize_permission) { if(in_array('editJenisAtomizer', $serialize_permission)) { echo "checked"; } } ?> >
+											</td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="hapusJenisAtomizer" class="JenisAtomizer"
+												<?php if($serialize_permission) { if(in_array('hapusJenisAtomizer', $serialize_permission)) { echo "checked"; } } ?> >
+											</td>
+											<td align="center"></td>
+											<td align="center"></td>
+										  </tr>
+										  <tr>
+											<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Data Bank Pembayaran</td>
+											<td align="center"><input type="checkbox" class="chk_Rekening" label="check all"  
+												<?php if($serialize_permission) { if(in_array('viewRekening', $serialize_permission)&& 
+																					 in_array('tambahRekening', $serialize_permission)&&
+																					 in_array('editRekening', $serialize_permission)&& 
+																					 in_array('hapusRekening', $serialize_permission)) { echo "checked"; } } ?> ></td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="viewRekening" class="Rekening"
+												<?php if($serialize_permission) { if(in_array('viewRekening', $serialize_permission)) { echo "checked"; } } ?> >
+											</td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="tambahRekening" class="Rekening"
+												<?php if($serialize_permission) { if(in_array('tambahRekening', $serialize_permission)) { echo "checked"; } } ?> >
+											</td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="editRekening" class="Rekening"
+												<?php if($serialize_permission) { if(in_array('editRekening', $serialize_permission)) { echo "checked"; } } ?> >
+											</td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="hapusRekening" class="Rekening"
+												<?php if($serialize_permission) { if(in_array('hapusRekening', $serialize_permission)) { echo "checked"; } } ?> >
+											</td>
+											<td align="center"></td>
+											<td align="center"></td>
+										  </tr>
+										  <tr>
+											<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Data Rasa Liquid</td>
+											<td align="center"><input type="checkbox" class="chk_RasaLiquid" label="check all"  
+												<?php if($serialize_permission) { if(in_array('viewRasaLiquid', $serialize_permission)&& 
+																					 in_array('tambahRasaLiquid', $serialize_permission)&&
+																					 in_array('editRasaLiquid', $serialize_permission)&& 
+																					 in_array('hapusRasaLiquid', $serialize_permission)) { echo "checked"; } } ?> ></td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="viewRasaLiquid" class="RasaLiquid"
+												<?php if($serialize_permission) { if(in_array('viewRasaLiquid', $serialize_permission)) { echo "checked"; } } ?> >
+											</td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="tambahRasaLiquid" class="RasaLiquid"
+												<?php if($serialize_permission) { if(in_array('tambahRasaLiquid', $serialize_permission)) { echo "checked"; } } ?> >
+											</td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="editRasaLiquid" class="RasaLiquid"
+												<?php if($serialize_permission) { if(in_array('editRasaLiquid', $serialize_permission)) { echo "checked"; } } ?> >
+											</td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="hapusRasaLiquid" class="RasaLiquid"
+												<?php if($serialize_permission) { if(in_array('hapusRasaLiquid', $serialize_permission)) { echo "checked"; } } ?> >
+											</td>
+											<td align="center"></td>
+											<td align="center"></td>
+										  </tr>
+										  <tr>
+											<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Data Warna</td>
+											<td align="center"><input type="checkbox" class="chk_Warna" label="check all"  
+												<?php if($serialize_permission) { if(in_array('viewWarna', $serialize_permission)&& 
+																					 in_array('tambahWarna', $serialize_permission)&&
+																					 in_array('editWarna', $serialize_permission)&& 
+																					 in_array('hapusWarna', $serialize_permission)) { echo "checked"; } } ?> ></td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="viewWarna" class="Warna"
+												<?php if($serialize_permission) { if(in_array('viewWarna', $serialize_permission)) { echo "checked"; } } ?> >
+											</td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="tambahWarna" class="Warna"
+												<?php if($serialize_permission) { if(in_array('tambahWarna', $serialize_permission)) { echo "checked"; } } ?> >
+											</td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="editWarna" class="Warna"
+												<?php if($serialize_permission) { if(in_array('editWarna', $serialize_permission)) { echo "checked"; } } ?> >
+											</td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="hapusWarna" class="Warna"
+												<?php if($serialize_permission) { if(in_array('hapusWarna', $serialize_permission)) { echo "checked"; } } ?> >
+											</td>
+											<td align="center"></td>
+											<td align="center"></td>
+										  </tr>
+										  <tr>
+											<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Kategori Retur Barang</td>
+											<td align="center"><input type="checkbox" class="chk_KatRetur" label="check all"  
+												<?php if($serialize_permission) { if(in_array('viewKatRetur', $serialize_permission)&& 
+																					 in_array('tambahKatRetur', $serialize_permission)&&
+																					 in_array('editKatRetur', $serialize_permission)&& 
+																					 in_array('hapusKatRetur', $serialize_permission)) { echo "checked"; } } ?> ></td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="viewKatRetur" class="KatRetur"
+												<?php if($serialize_permission) { if(in_array('viewKatRetur', $serialize_permission)) { echo "checked"; } } ?> >
+											</td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="tambahKatRetur" class="KatRetur"
+												<?php if($serialize_permission) { if(in_array('tambahKatRetur', $serialize_permission)) { echo "checked"; } } ?> >
+											</td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="editKatRetur" class="KatRetur"
+												<?php if($serialize_permission) { if(in_array('editKatRetur', $serialize_permission)) { echo "checked"; } } ?> >
+											</td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="hapusKatRetur" class="KatRetur"
+												<?php if($serialize_permission) { if(in_array('hapusKatRetur', $serialize_permission)) { echo "checked"; } } ?> >
+											</td>
+											<td align="center"></td>
+											<td align="center"></td>
+										  </tr>
+										  <tr>
+											<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Batas Waktu Transaksi</td>
+											<td align="center"><input type="checkbox" class="chk_DateLine" label="check all"  
+												<?php if($serialize_permission) { if(in_array('viewDateLine', $serialize_permission)&& 
+																					 in_array('tambahDateLine', $serialize_permission)&&
+																					 in_array('editDateLine', $serialize_permission)&& 
+																					 in_array('hapusDateLine', $serialize_permission)) { echo "checked"; } } ?> ></td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="viewDateLine" class="DateLine"
+												<?php if($serialize_permission) { if(in_array('viewDateLine', $serialize_permission)) { echo "checked"; } } ?> >
+											</td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="tambahDateLine" class="DateLine"
+												<?php if($serialize_permission) { if(in_array('tambahDateLine', $serialize_permission)) { echo "checked"; } } ?> >
+											</td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="editDateLine" class="DateLine"
+												<?php if($serialize_permission) { if(in_array('editDateLine', $serialize_permission)) { echo "checked"; } } ?> >
+											</td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="hapusDateLine" class="DateLine"
+												<?php if($serialize_permission) { if(in_array('hapusDateLine', $serialize_permission)) { echo "checked"; } } ?> >
+											</td>
+											<td align="center"></td>
+											<td align="center"></td>
+										  </tr>
+										  
+										  <tr>
+											<td><b>ADMINISTRATOR</b></td>
+										  </tr>
+										  <tr>
+											<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Data Group</td>
+											<td align="center"><input type="checkbox" class="chk_Groups" label="check all"  
+												<?php if($serialize_permission) { if(in_array('viewGroups', $serialize_permission)&& 
+																					 in_array('tambahGroups', $serialize_permission)&&
+																					 in_array('editGroups', $serialize_permission)&& 
+																					 in_array('hapusGroups', $serialize_permission)) { echo "checked"; } } ?> ></td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="viewGroups" class="Groups"
+												<?php if($serialize_permission) { if(in_array('viewGroups', $serialize_permission)) { echo "checked"; } } ?> >
+											</td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="tambahGroups" class="Groups"
+												<?php if($serialize_permission) { if(in_array('tambahGroups', $serialize_permission)) { echo "checked"; } } ?> >
+											</td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="editGroups" class="Groups"
+												<?php if($serialize_permission) { if(in_array('editGroups', $serialize_permission)) { echo "checked"; } } ?> >
+											</td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="hapusGroups" class="Groups"
+												<?php if($serialize_permission) { if(in_array('hapusGroups', $serialize_permission)) { echo "checked"; } } ?> >
+											</td>
+											<td align="center"></td>
+											<td align="center"></td>
+										  </tr>
+										  <tr>
+											<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Data Users</td>
+											<td align="center"><input type="checkbox" class="chk_Users" label="check all"  
+												<?php if($serialize_permission) { if(in_array('viewUsers', $serialize_permission)&& 
+																					 in_array('tambahUsers', $serialize_permission)&&
+																					 in_array('editUsers', $serialize_permission)&& 
+																					 in_array('hapusUsers', $serialize_permission)) { echo "checked"; } } ?> ></td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="viewUsers" class="Users"
+												<?php if($serialize_permission) { if(in_array('viewUsers', $serialize_permission)) { echo "checked"; } } ?> >
+											</td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="tambahUsers" class="Users"
+												<?php if($serialize_permission) { if(in_array('tambahUsers', $serialize_permission)) { echo "checked"; } } ?> >
+											</td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="editUsers" class="Users"
+												<?php if($serialize_permission) { if(in_array('editUsers', $serialize_permission)) { echo "checked"; } } ?> >
+											</td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="hapusUsers" class="Users"
+												<?php if($serialize_permission) { if(in_array('hapusUsers', $serialize_permission)) { echo "checked"; } } ?> >
+											</td>
+											<td align="center"></td>
+											<td align="center"></td>
+										  </tr>
+										  <tr>
+											<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Ganti Password</td>
+											<td align="center"><input type="checkbox" class="chk_GntPassword" label="check all"  
+												<?php if($serialize_permission) { if(in_array('viewGntPassword', $serialize_permission)&& 
+																					 in_array('editGntPassword', $serialize_permission)) { echo "checked"; } } ?> ></td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="viewGntPassword" class="GntPassword"
+												<?php if($serialize_permission) { if(in_array('viewGntPassword', $serialize_permission)) { echo "checked"; } } ?> >
+											</td>
+											<td align="center"></td>
+											<td align="center"><input type="checkbox" name="permission[]" id="permission" value="editGntPassword" class="GntPassword"
+												<?php if($serialize_permission) { if(in_array('editGntPassword', $serialize_permission)) { echo "checked"; } } ?> >
+											</td>
+											<td align="center"></td>
+											<td align="center"></td>
+											<td align="center"></td>
+										  </tr>
+										</tbody>
+									</table>
+					</div>				
+			</fieldset>
+		</div>
+		
+	</div>
+</div>
+<div class="col-lg-12">
+<div class="form-group form-group-bottom" align="right">
+						<input type="hidden" id="proses" name="proses" value="<?php echo $this->proses?>">	
+						<br><br>
+							
+							<a href="groups">
+							<button type="button" class="btn btn-theme02">
+								<span class="fa fa-backward"></span> &nbsp;Kembali
+							</button></a>
+							<button type="button" class="btn btn-theme03" onCLick="PostData()">
+								<span class="fa fa-save"></span> &nbsp;Simpan
+							</button>
+							
+			</div>
+</div>
+</form>
+  <script src="<?php echo $this->baseUrl();?>/lib/jquery/jquery.min.js"></script>
+  <script src="<?php echo $this->baseUrl();?>/lib/bootstrap/js/bootstrap.min.js"></script>
+  <script src="<?php echo $this->baseUrl();?>/lib/jquery.form.js"></script>
+  <link rel="stylesheet" href="<?php echo $this->baseUrl();?>/bootstrap-select/dist/css/bootstrap-select.min.css" />
+  <link rel="stylesheet" type="text/css" href="<?php echo $this->baseUrl();?>/css/sweetalert.css">
+  <script src="<?php echo $this->baseUrl();?>/lib/sweetalert.min.js"></script>
+  <script src="<?php echo $this->baseUrl();?>/bootstrap-select/dist/js/bootstrap-select.min.js"></script>
+  <script src="<?php echo $this->baseUrl();?>/lib/jquery.scrollTo.min.js"></script>
+  <script src="<?php echo $this->baseUrl();?>/lib/jquery.nicescroll.js" type="text/javascript"></script>
+<script>
+	$(function() {
+		$('.chk_supplier').click(function() {
+			$('.supplier').prop('checked', this.checked);
+		});
+	});
+	$(function() {
+		$('.chk_sales').click(function() {
+			$('.sales').prop('checked', this.checked);
+		});
+	});
+	$(function() {
+		$('.chk_customer').click(function() {
+			$('.customer').prop('checked', this.checked);
+		});
+	});
+	$(function() {
+		$('.chk_liquid').click(function() {
+			$('.liquid').prop('checked', this.checked);
+		});
+	});
+	$(function() {
+		$('.chk_perlengkapan').click(function() {
+			$('.perlengkapan').prop('checked', this.checked);
+		});
+	});
+	$(function() {
+		$('.chk_aksesoris').click(function() {
+			$('.aksesoris').prop('checked', this.checked);
+		});
+	});
+	$(function() {
+		$('.chk_atomizer').click(function() {
+			$('.atomizer').prop('checked', this.checked);
+		});
+	});
+	$(function() {
+		$('.chk_OrderCentral').click(function() {
+			$('.OrderCentral').prop('checked', this.checked);
+		});
+	});
+	$(function() {
+		$('.chk_PembayaranSupplier').click(function() {
+			$('.PembayaranSupplier').prop('checked', this.checked);
+		});
+	});
+	$(function() {
+		$('.chk_ReturSupplier').click(function() {
+			$('.ReturSupplier').prop('checked', this.checked);
+		});
+	});
+	$(function() {
+		$('.chk_SaleCentral').click(function() {
+			$('.SaleCentral').prop('checked', this.checked);
+		});
+	});
+	$(function() {
+		$('.chk_PembayaranCustomer').click(function() {
+			$('.PembayaranCustomer').prop('checked', this.checked);
+		});
+	});
+	$(function() {
+		$('.chk_ReturCustomer').click(function() {
+			$('.ReturCustomer').prop('checked', this.checked);
+		});
+	});
+	$(function() {
+		$('.chk_SopGudang').click(function() {
+			$('.SopGudang').prop('checked', this.checked);
+		});
+	});
+	
+	$(function() {
+		$('.chk_BadstockGudang').click(function() {
+			$('.BadstockGudang').prop('checked', this.checked);
+		});
+	});
+	$(function() {
+		$('.chk_ReqtoRetail').click(function() {
+			$('.ReqtoRetail').prop('checked', this.checked);
+		});
+	});
+	$(function() {
+		$('.chk_ReqtoStudio').click(function() {
+			$('.ReqtoStudio').prop('checked', this.checked);
+		});
+	});
+	$(function() {
+		$('.chk_ApprvCentral').click(function() {
+			$('.ApprvCentral').prop('checked', this.checked);
+		});
+	});
+	
+	$(function() {
+		$('.chk_ReqretailToCentral').click(function() {
+			$('.ReqretailToCentral').prop('checked', this.checked);
+		});
+	});
+	$(function() {
+		$('.chk_SaleRetail').click(function() {
+			$('.SaleRetail').prop('checked', this.checked);
+		});
+	});
+	$(function() {
+		$('.chk_ReturSaleRetail').click(function() {
+			$('.ReturSaleRetail').prop('checked', this.checked);
+		});
+	});
+	$(function() {
+		$('.chk_SopRetail').click(function() {
+			$('.SopRetail').prop('checked', this.checked);
+		});
+	});
+	$(function() {
+		$('.chk_ApprvRetail').click(function() {
+			$('.ApprvRetail').prop('checked', this.checked);
+		});
+	});
+	
+	$(function() {
+		$('.chk_ReqstudioToCentral').click(function() {
+			$('.ReqstudioToCentral').prop('checked', this.checked);
+		});
+	});
+	$(function() {
+		$('.chk_SaleStudio').click(function() {
+			$('.SaleStudio').prop('checked', this.checked);
+		});
+	});
+	$(function() {
+		$('.chk_ReturSaleStudio').click(function() {
+			$('.ReturSaleStudio').prop('checked', this.checked);
+		});
+	});
+	$(function() {
+		$('.chk_SopStudio').click(function() {
+			$('.SopStudio').prop('checked', this.checked);
+		});
+	});
+	$(function() {
+		$('.chk_ApprvStudio').click(function() {
+			$('.ApprvStudio').prop('checked', this.checked);
+		});
+	});
+	
+	$(function() {
+		$('.chk_VolLiquid').click(function() {
+			$('.VolLiquid').prop('checked', this.checked);
+		});
+	});
+	$(function() {
+		$('.chk_JenisDevice').click(function() {
+			$('.JenisDevice').prop('checked', this.checked);
+		});
+	});
+	$(function() {
+		$('.chk_JenisAcc').click(function() {
+			$('.JenisAcc').prop('checked', this.checked);
+		});
+	});
+	$(function() {
+		$('.chk_JenisAtomizer').click(function() {
+			$('.JenisAtomizer').prop('checked', this.checked);
+		});
+	});
+	$(function() {
+		$('.chk_Rekening').click(function() {
+			$('.Rekening').prop('checked', this.checked);
+		});
+	});
+	$(function() {
+		$('.chk_RasaLiquid').click(function() {
+			$('.RasaLiquid').prop('checked', this.checked);
+		});
+	});
+	$(function() {
+		$('.chk_Warna').click(function() {
+			$('.Warna').prop('checked', this.checked);
+		});
+	});
+	$(function() {
+		$('.chk_KatRetur').click(function() {
+			$('.KatRetur').prop('checked', this.checked);
+		});
+	});
+	$(function() {
+		$('.chk_DateLine').click(function() {
+			$('.DateLine').prop('checked', this.checked);
+		});
+	});
+	
+	$(function() {
+		$('.chk_Groups').click(function() {
+			$('.Groups').prop('checked', this.checked);
+		});
+	});
+	$(function() {
+		$('.chk_Users').click(function() {
+			$('.Users').prop('checked', this.checked);
+		});
+	});
+	$(function() {
+		$('.chk_GntPassword').click(function() {
+			$('.GntPassword').prop('checked', this.checked);
+		});
+	});
+
+	function getSelectValue(){
+		var selectedValue = document.getElementById("kode_supplier").value;
+		var res = selectedValue.split(",");
+		var kode_supplier = res[0];
+		var alamat = res[1];
+		var tipe = res[2];
+		var res2 = tipe.substring(0,1);
+		var jenis_aksesoris = document.getElementById("jenis_aksesoris").value;
+		var seq = document.getElementById("seq").value;
+		
+		//var kode = res2+'-'+jenis_aksesoris+'-'+seq;
+		//document.getElementById("kode_aksesoris").value = kode;
+		//document.getElementById("test").innerHTML = kode;
+		
+		var id_kode_barang = res2+'-'+jenis_aksesoris;
+		var url = "<?php echo $this->baseUrl; ?>/groups/cekseq";
+			var opt = {id_kode_barang:id_kode_barang};
+		
+			jQuery.get(url,opt, function(data) {	
+			//alert(data);
+				if(data == ''){
+					data2='0';
+				} else {
+					data2=data;
+				}
+				var hasilseq = parseInt(data2) + parseInt(1);
+				var str = "" + hasilseq
+				var pad = "00000"
+				var ans = pad.substring(0, pad.length - str.length) + str
+				
+				var kode = id_kode_barang+'-'+ans;
+				document.getElementById("kode_aksesoris").value = kode;
+				
+				document.getElementById("id_kode_barang").value = id_kode_barang;
+				document.getElementById("seq_kode_barang").value = hasilseq;
+			});
+		
+		document.getElementById("kode_supplier2").value = kode_supplier;
+		document.getElementById("alamat_supplier").value = alamat;
+		document.getElementById("tipe").value = tipe;
+	}
+	
+	function getKode(){
+		var tipe = document.getElementById("tipe").value;
+		var res = tipe.substring(0,1);
+		var jenis_aksesoris = document.getElementById("jenis_aksesoris").value;
+		var seq = document.getElementById("seq").value;
+		
+		//var kode = res+'-'+jenis_aksesoris+'-'+seq;
+		//document.getElementById("kode_aksesoris").value = kode;
+		//document.getElementById("test").innerHTML = kode;
+		
+		var id_kode_barang = res+'-'+jenis_aksesoris;
+		var url = "<?php echo $this->baseUrl; ?>/groups/cekseq";
+			var opt = {id_kode_barang:id_kode_barang};
+		
+			jQuery.get(url,opt, function(data) {	
+			//alert(data);
+				if(data == ''){
+					data2='0';
+				} else {
+					data2=data;
+				}
+				var hasilseq = parseInt(data2) + parseInt(1);
+				var str = "" + hasilseq
+				var pad = "00000"
+				var ans = pad.substring(0, pad.length - str.length) + str
+				
+				var kode = id_kode_barang+'-'+ans;
+				document.getElementById("kode_aksesoris").value = kode;
+				
+				document.getElementById("id_kode_barang").value = id_kode_barang;
+				document.getElementById("seq_kode_barang").value = hasilseq;
+			});
+		
+	}
+                                                                                                                                     
+	
+	function PostData(){
+		//alert('Testing2');
+        $("#frm_postdata").ajaxSubmit(post_data);
+    }
+	
+	var post_data = {
+		target:'',
+		beforeSubmit: function() {	
+			var group_name 	  = document.getElementById("group_name").value;
+			
+				if (!group_name) {
+					document.getElementById('group_name-error').innerHTML ="<span style='color: red;'>Nama Group Harus Diisi.</span>";
+					document.getElementById('group_name').focus();
+					exit;
+				}else document.getElementById('group_name-error').innerHTML ='';
+				
+			}, 
+		success:function(){	
+			swal({
+				    title: 'Tambah Data Berhasil !',
+				    text: 'Auto Close...',
+				    icon: 'success',
+				    timer: 4000,
+				    showConfirmButton: false,
+				})
+			location.href="#";		
+			location.reload(true)
+		},
+		url: '<?php echo $this->baseUrl();?>/groups/kirimdataedit',
+		type: 'post',
+		resetForm: false
+	};
+	
+	function isNumber(evt) {
+        var iKeyCode = (evt.which) ? evt.which : evt.keyCode
+        if (iKeyCode != 46 && iKeyCode > 31 && (iKeyCode < 48 || iKeyCode > 57))
+            return false;
+
+        return true;
+    } 
+	
+	function currency(){
+		var harga_beli = document.getElementById("harga_beli").value;
+		var harga_beli2 = harga_beli.replaceAll(".", "");
+		var harga_beli3 = harga_beli2.toString().replaceAll(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1.");
+		document.getElementById("harga_beli").value=harga_beli3;
+		
+		var hj_agen = document.getElementById("hj_agen").value;
+		var hj_agen2 = hj_agen.replaceAll(".", "");
+		var hj_agen3 = hj_agen2.toString().replaceAll(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1.");
+		document.getElementById("hj_agen").value=hj_agen3;
+		
+		var hj_retail = document.getElementById("hj_retail").value;
+		var hj_retail2 = hj_retail.replaceAll(".", "");
+		var hj_retail3 = hj_retail2.toString().replaceAll(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1.");
+		document.getElementById("hj_retail").value=hj_retail3;
+		
+		var hj_whs = document.getElementById("hj_whs").value;
+		var hj_whs2 = hj_whs.replaceAll(".", "");
+		var hj_whs3 = hj_whs2.toString().replaceAll(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1.");
+		document.getElementById("hj_whs").value=hj_whs3;
+	}
+</script>

@@ -1,0 +1,62 @@
+<!-- Content Header (Page header) -->
+<ol class="breadcrumb">
+	<li><a href="#"><i class="fa fa-dashboard"></i> <?php if(!empty($this->nav1)) echo $this->nav1;?></a></li>
+	<?php if(!empty($this->nav2)){?>
+		<li><a href="#"><?php echo $this->nav2;?></a></li>
+	<?php }?>
+	<li class="active"><?php if(!empty($this->nav3)) echo $this->nav3;?></li>
+</ol>
+<h2><?php if(!empty($this->title)) echo $this->title;?></h2>
+<!-- Main content -->
+<div class="row fit">
+	<div class="col-md-12 text-center">
+		<a href="#pressForm" id="addPress" onclick="open_url_to_div('<?php echo $this->baseUrl(); ?>/adminmodule/press/form','<?php echo $this->baseUrl(); ?>/adminmodule/press/formjs');" class="btn btn-primary"><span class="fa fa-plus-square"></span> Add Data</a>
+	</div>
+</div>
+<?php 
+	if(!empty($this->press)){
+		echo '<table cellspacing="0" id="delTable" class="table table-bordered">';
+			echo '<thead><tr>';
+				echo '<th width="5%" scope="col">No</th>';
+				echo '<th width="10%" scope="col">Date</th>';
+				echo '<th width="60%" scope="col">Title</th>';
+				echo '<th width="10%" scope="col">Status</th>';
+				echo '<th width="15%" scope="col">Actions</th>';
+			echo '</tr></thead>';
+			
+			echo '<tbody id="the-list">';
+				$i=1;
+				foreach($this->press as $row){
+					$newDate = date("d-m-Y", strtotime($row['d_release']));
+					if($i % 2 == 1){
+						echo '<tr class="alternate2">';
+					}else{
+						echo '<tr class="alternate">';
+					}	
+						echo '<td align="center">'.$i.'</td>';
+						echo '<td align="center">'.$newDate.'</td>';
+						echo '<td>'.$row['n_judul'].'</td>';
+						if($row['c_status']==1){
+							echo '<td align="center">Published</td>';
+						}else{
+							echo '<td align="center">Not Published</td>';
+						}
+						echo '<td align="center">
+							<a class="btn btn-sm btn-warning" title="Change press release" href="#pressForm" onclick="open_url_to_div(\''.$this->baseUrl().'/adminmodule/press/updateform/id/'.$row["c_release"].'\',\''.$this->baseUrl().'/adminmodule/press/formjs\');"><span class="glyphicon glyphicon-edit"></span> Edit</a>
+							<a title="Delete press release" class="remove btn btn-sm btn-danger" href="#" onclick="deleteData(\''.$this->baseUrl().'/adminmodule/press/index/id/'.$row["c_release"].'\',\''.$this->baseUrl().'/adminmodule/press/pressjs\');"><span class="glyphicon glyphicon-trash"></span> Delete</a></td>';
+					echo '</tr>';
+					$i++;
+				}
+			echo '</tbody>';
+		echo '</table>';
+	}
+?>
+<script>
+	$(document).ready(function() {
+		$('.active').removeClass("active");
+		$('#media').addClass("active");
+		$('#delTable').DataTable({
+				responsive: true
+		});
+	});
+</script>

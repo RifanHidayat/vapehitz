@@ -1,0 +1,496 @@
+<head>
+  <link href="<?php echo $this->baseUrl();?>/css/select2.min.css" rel="stylesheet">
+  <link href="<?php echo $this->baseUrl();?>/css/fileinput/fileinput.min.css" rel="stylesheet">
+  <script src="<?php echo $this->baseUrl();?>/lib/select2.full.min.js"></script>
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+  <script src="<?php echo $this->baseUrl();?>/lib/jquery-ui-1.9.2.custom.min.js"></script>
+</head>
+<style>
+#backgroundPopup{  
+
+display:none;  
+position:fixed;  
+_position:absolute; /* hack for internet explorer 6*/  
+height:100%;  
+width:100%;  
+top:0;  
+left:0; 
+/*background: rgba(0, 0, 0, 0) url("../img/popup-bg.png");*/
+background:rgba(0,0,0,0.85);  
+border:1px solid #cecece;  
+z-index:1040;  
+
+
+}  
+ 
+ 
+.box-popup1{
+	position:fixed;
+	top:30px;
+	left:30px;
+	width:40px;
+	height:30px;
+}
+ 
+
+#popupContact{  
+
+display:none;  
+position:fixed;  
+_position:absolute; /* hack for internet explorer 6*/  
+height:100%; 
+width:90%;  
+background:#acacac;  
+z-index:999999;  
+font-size:13px;  
+overflow:auto;
+top:2px;
+bottom:10px;
+padding:15px;
+margin: 1%;
+}  
+
+
+
+
+#popupContact h1{  
+text-align:left;  
+color:#6FA5FD;  
+font-size:22px;  
+font-weight:bold;  
+border-bottom:1px dotted #D3D3D3;  
+padding-bottom:2px;  
+margin-bottom:20px;  
+}  
+#popupContact textarea{width:90%;height:100px;}
+#popupContactClose{  
+font-size:14px;  
+line-height:14px;  
+right:6px;  
+top:4px;  
+position:absolute;  
+color:#6fa5fd;  
+font-weight:bold;  
+width:16px;
+cursor:pointer;
+display:block;  
+background:url(../images/cross.png)
+} 
+
+
+</style>
+<form id="frm_postdata" name="frm_postdata" enctype="multipart/form-data" method="POST">
+	<input type="hidden" name="currentPage" id="currentPage" size="6" maxlength="6" value="<?php echo $this->numPage;?>" class="inputbox2 narrowkey1"></input>
+		<?php 
+			$seq = $this->seq;
+			//var_dump($seq);
+			$seq += 1;
+			$seq=str_pad($seq, 4, '0', STR_PAD_LEFT);
+		?>
+		<input type="hidden" id='seq' name='seq' value ='<?php echo $seq;?>'>
+		<div id="popupview"></div>
+		<div class="panel">
+            <fieldset class="panel-dt">		
+			<div class="col-lg-12 col-md-12 col-sm-12">
+				<div align='left'>
+					<b><u>PEMBELIAN BARANG</u></b>
+				</div>
+				<br>
+			</div>
+					<div class="col-sm-12">
+						<table width="100%">
+							<tr>
+								<td width="13%"><font style="font-size:12px;font-weight:bold;">Nomor Retur</font></td>
+								<td width="1%">:</td>
+								<td>
+									<table>
+										<td> <input name="no_retur" id="no_retur" type="text" maxlength="50" size="20" class="form-control input-sm" value="RS/VH/<?php echo date("m-y");?>/<?php echo $seq;?>" readonly> </td>
+										<td> &nbsp; <label id="no_retur-error" for="no_retur" class="error"></td>
+									</table>
+								</td>
+							</tr>
+							<tr><td>&nbsp;</td></tr>
+							<tr>
+								<td width="10%"><font style="font-size:12px;font-weight:bold;">Tanggal Retur</font></td>
+								<td width="1%">:</td>
+								<td>
+									<table>
+										<td> 
+											<input name="tgl_retur" id="tgl_retur" type="text" maxlength="50" size="20" class="form-control" value=""> 
+											<span class="input-group-btn add-on">
+												<button class="btn btn-theme" type="button"><i class="fa fa-calendar"></i></button>
+											</span>
+										</td>
+										<td> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <label id="tgl_retur-error" for="tgl_retur" class="error"></td>
+									</table>
+								</td>
+							</tr> 
+							<tr><td>&nbsp;</td></tr>
+							<tr>
+								<td width="10%"><font style="font-size:12px;font-weight:bold;">Nomor Invoice</font></td>
+								<td width="1%">:</td>
+								<td>
+									<table>
+										<td> <input name="no_invoice" id="no_invoice" type="text" maxlength="50" size="20" class="form-control input-sm" value="<?php echo $this->data[0]['no_invoice'];?>" readonly> </td>
+										<td> &nbsp; <label id="no_invoice-error" for="no_invoice" class="error"></td>
+									</table>
+								</td>
+							</tr> 
+							<tr><td>&nbsp;</td></tr>
+							<tr>
+								<td width="10%"><font style="font-size:12px;font-weight:bold;">Tanggal Invoice</font></td>
+								<td width="1%">:</td>
+								<td>
+									<table>
+										<?php
+											$tgl_invoice = date_create($this->data[0]['tgl_invoice']);
+											$tgl_invoice = date_format($tgl_invoice,"d-m-Y");
+										?>
+										<td> <input name="tgl_invoice" id="tgl_invoice" type="text" maxlength="50" size="20" class="form-control input-sm" value="<?php echo $tgl_invoice;?>" readonly> </td>
+										<td> &nbsp; <label id="tgl_invoice-error" for="tgl_invoice" class="error"></td>
+									</table>
+								</td>
+							</tr> 
+							<tr><td>&nbsp;</td></tr>
+						</table>
+						<hr>
+					<div class="col-lg-12 col-md-12 col-sm-12">
+						<div align='left'>
+							<input type="button" class="right btn btn-success  btn-xs" style="font-weight:bold;" value="Tambah Barang Retur" onclick="databarang('<?php echo $this->data[0]['no_invoice'];?>')">
+							<input type='hidden' name='counterx' id='counterx' value="<?php echo count($this->data3);?>">
+						</div>
+						<br>
+						<table width="100%" id="myTable">
+							<tr>
+								<td> <font style="font-size:12px;font-weight:bold;">Kode Barang</font></td>
+								<td> <font style="font-size:12px;font-weight:bold;">Nama Barang</font></td>
+								<td width="10%"> <font style="font-size:12px;font-weight:bold;">Stok Studio</font></td>
+								<td> <font style="font-size:12px;font-weight:bold;">Harga Jual</font></td>
+								<td width="5%"> <font style="font-size:12px;font-weight:bold;">QTY</font></td>
+								<td> <font style="font-size:12px;font-weight:bold;">Sub Total</font></td>
+								<td width="15%"> <font style="font-size:12px;font-weight:bold;">Alasan Retur</font></td>
+								<td width="7%"> <font style="font-size:12px;font-weight:bold;">Qty Retur</font></td>
+								<td> <font style="font-size:12px;font-weight:bold;">Nominal Retur</font></td>
+								<td> <font style="font-size:12px;font-weight:bold;"></font></td>
+							</tr>
+						</table>
+				</div>
+				<div class="col-lg-8 col-md-8 col-sm-12">	
+				</div>
+				<div class="col-lg-4 col-md-4 col-sm-12">	
+					<table width="100%" id="myTable2">
+						<tr><td>&nbsp;</td></tr>
+							<tr>
+								<td width="25%"></td>
+								<td width="35%"><font style="font-size:12px;font-weight:bold;">Total Qty</font></td>
+								<td width="40%"><input type='text' class="form-control input-sm" name='total_qty_retur' id='total_qty_retur' value='0' readonly> </td>
+							</tr>
+							<tr><td  align="right"><label id="total_qty_retur-error" for="total_qty_retur" class="error"></td></tr>
+							<tr>
+											<tr><td>&nbsp;</td></tr>
+								<tr>
+							
+								<td width="25%"></td>
+								<td width="35%"><font style="font-size:12px;font-weight:bold;">Cara Pembayaran</font></td>
+								<td> 
+	                  				<select id="metode_bayar" name="metode_bayar" class = "form-control input-sm" width="15%" onclick="metodebayar(this)">
+	                   				 <option value="0">--Pilih Cara Pembayaran--</option>
+	                    				<option value="Transfer">Transfer</option>
+	                    				<option value="Cash">Cash</option>
+	                  				</select>
+	                				</td>
+							</tr>
+							<tr><td>&nbsp;</td></tr>
+							<tr id='transfer'>
+								<td width="25%"></td>
+								<td width="35%"><font style="font-size:12px;font-weight:bold;">Sumber Dana</font></td>
+
+								<td>
+									 <!--   menampilkan semua bang transfer    -->               
+                		  <select id="no_rek" name="no_rek" class = "form-control input-sm" width="15%">
+                  			  <option value="0">--Pilih Sumber Dana--</option>
+
+                    			<?php  
+                     		 for($x=0; $x<count($this->rek); $x++){ 
+                     		 $cek_rek = $this->rek[$x]['nama_akun'].' - '.$this->rek[$x]['no_akun'] .' ('.$this->rek[$x]['nama_cabang_pembuka'].')';
+                      		$id = $this->rek[$x]['id'];
+                   			 ?>
+                   			 <option value="<?php echo $id;?>"><?php echo $cek_rek;?></option>
+                   			 <?php } ?>
+                  			</select>
+                  <!--   menampilkan semua bang transfer    -->   
+
+                		  <select id="cash" name="cash" class = "form-control input-sm" width="15%">
+                 		 <option value="0">--Pilih Sumber Dana--</option>
+                 		   <?php  
+                   		   for($x=0; $x<count($this->cash); $x++){ 
+                      		$cek_rek = $this->cash[$x]['nama_akun'];
+                      	$id = $this->cash[$x]['id'];
+                    	?>
+                    	<option value="<?php echo $id;?>"><?php echo $cek_rek;?></option>
+                    	<?php } ?>
+                  			</select>
+								</td>
+							</tr>
+								<tr><td>&nbsp;</td></tr>
+								<td ></td>
+								<td><font style="font-size:12px;font-weight:bold;">Total Nominal</font></td>
+								<td>
+									<input type='hidden' class="form-control input-sm" name='total' id='total' value='<?php echo number_format($this->data[0]['total_biaya'],0,",",".");?>' readonly>
+									<input type='hidden' class="form-control input-sm" name='net_total' id='net_total' value='<?php echo number_format($this->data[0]['net_total'],0,",",".");?>' readonly>
+									<input type='text' class="form-control input-sm" name='total_nominal_retur' id='total_nominal_retur' value='0' readonly>
+									<input type='hidden' class="form-control input-sm" name='total_baru' id='total_baru' value='' readonly>
+									<input type='hidden' class="form-control input-sm" name='net_total_baru' id='net_total_baru' value='' readonly>
+								</td>
+							</tr>
+							<tr><td></td><td align="left" colspan="2"><label id="total_nominal_retur-error" for="total_nominal_retur" class="error"></td></tr>
+							<!--tr>
+								<td width="30%"></td>
+								<td width="30%"><font style="font-size:12px;font-weight:bold;">Sisa Pembayaran</font></td>
+								<td width="40%"><input type='text' class="form-control input-sm" name='sisa_bayar' id='sisa_bayar' value='<?php echo number_format($this->data[0]['sisa_bayar'],0,",",".");?>' readonly> </td>
+							</tr>
+							<tr><td  align="right"><label id="sisa_bayar-error" for="sisa_bayar" class="error"></td></tr-->
+					</table>
+				</div>	
+			</fieldset>
+		</div>
+		
+	</div>
+</div>
+<div class="col-lg-12">
+<div class="form-group form-group-bottom" align="right">
+						<input type="hidden" id="proses" name="proses" value="<?php echo $this->proses?>">	
+						<br><br>
+							
+							<a href="retursalestudio">
+							<button type="button" class="btn btn-theme02">
+								<span class="fa fa-backward"></span> &nbsp;Kembali
+							</button></a>
+							<button type="button" class="btn btn-theme03" onCLick="PostData()">
+								<span class="fa fa-save"></span> &nbsp;Simpan
+							</button>
+							
+			</div>
+</div>
+</form>
+  <script src="<?php echo $this->baseUrl();?>/lib/jquery.form.js"></script>
+  <link rel="stylesheet" type="text/css" href="<?php echo $this->baseUrl();?>/css/sweetalert.css">
+  <script src="<?php echo $this->baseUrl();?>/lib/sweetalert.min.js"></script>   
+  <script src="<?php echo $this->baseUrl();?>/lib/jquery.scrollTo.min.js"></script>
+  <script src="<?php echo $this->baseUrl();?>/lib/jquery.nicescroll.js" type="text/javascript"></script>
+<script>function loadPopup() {
+		var popupStatus = 0;
+		if (popupStatus == 0) {
+			jQuery("#backgroundPopup").css({"opacity": "1"});
+			jQuery("#backgroundPopup").fadeIn("fast");
+			jQuery("#popupContact").fadeIn("fast");
+			popupStatus = 1
+		}
+	}
+
+	function centerPopup() {
+		var windowWidth = document.documentElement.clientWidth;
+		var windowHeight = "1000%";
+		var popupHeight = jQuery("#popupContact").height();
+		var popupWidth = jQuery("#popupContact").width();
+	}
+
+	function closePopup() {
+		document.getElementById('popupContact').style.display = "none";
+		document.getElementById('backgroundPopup').style.display = "none";
+	}
+
+	function disablePopup() {
+		document.getElementById('popupContact').style.display = "none";
+		document.getElementById('backgroundPopup').style.display = "none";
+	}
+		
+	function databarang(no_invoice){
+		
+		var url = '<?php echo $this->basePath; ?>/retursalestudio/databarang';
+		var opt = {no_invoice:no_invoice};
+		
+		jQuery.get(url,opt, function(data) {			
+			jQuery("#popupview").html(data);
+			centerPopup(); 
+			loadPopup();		
+		})
+	}
+                                                                                                                                     
+	
+	function PostData(){
+		//alert('Testing2');
+        $("#frm_postdata").ajaxSubmit(post_data);
+    }
+	
+	var post_data = {
+		target:'',
+		beforeSubmit: function() {	
+			var tgl_retur	  = document.getElementById('tgl_retur').value;
+			//var sisa_bayar	  = document.getElementById('sisa_bayar').value;
+			//var sisa_bayar2   = sisa_bayar.replaceAll(".", "");
+			//alert(sisa_bayar2);
+			var total_nominal_retur	= document.getElementById('total_nominal_retur').value;
+			var total_nominal_retur2 = total_nominal_retur.replaceAll(".", "");
+			//alert(total_nominal_retur2);
+				
+				if (!tgl_retur) {
+					document.getElementById('tgl_retur-error').innerHTML ="<span style='color: red;'>Tanggal Retur Harus Diisi.</span>";
+					document.getElementById('tgl_retur').focus();
+					exit;
+				}else document.getElementById('tgl_retur-error').innerHTML ='';
+				
+				/* if (total_nominal_retur2 > sisa_bayar2) {
+					document.getElementById('total_nominal_retur-error').innerHTML ="<span style='color: red;'>Nominal Retur Melebihi Sisa Pembayaran.</span>";
+					document.getElementById('total_nominal_retur').focus();
+					exit;
+				}else document.getElementById('total_nominal_retur-error').innerHTML =''; */
+				
+			}, 
+		success:function(){	
+			swal({
+				    title: 'Order Sukses !',
+				    text: 'Auto Close...',
+				    icon: 'success',
+				    timer: 4000,
+				    showConfirmButton: false,
+				})
+			location.href="#";		
+			location.reload(true)
+		},
+		url: '<?php echo $this->baseUrl();?>/retursalestudio/kirimdataedit',
+		type: 'post',
+		resetForm: false
+	};
+	
+	function isNumber(evt) {
+        var iKeyCode = (evt.which) ? evt.which : evt.keyCode
+        if (iKeyCode != 46 && iKeyCode > 31 && (iKeyCode < 48 || iKeyCode > 57))
+            return false;
+
+        return true;
+    } 
+	
+	function closeDetil(){
+	document.getElementById('popupContact').style.display = "none";
+	disablePopup();
+	}
+	
+	function deleterow(button,rows){
+		var x = button.parentNode.parentNode.rowIndex;
+		document.getElementById("myTable").deleteRow(x);
+		
+	}
+	
+	function retur(button){
+		var x = button;
+		
+		var total_nominal_retur = document.getElementById("total_nominal_retur").value;
+		var total_nominal_retur2 = total_nominal_retur.replaceAll(".", "");
+		var nominal_retur = document.getElementById("nominal_retur"+x).value;
+		var nominal_retur2 = nominal_retur.replaceAll(".", "");
+		var hitung_total = parseInt(total_nominal_retur2) - parseInt(nominal_retur2);
+		
+		var harga_jual = document.getElementById("harga_jual"+x).value;
+		var harga_jual2 = harga_jual.replaceAll(".", "");
+		
+		var qty_retur = document.getElementById("qty_retur"+x).value;
+		var qty_retur2 = qty_retur.replaceAll(".", "");
+		
+		////
+		var table = document.getElementById("myTable"), sumVal = 0;
+		for(var i = 1; i < table.rows.length; i++)
+            {
+				sumVal = sumVal + parseInt(document.getElementById("qty_retur"+i).value);
+            }
+
+		   document.getElementById("total_qty_retur").value=sumVal;
+		///
+		
+		
+		
+		var kali = qty_retur2 * harga_jual2;
+		var kali2 = kali.toString().replaceAll(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1.");
+		document.getElementById("nominal_retur"+x).value=kali2;
+		
+		var tambah = parseInt(hitung_total) + parseInt(kali);
+		var tambah2 = tambah.toString().replaceAll(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1.");
+		document.getElementById("total_nominal_retur").value=tambah2;
+		
+		var qty1 = document.getElementById("qty1"+x).value;
+		var qty2 = qty1.replaceAll(".", "");
+		
+		var kurang = parseInt(qty2)-parseInt(qty_retur2);
+		if(kurang >= 0){
+			document.getElementById("qty"+x).value=kurang;
+		} else if(kurang < 0) {
+			document.getElementById("qty"+x).value=kurang;
+		} else {
+			document.getElementById("qty"+x).value=qty1;
+		}
+		
+		var stok_gudang1 = document.getElementById("stok_gudang1"+x).value;
+		var stok_gudang2 = stok_gudang1.replaceAll(".", "");
+		
+		var kurang2 = parseInt(stok_gudang2)+parseInt(qty_retur2);
+		if(kurang2 >= 0){
+			document.getElementById("stok_gudang"+x).value=kurang2;
+		} else if(kurang2 < 0) {
+			document.getElementById("stok_gudang"+x).value=kurang2;
+		} else {
+			document.getElementById("stok_gudang"+x).value=stok_gudang1;
+		}
+		
+		var sub_total1 = document.getElementById("sub_total1"+x).value;
+		var sub_total2 = sub_total1.replaceAll(".", "");
+		var hitung_subtotal = parseInt(sub_total2)-parseInt(kali);
+		var hitung_subtota2 = hitung_subtotal.toString().replaceAll(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1.");
+		document.getElementById("sub_total"+x).value=hitung_subtota2;
+		
+		var total = document.getElementById("total").value;
+		var total2 = total.replaceAll(".", "");
+		var net_total = document.getElementById("net_total").value;
+		var net_total2 = net_total.replaceAll(".", "");
+		
+		var hitung_total_baru = parseInt(total2)-parseInt(tambah);
+		var hitung_total_baru2 = hitung_total_baru.toString().replaceAll(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1.");
+		document.getElementById("total_baru").value=hitung_total_baru2;
+		
+		var hitung_net_total_baru = parseInt(net_total2)-parseInt(tambah);
+		var hitung_net_total_baru2 = hitung_net_total_baru.toString().replaceAll(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1.");
+		document.getElementById("net_total_baru").value=hitung_net_total_baru2;
+	}
+</script>
+
+  <script>
+   $(".product").select2();
+  </script>
+  <script>
+   $(document).ready(function(){
+    $(function() {
+      $('#tgl_retur').datepicker({
+        dateFormat: 'dd/mm/yy',
+        changeMonth: true,
+        changeYear: true
+      });
+    });
+  });
+    $("#transfer").hide();
+
+    function metodebayar(nilai){
+    var nilai = nilai.value;
+    if(nilai == 'Transfer'){
+      $("#transfer").show();
+
+      $("#no_rek").show();
+      $("#cash").hide();
+       $("#cash").val("");
+    } else {
+      $("#transfer").show();
+
+      $("#no_rek").hide();
+      $("#cash").show();
+       $("#no_rek").val("");
+    }
+  }
+  </script>

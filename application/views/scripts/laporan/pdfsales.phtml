@@ -1,0 +1,154 @@
+<?php
+ini_set("memory_limit", "2048M");
+ini_set('display_errors', 1);
+ini_set('error_reporting', E_ERROR);
+require_once "service/Ordercentral_Service.php";
+$this->Ordercentral_Service = Ordercentral_Service::getInstance();
+
+require_once "share/oa_date.php";
+require_once("share/oa_dec_cur_conv.php");
+//require_once("share/global_function.php");
+
+$dectocurr = new oa_dec_cur_conv();
+$tanggal = new oa_date();
+
+
+	
+require_once 'Zend/View.php';
+$ctrlFrm = new Zend_View();
+
+/*nama bulan*/
+$namaBulan = array("01" => "Januari",
+					"02" => "Februari",
+					"03" => "Maret",
+					"04" => "April",
+					"05" => "Mei",
+					"06" => "Juni",
+					"07" => "Juli",
+					"08" => "Agustus",
+					"09" => "September",
+					"10" => "Oktober",
+					"11" => "November",
+					"12" => "Desember");
+					
+
+$data = $this->data;
+
+$html = '
+<style>
+body{
+	font-size:9pt;
+
+}	table{
+				font-family: tahoma, Helvetica, sans-serif;
+				border: 1px solid black;
+				border-collapse: collapse;
+			  }
+	td {
+				font-family: tahoma, Helvetica, sans-serif;
+				border: 1px solid black;
+				border-collapse: collapse;
+				font-size:9pt;
+			  }
+	th {
+				font-family: Arial, Helvetica, sans-serif;
+				border: 1px solid black;
+				border-collapse: collapse;
+			  }
+	h1,h2,h3{font-family: tahoma, Helvetica, sans-serif;}		  
+	H1{font-size:13pt;}
+	H2{font-size:11pt;}
+	H3{font-size:9pt;}
+	.rotate{
+				-ms-transform: rotate(-90deg);
+				-moz-transform: rotate(-90deg);
+				-webkit-transform: rotate(-90deg);
+				}
+	.break {page-break-before:always}
+   table.fixed { table-layout:fixed; }
+   table.fixed td { overflow: hidden; }
+   .barcode {
+	padding: 1.5mm;
+	margin: 0;
+	vertical-align: top;
+	color: #000000;
+	background:transparent;
+	height:20px;
+}
+@page {  
+    header: html_otherpageheader;
+
+}
+</style>
+';
+$tglSkrg=date('Y-m-d');
+			$tgl=substr($tglSkrg,8,2); 
+			$bln=substr($tglSkrg,5,2);
+			$thn=substr($tglSkrg,0,4);
+			$jam = date('H:i:s');
+			$d_start="$thn-$bln-$tgl -$jam";	
+$html.='
+<table>
+							<thead>
+							<tr bgcolor="#4ECDC4">
+								<th width="3%" style="text-align:center;">No</th>
+								<th width="11%" style="text-align:center;">Kode Sales</th>
+								<th width="12%%" style="text-align:center;">Nama Sales</th>
+								<th width="12%" style="text-align:center;">Alamat</th>
+								<th width="10%" style="text-align:center;">No Tlp</th>
+								<th width="10%" style="text-align:center;">No Handphone</th>
+								<th width="10%" style="text-align:center;">Email</th>
+								<th width="10%" style="text-align:center;">Status</th>
+							</tr>
+							</thead>
+							<tbody>';
+							for($x=0; $x<count($this->data2); $x++){
+
+										$nomer			= $x+1;
+										$kode_sales 	= $this->data2[$x]['kode_sales'];
+										$nama_sales 	= $this->data2[$x]['nama_sales'];
+										$alamat_sales   = $this->data2[$x]['alamat_sales'];
+										$no_tlp 		= $this->data2[$x]['no_tlp'];
+										$no_hp 			= $this->data2[$x]['no_hp'];
+										$email 			= $this->data2[$x]['email'];
+										$status 		= $this->data2[$x]['status'];
+										if($status=='1'){
+											$stat = 'Active';
+										} else {
+											$stat = 'Inactive';
+										}
+
+$html.='
+										<tr>
+											<td align="center">'.$nomer.'</td>	  
+											<td align="center">'.$kode_sales.'</td>
+											<td align="center">'.$nama_sales.'</td>
+											<td align="center">'.$alamat_sales.'</td>
+											<td align="center">'.$no_tlp.'</td>
+											<td align="center">'.$no_hp.'</td>
+											<td align="center">'.$email.'</td>
+											<td align="center">'.$stat.'</td>
+										</tr>';
+							}
+$html.='</tbody>
+		</table>';
+							
+include("mpdf/mpdf.php");
+
+ $mpdf=new mPDF('en-GB-x','A4','','',20,10,37,16,9,9); /*Left, Right, top, , ,*/
+
+$mpdf->SetDisplayMode('fullpage','two');
+
+
+
+$mpdf->list_indent_first_level = 0;	// 1 or 0 - whether to indent the first level of a list
+
+// LOAD a stylesheet
+/* $stylesheet = file_get_contents('mpdf/mpdfstyletables.css');
+$mpdf->WriteHTML($stylesheet,1);	// The parameter 1 tells that this is css/style only and no body/html/text */
+
+$mpdf->WriteHTML($html);
+//echo $html;
+$mpdf->Output('Master Data Sales.pdf','I');
+exit;
+?>

@@ -1,0 +1,497 @@
+<head>
+  <link href="<?php echo $this->baseUrl();?>/css/select2.min.css" rel="stylesheet">
+  <link href="<?php echo $this->baseUrl();?>/css/fileinput/fileinput.min.css" rel="stylesheet">
+  <script src="<?php echo $this->baseUrl();?>/lib/select2.full.min.js"></script>
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+  <script src="<?php echo $this->baseUrl();?>/lib/jquery-ui-1.9.2.custom.min.js"></script>
+</head>
+<style>
+#backgroundPopup{  
+
+display:none;  
+position:fixed;  
+_position:absolute; /* hack for internet explorer 6*/  
+height:100%;  
+width:100%;  
+top:0;  
+left:0; 
+/*background: rgba(0, 0, 0, 0) url("../img/popup-bg.png");*/
+background:rgba(0,0,0,0.85);  
+border:1px solid #cecece;  
+z-index:1040;  
+
+
+}  
+ 
+ 
+.box-popup1{
+	position:fixed;
+	top:30px;
+	left:30px;
+	width:40px;
+	height:30px;
+}
+ 
+
+#popupContact{  
+
+display:none;  
+position:fixed;  
+_position:absolute; /* hack for internet explorer 6*/  
+height:100%; 
+width:90%;  
+background:#acacac;  
+z-index:999999;  
+font-size:13px;  
+overflow:auto;
+top:2px;
+bottom:10px;
+padding:15px;
+margin: 1%;
+}  
+
+
+
+
+#popupContact h1{  
+text-align:left;  
+color:#6FA5FD;  
+font-size:22px;  
+font-weight:bold;  
+border-bottom:1px dotted #D3D3D3;  
+padding-bottom:2px;  
+margin-bottom:20px;  
+}  
+#popupContact textarea{width:90%;height:100px;}
+#popupContactClose{  
+font-size:14px;  
+line-height:14px;  
+right:6px;  
+top:4px;  
+position:absolute;  
+color:#6fa5fd;  
+font-weight:bold;  
+width:16px;
+cursor:pointer;
+display:block;  
+background:url(../images/cross.png)
+} 
+</style>
+<form id="frm_postdata" name="frm_postdata" enctype="multipart/form-data" method="POST" autocomplete="off">
+	<input type="hidden" name="currentPage" id="currentPage" size="6" maxlength="6" value="<?php echo $this->numPage;?>" class="inputbox2 narrowkey1"></input>
+		<?php 
+			$seq = $this->seq;
+			//var_dump($seq);
+			$seq += 1;
+			$seq=str_pad($seq, 4, '0', STR_PAD_LEFT);
+		?>
+		<input type="hidden" id='seq' name='seq' value ='<?php echo $seq;?>'>
+		<div id="popupview"></div>
+		<div class="panel">
+            <fieldset class="panel-dt">							
+				<h4><i class="fa fa-angle-right"></i> Tambah Stock Opname</h4>
+						<br>
+					<div class="col-sm-12">
+						<table width="100%">
+							<tr>
+								<td width="10%"><font style="font-size:12px;font-weight:bold;">Nomor Stock Opname</font></td>
+								<td width="1%">:</td>
+								<td>
+									<table>
+										<td> <input name="no_sop" id="no_sop" type="text" maxlength="50" size="22" class="form-control input-sm" value="SOGP-<?php echo $seq;?>/VH/<?php echo date("m");?>-<?php echo date("y");?>/" readonly> </td>
+										<td> &nbsp; 
+											<label id="no_sop-error" for="no_sop" class="error">
+											<input name="no_sop2" id="no_sop2" type="hidden" value="SOGP-<?php echo $seq;?>/VH/<?php echo date("m");?>-<?php echo date("y");?>/">
+										</td>
+									</table>
+								</td>
+							</tr> 
+							<tr><td>&nbsp;</td></tr>
+							<tr>
+								<td width="10%"><font style="font-size:12px;font-weight:bold;">Tanggal Stock Opname</font></td>
+								<td width="1%">:</td>
+								<td>
+									<table>
+										<td> 
+											<input name="tgl_sop" id="tgl_sop" class="form-control form-control-inline input-medium" size="16" type="text" value="">
+											<span class="input-group-btn add-on">
+												<button class="btn btn-theme" type="button"><i class="fa fa-calendar"></i></button>
+											</span>
+										</td>
+										<td> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <label id="tgl_sop-error" for="tgl_sop" class="error"></td>
+									</table>
+								</td>
+							</tr> 
+							<tr><td>&nbsp;</td></tr>
+							<tr>
+								<td width="10%"><font style="font-size:12px;font-weight:bold;">Kategori</font></td>
+								<td width="1%">:</td>
+								<td>
+									<table>
+										<td>
+											<select class = "form-control input-sm" name="kategori" id="kategori" width="15%" onclick="getKode(this)">
+												<option value="0">--Pilih Kategori--</option>
+												<option value="Liquid">Isi Ulang (Liquid)</option>
+												<option value="Device">Perlengkapan (Device)</option>
+												<option value="Aksesoris">Aksesoris</option>
+												<option value="Atomizer">Atomizer</option>
+											</select>
+										</td>
+										<td> &nbsp; <label id="kategori-error" for="kategori" class="error"></td>
+									</table>
+								</td>
+							</tr>
+							<tr><td>&nbsp;</td></tr>
+						</table>
+						<hr>
+						<div align='left'>
+							<input id="liquid" type="button" class="right btn btn-success  btn-xs" style="font-weight:bold;" value="Tambah Barang" onclick="dataliquid()">
+							<input id="device" type="button" class="right btn btn-success  btn-xs" style="font-weight:bold;" value="Tambah Barang" onclick="datadevice()">
+							<input id="aksesoris" type="button" class="right btn btn-success  btn-xs" style="font-weight:bold;" value="Tambah Barang" onclick="dataaksesoris()">
+							<input id="atomizer" type="button" class="right btn btn-success  btn-xs" style="font-weight:bold;" value="Tambah Barang" onclick="dataatomizer()">
+							<input type='hidden' name='counterx' id='counterx' value="0">
+						</div>
+						<br>
+						<table width="100%" id="myTable" style="font-size:12px;" class="table-bordered">
+							<tr bgcolor="#4ECDC4" id="liquid2">
+								<td width="10%" style="text-align:center;"> <font style="font-size:12px;font-weight:bold;">Kode Barang</font></td>
+								<td width="20%" style="text-align:center;"> <font style="font-size:12px;font-weight:bold;">Nama Barang</font></td>
+								<td width="5%" style="text-align:center;"> <font style="font-size:12px;font-weight:bold;">Rasa</font></td>
+								<td width="5%" style="text-align:center;"> <font style="font-size:12px;font-weight:bold;">Nicotin</font></td>
+								<td width="5%" style="text-align:center;"> <font style="font-size:12px;font-weight:bold;">Volume</font></td>
+								<td width="5%" style="text-align:center;"> <font style="font-size:12px;font-weight:bold;">Stok Gudang</font></td>
+								<td width="5%" style="text-align:center;"> <font style="font-size:12px;font-weight:bold;">Good Stock</font></td>
+								<td width="5%" style="text-align:center;"> <font style="font-size:12px;font-weight:bold;">Bad Stock</font></td>
+								<td width="5%" style="text-align:center;"> <font style="font-size:12px;font-weight:bold;">Selisih</font></td>
+								<td width="20%" style="text-align:center;"> <font style="font-size:12px;font-weight:bold;">Keterangan</font></td>
+								<td width="5%" style="text-align:center;"> <font style="font-size:12px;font-weight:bold;"></font></td>
+							</tr>
+							<tr bgcolor="#4ECDC4" id="device2">
+								<td width="10%" style="text-align:center;"> <font style="font-size:12px;font-weight:bold;">Kode Barang</font></td>
+								<td width="20%" style="text-align:center;"> <font style="font-size:12px;font-weight:bold;">Nama Barang</font></td>
+								<td width="5%" style="text-align:center;"> <font style="font-size:12px;font-weight:bold;">Warna</font></td>
+								<td width="5%" style="text-align:center;"> <font style="font-size:12px;font-weight:bold;">Jenis</font></td>
+								<td width="5%" style="text-align:center;"> <font style="font-size:12px;font-weight:bold;">Stok Gudang</font></td>
+								<td width="5%" style="text-align:center;"> <font style="font-size:12px;font-weight:bold;">Good Stock</font></td>
+								<td width="5%" style="text-align:center;"> <font style="font-size:12px;font-weight:bold;">Bad Stock</font></td>
+								<td width="5%" style="text-align:center;"> <font style="font-size:12px;font-weight:bold;">Selisih</font></td>
+								<td width="20%" style="text-align:center;"> <font style="font-size:12px;font-weight:bold;">Keterangan</font></td>
+								<td width="5%" style="text-align:center;"> <font style="font-size:12px;font-weight:bold;"></font></td>
+							</tr>
+							<tr bgcolor="#4ECDC4" id="aksesoris2">
+								<td width="10%" style="text-align:center;"> <font style="font-size:12px;font-weight:bold;">Kode Barang</font></td>
+								<td width="20%" style="text-align:center;"> <font style="font-size:12px;font-weight:bold;">Nama Barang</font></td>
+								<td width="5%" style="text-align:center;"> <font style="font-size:12px;font-weight:bold;">Jenis</font></td>
+								<td width="5%" style="text-align:center;"> <font style="font-size:12px;font-weight:bold;">Stok Gudang</font></td>
+								<td width="5%" style="text-align:center;"> <font style="font-size:12px;font-weight:bold;">Good Stock</font></td>
+								<td width="5%" style="text-align:center;"> <font style="font-size:12px;font-weight:bold;">Bad Stock</font></td>
+								<td width="5%" style="text-align:center;"> <font style="font-size:12px;font-weight:bold;">Selisih</font></td>
+								<td width="20%" style="text-align:center;"> <font style="font-size:12px;font-weight:bold;">Keterangan</font></td>
+								<td width="5%" style="text-align:center;"> <font style="font-size:12px;font-weight:bold;"></font></td>
+							</tr>
+							<tr bgcolor="#4ECDC4" id="atomizer2">
+								<td width="10%" style="text-align:center;"> <font style="font-size:12px;font-weight:bold;">Kode Barang</font></td>
+								<td width="20%" style="text-align:center;"> <font style="font-size:12px;font-weight:bold;">Nama Barang</font></td>
+								<td width="5%" style="text-align:center;"> <font style="font-size:12px;font-weight:bold;">Warna</font></td>
+								<td width="5%" style="text-align:center;"> <font style="font-size:12px;font-weight:bold;">Jenis</font></td>
+								<td width="5%" style="text-align:center;"> <font style="font-size:12px;font-weight:bold;">Stok Gudang</font></td>
+								<td width="5%" style="text-align:center;"> <font style="font-size:12px;font-weight:bold;">Good Stock</font></td>
+								<td width="5%" style="text-align:center;"> <font style="font-size:12px;font-weight:bold;">Bad Stock</font></td>
+								<td width="5%" style="text-align:center;"> <font style="font-size:12px;font-weight:bold;">Selisih</font></td>
+								<td width="20%" style="text-align:center;"> <font style="font-size:12px;font-weight:bold;">Keterangan</font></td>
+								<td width="5%" style="text-align:center;"> <font style="font-size:12px;font-weight:bold;"></font></td>
+							</tr>
+						</table>
+						<br>
+					</div>				
+			</fieldset>
+		</div>
+		
+	</div>
+</div>
+<div class="col-lg-12">
+<div class="form-group form-group-bottom" align="right">
+						<input type="hidden" id="proses" name="proses" value="<?php echo $this->proses?>">	
+						<br><br>
+							
+							<a href="sopgudang">
+							<button type="button" class="btn btn-theme02">
+								<span class="fa fa-backward"></span> &nbsp;Kembali
+							</button></a>
+							<button type="button" class="btn btn-theme03" onCLick="PostData()">
+								<span class="fa fa-save"></span> &nbsp;Simpan
+							</button>
+							
+			</div>
+</div>
+</form>
+  <script src="<?php echo $this->baseUrl();?>/lib/jquery.form.js"></script>
+  <link rel="stylesheet" type="text/css" href="<?php echo $this->baseUrl();?>/css/sweetalert.css">
+  <script src="<?php echo $this->baseUrl();?>/lib/sweetalert.min.js"></script>   
+  <script src="<?php echo $this->baseUrl();?>/lib/jquery.scrollTo.min.js"></script>
+  <script src="<?php echo $this->baseUrl();?>/lib/jquery.nicescroll.js" type="text/javascript"></script>
+<script>
+	$("#liquid").hide();
+	$("#device").hide();
+	$("#aksesoris").hide();
+	$("#atomizer").hide();
+	$("#liquid2").hide();
+	$("#device2").hide();
+	$("#aksesoris2").hide();
+	$("#atomizer2").hide();
+	function getKode(x){
+		var nilai = x.value;
+		var no_sop2 = document.getElementById('no_sop2').value;
+		if(nilai == 'Liquid'){
+			var kode = no_sop2 + 'L';
+			$("#liquid").show();
+			$("#device").hide();
+			$("#aksesoris").hide();
+			$("#atomizer").hide();
+			$("#liquid2").show();
+			$("#device2").hide();
+			$("#aksesoris2").hide();
+			$("#atomizer2").hide();
+		}else if(nilai == 'Device'){
+			var kode = no_sop2 + 'D';
+			$("#liquid").hide();
+			$("#device").show();
+			$("#aksesoris").hide();
+			$("#atomizer").hide();
+			$("#liquid2").hide();
+			$("#device2").show();
+			$("#aksesoris2").hide();
+			$("#atomizer2").hide();
+		}else if(nilai == 'Aksesoris'){
+			var kode = no_sop2 + 'A';
+			$("#liquid").hide();
+			$("#device").hide();
+			$("#aksesoris").show();
+			$("#atomizer").hide();
+			$("#liquid2").hide();
+			$("#device2").hide();
+			$("#aksesoris2").show();
+			$("#atomizer2").hide();
+		}else if(nilai == 'Atomizer'){
+			var kode = no_sop2 + 'T';
+			$("#liquid").hide();
+			$("#device").hide();
+			$("#aksesoris").hide();
+			$("#atomizer").show();
+			$("#liquid2").hide();
+			$("#device2").hide();
+			$("#aksesoris2").hide();
+			$("#atomizer2").show();
+		}else {
+			var kode = no_sop2;
+			$("#liquid").hide();
+			$("#device").hide();
+			$("#aksesoris").hide();
+			$("#atomizer").hide();
+			$("#liquid2").hide();
+			$("#device2").hide();
+			$("#aksesoris2").hide();
+			$("#atomizer2").hide();
+		}
+		document.getElementById("no_sop").value=kode;
+	}
+                                                                                                                                     
+	
+	function PostData(){
+		//alert('Testing2');
+        $("#frm_postdata").ajaxSubmit(post_data);
+    }
+	
+	var post_data = {
+		target:'',
+		beforeSubmit: function() {	
+			var kategori 	  	  = document.getElementById('kategori').value;
+			var tgl_sop 	 	  = document.getElementById('tgl_sop').value;
+			var seq		 	 	  = document.getElementById('seq').value;
+				
+				if (!tgl_sop) {
+					document.getElementById('tgl_sop-error').innerHTML ="<span style='color: red;'>Tanggal Stock Opname Harus Diisi.</span>";
+					document.getElementById('tgl_sop').focus();
+					exit;
+				}else document.getElementById('tgl_sop-error').innerHTML ='';
+				
+				if (kategori=='0') {
+					document.getElementById('kategori-error').innerHTML ="<span style='color: red;'>Kategori Harus Dipilih.</span>";
+					document.getElementById('kategori').focus();
+					exit;
+				}else document.getElementById('kategori-error').innerHTML ='';
+				
+			}, 
+		success:function(){	
+			swal({
+				    title: 'Order Sukses !',
+				    text: 'Auto Close...',
+				    icon: 'success',
+				    timer: 4000,
+				    showConfirmButton: false,
+				})
+			location.href="#";		
+			location.reload(true)
+		},
+		url: '<?php echo $this->baseUrl();?>/sopgudang/kirimdata',
+		type: 'post',
+		resetForm: false
+	};
+	
+	function isNumber(evt) {
+        var iKeyCode = (evt.which) ? evt.which : evt.keyCode
+        if (iKeyCode != 46 && iKeyCode > 31 && (iKeyCode < 48 || iKeyCode > 57))
+            return false;
+
+        return true;
+    } 
+	
+	function closeDetil(){
+	document.getElementById('popupContact').style.display = "none";
+	disablePopup();
+	}
+	
+	function deleterow(button,rows){
+		var x = button.parentNode.parentNode.rowIndex;
+		document.getElementById("myTable").deleteRow(x);
+	}
+
+	function pilih_barang(x){
+		var nilai = x.value;
+		if(nilai == 'Liquid'){
+			dataliquid();
+		} else if(nilai == 'Device'){
+			datadevice();
+		} else if(nilai == 'Aksesoris'){
+			dataaksesoris();
+		} else if(nilai == 'Atomizer'){
+			dataatomizer();
+		} 
+	}
+	
+	function loadPopup() {
+		var popupStatus = 0;
+		if (popupStatus == 0) {
+			jQuery("#backgroundPopup").css({"opacity": "1"});
+			jQuery("#backgroundPopup").fadeIn("fast");
+			jQuery("#popupContact").fadeIn("fast");
+			popupStatus = 1
+		}
+	}
+
+	function centerPopup() {
+		var windowWidth = document.documentElement.clientWidth;
+		var windowHeight = "1000%";
+		var popupHeight = jQuery("#popupContact").height();
+		var popupWidth = jQuery("#popupContact").width();
+	}
+
+	function closePopup() {
+		document.getElementById('popupContact').style.display = "none";
+		document.getElementById('backgroundPopup').style.display = "none";
+	}
+
+	function disablePopup() {
+		document.getElementById('popupContact').style.display = "none";
+		document.getElementById('backgroundPopup').style.display = "none";
+	}
+		
+	function dataliquid(){
+		var seq = document.getElementById('seq').value;
+		
+		//alert('maintain'); 
+		
+		var url = '<?php echo $this->basePath; ?>/sopgudang/dataliquid';
+		var opt = {seq:seq};
+		
+		jQuery.get(url,opt, function(data) {			
+			jQuery("#popupview").html(data);
+			centerPopup(); 
+			loadPopup();		
+		})
+	}
+	
+	function datadevice(){
+		var seq = document.getElementById('seq').value;
+		
+		//alert('maintain'); 
+		
+		var url = '<?php echo $this->basePath; ?>/sopgudang/datadevice';
+		var opt = {seq:seq};
+		
+		jQuery.get(url,opt, function(data) {			
+			jQuery("#popupview").html(data);
+			centerPopup(); 
+			loadPopup();		
+		})
+	}
+	
+	function dataaksesoris(){
+		var seq = document.getElementById('seq').value;
+		
+		//alert('maintain'); 
+		
+		var url = '<?php echo $this->basePath; ?>/sopgudang/dataaksesoris';
+		var opt = {seq:seq};
+		
+		jQuery.get(url,opt, function(data) {			
+			jQuery("#popupview").html(data);
+			centerPopup(); 
+			loadPopup();		
+		})
+	}
+	
+	function dataatomizer(){
+		var seq = document.getElementById('seq').value;
+		
+		//alert('maintain'); 
+		
+		var url = '<?php echo $this->basePath; ?>/sopgudang/dataatomizer';
+		var opt = {seq:seq};
+		
+		jQuery.get(url,opt, function(data) {			
+			jQuery("#popupview").html(data);
+			centerPopup(); 
+			loadPopup();		
+		})
+	}
+	
+	function hitung(button){
+		var x = button;
+		
+		var stok_gudang = document.getElementById("stok_gudang"+x).value;
+		var stok_gudang2 = stok_gudang.replaceAll(".", "");
+		
+		var good_stock = document.getElementById("good_stock"+x).value;
+		var good_stock2 = good_stock.replaceAll(".", "");
+		
+		var bad_stock = document.getElementById("bad_stock"+x).value;
+		var bad_stock2 = bad_stock.replaceAll(".", "");
+		
+		var hitung_selisih = parseInt(stok_gudang2) -(parseInt(good_stock2) + parseInt(bad_stock2)) ;
+		//var hitung_selisih2 = hitung_selisih.toString().replaceAll(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1.");
+		document.getElementById("selisih"+x).value=hitung_selisih;
+		
+		var bad_stock_awal = document.getElementById("bad_stock_awal"+x).value;
+		var bad_stock_awal2 = bad_stock_awal.replaceAll(".", "");
+		
+		var hitung_bad_stock = parseInt(bad_stock_awal2) + parseInt(bad_stock2);
+		//var hitung_bad_stock2 = hitung_bad_stock.toString().replaceAll(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1.");
+		document.getElementById("bad_stock_baru"+x).value=hitung_bad_stock;
+	}
+	
+</script>
+  <script>
+   $(".product").select2();
+  </script>
+  <script>
+   $(document).ready(function(){
+    $(function() {
+      $('#tgl_sop').datepicker({
+        dateFormat: 'dd/mm/yy',
+        changeMonth: true,
+        changeYear: true
+      });
+    });
+  });
+  </script>

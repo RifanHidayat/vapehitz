@@ -1,0 +1,77 @@
+<form id="frm_postdata" name="frm_postdata" enctype="multipart/form-data" method="POST">
+	<input type="hidden" name="currentPage" id="currentPage" size="6" maxlength="6" value="<?php echo $this->numPage;?>" class="inputbox2 narrowkey1"></input>
+		<?php 
+			$seq = $this->seq;
+			//var_dump($seq);
+			$seq += 1;
+			$seq2=str_pad($seq, 2, '0', STR_PAD_LEFT);
+		?>
+		<input type="hidden" id='seq' name='seq' value ='<?php echo $seq;?>'>
+		<input type="hidden" id='action' name='action' value =''>
+		<div class="panel">
+            <fieldset class="panel-dt">	
+				<h4 align="left"><u>Detail Data</u></h4>
+				<br>
+					<div class="col-sm-12">
+						<table width="100%">
+							<tr>
+								<td width="10%"><font style="font-size:12px;font-weight:bold;">ID Volume</font></td>
+								<td width="1%">:</td>
+								<td>
+									<table>
+										<td> <input name="id_volume" id="id_volume" type="text" maxlength="4" size="10" class="form-control input-sm" value="<?php echo $this->data[0]['id_volume'];?>" readonly> </td>
+										<td> &nbsp; <label id="id_volume-error" for="id_volume" class="error"></td>
+									</table>
+								</td>
+							</tr> 
+							<tr><td>&nbsp;</td></tr>
+							<tr>
+								<td width="10%"><font style="font-size:12px;font-weight:bold;">Volume</font></td>
+								<td width="1%">:</td>
+								<td>
+									<table>
+										<td> <input name="volume" id="volume" type="text" maxlength="5" size="10" class="form-control input-sm" value="<?php echo $this->data[0]['volume'];?>"> </td>
+										<td> &nbsp; <label id="volume-error" for="volume" class="error"></td>
+									</table>
+								</td>
+							</tr>
+							<tr><td>&nbsp;</td></tr>
+							<tr>
+								<td width="10%"><font style="font-size:12px;font-weight:bold;">Status</font></td>
+								<td width="1%">:</td>
+								<td>
+									<table>
+										<td> 
+										<?php 
+											$status = $this->data[0]['status'];
+											$selected = 'selected';
+										?>
+											<select id="status" name="status" class = "form-control input-sm" width="15%">
+												<option value="">--Pilih Status--</option>
+												<option value="1" <?php if($status == '1'){ echo $selected; } ?>>Active</option>
+												<option value="0" <?php if($status == '0'){ echo $selected; } ?>>Inactive</option>
+											</select>
+										</td>
+										<td> &nbsp; <label id="status-error" for="status" class="error"></td>
+									</table>
+								</td>
+							</tr>
+							<tr><td>&nbsp;</td></tr>
+						</table>
+					</div>
+				<div class="col-lg-12">
+					<div class="form-group form-group-bottom" align="right">
+						<input type="hidden" id="proses" name="proses" value="<?php echo $this->proses?>">	
+						<br><br>
+							<a href="volliquid">
+							<button type="button" class="btn btn-theme02">
+								<span class="fa fa-backward"></span> &nbsp;Kembali
+							</button></a>
+							<button type="button" class="btn btn-theme03" onCLick="PostData()">
+								<span class="fa fa-save"></span> &nbsp;Simpan
+							</button>
+					</div>
+				</div>
+			</fieldset>
+		</div>
+	</form>

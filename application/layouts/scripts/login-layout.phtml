@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="">
+  <meta name="author" content="Dashboard">
+  <meta name="keyword" content="Dashboard, Bootstrap, Admin, Template, Theme, Responsive, Fluid, Retina">
+  <title>SI - VIS@Vapehitz</title>
+
+  <!-- Favicons -->
+  <link href="<?php echo $this->baseUrl();?>/img/favicon.png" rel="icon">
+  <link href="<?php echo $this->baseUrl();?>/img/apple-touch-icon.png" rel="apple-touch-icon">
+
+  <!-- Bootstrap core CSS -->
+  <link href="<?php echo $this->baseUrl();?>/lib/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <!--external css-->
+  <link href="<?php echo $this->baseUrl();?>/lib/font-awesome/css/font-awesome.css" rel="stylesheet" />
+  <!-- Custom styles for this template -->
+  <link href="<?php echo $this->baseUrl();?>/css/style.css" rel="stylesheet">
+  <link href="<?php echo $this->baseUrl();?>/css/style-responsive.css" rel="stylesheet">
+  <!-- =======================================================
+    Template Name: Dashio
+    Template URL: https://templatemag.com/dashio-bootstrap-admin-template/
+    Author: TemplateMag.com
+    License: https://templatemag.com/license/
+  ======================================================= -->
+</head>
+
+<body>
+  <!-- **********************************************************************************************************************************************************
+      MAIN CONTENT
+      *********************************************************************************************************************************************************** -->
+  <div id="login-page">
+    <div class="container">
+      <form  class="form-login" id="loginform" method="POST" novalidate>
+        <h2 class="form-login-heading">sign in now</h2>
+        <div class="login-wrap">
+          <input type="text" name="userid" id="userid" class="form-control" placeholder="User ID" autofocus>
+		  <label id="userid-error" for="userid" class="error"></label>
+          <br>
+          <input type="password" name="password" id="password" class="form-control" placeholder="Password">
+		  <label id="password-error" for="password" class="error"></label>
+          <label class="checkbox">
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			<input type="checkbox" value="remember-me"> Remember me
+            <span class="pull-right">
+            <a data-toggle="modal" href="login.html#myModal"> Forgot Password?</a>
+            </span>
+            </label>
+          <button class="btn btn-theme btn-block" id="kirim" onClick="KirimData()" type="button"><i class="fa fa-lock"></i> SIGN IN</button>
+          <!--hr>
+          <div class="login-social-link centered">
+            <p>or you can sign in via your social network</p>
+            <button class="btn btn-facebook" type="submit"><i class="fa fa-facebook"></i> Facebook</button>
+            <button class="btn btn-twitter" type="submit"><i class="fa fa-twitter"></i> Twitter</button>
+          </div>
+          <div class="registration">
+            Don't have an account yet?<br/>
+            <a class="" href="#">
+              Create an account
+              </a>
+          </div-->
+        </div>
+        <!-- Modal -->
+        <div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="myModal" class="modal fade">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">Forgot Password ?</h4>
+              </div>
+              <div class="modal-body">
+                <p>Enter your e-mail address below to reset your password.</p>
+                <input type="text" name="email" placeholder="Email" autocomplete="off" class="form-control placeholder-no-fix">
+              </div>
+              <div class="modal-footer">
+                <button data-dismiss="modal" class="btn btn-default" type="button">Cancel</button>
+                <button class="btn btn-theme" type="button">Submit</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- modal -->
+      </form>
+    </div>
+  </div>
+  <!-- js placed at the end of the document so the pages load faster -->
+  <script src="<?php echo $this->baseUrl();?>/lib/jquery/jquery.min.js"></script>
+  <script src="<?php echo $this->baseUrl();?>/lib/bootstrap/js/bootstrap.min.js"></script>
+  <script src="<?php echo $this->baseUrl();?>/lib/jquery.form.js"></script>
+  <!--BACKSTRETCH-->
+  <!-- You can use an image of whatever size. This script will stretch to fit in any screen size.-->
+  <script type="text/javascript" src="<?php echo $this->baseUrl();?>/lib/jquery.backstretch.min.js"></script>
+  <script>
+    $.backstretch("<?php echo $this->baseUrl();?>/img/login-bg.jpg", {
+      speed: 500
+    });
+	
+	function KirimData()
+    {
+		//alert('Testing2');
+        $("#loginform").ajaxSubmit(inst_data);
+    }
+	
+	var inst_data = {
+		target:'',
+		beforeSubmit: function() {	
+			var userid 	  = document.getElementById('userid').value;
+			var password  = document.getElementById('password').value;
+				if (!userid) {
+					//alert('Uraian Harus Diisi.');
+					document.getElementById('userid-error').innerHTML ="<span style='color: red;'>User id Harus Diisi.</span>";
+					document.getElementById('userid').focus();
+					exit;
+				}else document.getElementById('userid-error').innerHTML ='';
+				
+				if (!password) {
+					//alert('Perkiraan Waktu Harus Diisi.');
+					document.getElementById('password-error').innerHTML ="<span style='color: red;'>Password Harus Diisi.</span>";
+					document.getElementById('password').focus();
+					exit;
+				}else document.getElementById('password-error').innerHTML ='';			
+			}, 
+		success:function(){	
+			//alert('sukses');
+			//location.reload(true)
+			location.href="<?php echo $this->baseUrl();?>/index";		
+		},
+		url: '<?php echo $this->baseUrl();?>/login/login',
+		type: 'post',
+		resetForm: false
+	};
+  </script>
+  <script>
+   var inputText = document.getElementById("password");
+   inputText.addEventListener("keyup", function(event) {
+      if (event.keyCode === 13) {
+         event.preventDefault();
+         document.getElementById("kirim").click();
+      }
+   });
+   
+   var inputText2 = document.getElementById("userid");
+   inputText2.addEventListener("keyup", function(event) {
+      if (event.keyCode === 13) {
+         event.preventDefault();
+         document.getElementById("kirim").click();
+      }
+   });
+</script>
+</body>
+
+</html>

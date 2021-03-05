@@ -1,0 +1,386 @@
+<?php
+if($this->email) {
+?>
+<?php require('partial/header.php');?>
+<?php require('partial/menu.php');?>    
+    <!-- **********************************************************************************************************************************************************
+        MAIN CONTENT
+        *********************************************************************************************************************************************************** -->
+    <!--main content start-->
+    <section id="main-content">
+      <section class="wrapper">
+        <div class="row">
+          <div class="col-lg-9">
+            <div class="jumbotron jumbotron-fluid">
+              <h3 style="margin-top: -3rem;">&nbsp;Pembelian & Penjualan Central per- <?php echo date("Y");?></h3>
+              <?php
+                    $total1     = $this->orderjanuari;
+                    $total2     = $this->orderfebruari;
+                    $total3     = $this->ordermaret;
+                    $total4     = $this->orderapril;
+                    $total5     = $this->ordermei;
+                    $total6     = $this->orderjuni;
+                    $total7     = $this->orderjuli;
+                    $total8     = $this->orderagustus;
+                    $total9     = $this->orderseptember;
+                    $total10     = $this->orderoktober;
+                    $total11     = $this->ordernovember;
+                    $total12     = $this->orderdesember;
+                    //echo($total);
+
+
+                    $sale1     = $this->salejanuari;
+                    $sale2     = $this->salefebruari;
+                    $sale3     = $this->salemaret;
+                    $sale4     = $this->saleapril;
+                    $sale5     = $this->salemei;
+                    $sale6     = $this->salejuni;
+                    $sale7     = $this->salejuli;
+                    $sale8     = $this->saleagustus;
+                    $sale9     = $this->saleseptember;
+                    $sale10     = $this->saleoktober;
+                    $sale11     = $this->salenovember;
+                    $sale12     = $this->saledesember;
+
+                    $totalcentral = $this->ordertotal;
+
+                    //float $totalpersen1;
+                    if($totalcentral > 0) {
+                      $totalpersen1 = $this->orderjanuari/$totalcentral * 100;
+                    $totalpersen2 = $this->orderfebruari/$totalcentral * 100;
+                    $totalpersen3 = $this->ordermaret/$totalcentral * 100;
+                    $totalpersen4 = $this->orderapril/$totalcentral * 100;
+                    $totalpersen5 = $this->ordermei/$totalcentral * 100;
+                    $totalpersen6 = $this->orderjuni/$totalcentral * 100;
+                    $totalpersen7 = $this->orderjuli/$totalcentral * 100;
+                    $totalpersen8 = $this->orderagustus/$totalcentral * 100;
+                    $totalpersen9 = $this->orderseptember/$totalcentral * 100;
+                    $totalpersen10 = $this->orderoktober/$totalcentral * 100;
+                    $totalpersen11 = $this->ordernovember/$totalcentral * 100;
+                    $totalpersen12 = $this->orderdesember/$totalcentral * 100;
+                    }
+                    //var_dump($totalpersen1);
+              ?>
+              <canvas id="myChart" width="400" height="200"></canvas>
+            </div>
+          </div>
+          <div class="col-lg-3 ds">      
+            <!-- CALENDAR-->
+            <div id="calendar" class="mb">
+              <div class="panel green-panel no-margin">
+                <div class="panel-body">
+                  <div id="date-popover" class="popover top" style="cursor: pointer; disadding: block; margin-left: 33%; margin-top: -50px; width: 175px;">
+                    <div class="arrow"></div>
+                    <h3 class="popover-title" style="disadding: none;"></h3>
+                    <div id="date-popover-content" class="popover-content"></div>
+                  </div>
+                  <div id="my-calendar"></div>
+                </div>
+              </div>
+            </div>
+            <!-- / calendar -->
+          </div>
+          <!-- /col-lg-3 -->
+        </div>
+        <!-- /row -->
+        <div class="row">
+          <div class="col-lg-9">
+            <div class="jumbotron jumbotron-fluid">
+              <h3 style="margin-top: -3rem;">&nbsp;Penjualan Retail per- <?php echo date("Y");?></h3>
+              <?php
+              ?>
+              <?php
+                    $saler1     = $this->retail1;
+                    $saler2     = $this->retail2;
+                    $saler3     = $this->retail3;
+                    $saler4     = $this->retail4;
+                    $saler5     = $this->retail5;
+                    $saler6     = $this->retail6;
+                    $saler7     = $this->retail7;
+                    $saler8     = $this->retail8;
+                    $saler9     = $this->retail9;
+                    $saler10     = $this->retail10;
+                    $saler11     = $this->retail11;
+                    $saler12     = $this->retail12;
+                    //echo($total);
+              ?>
+              <canvas id="myChart2" width="400" height="200"></canvas>
+            </div>
+          </div>
+        </div>
+        <!-- /row -->
+        <!-- /row -->
+        <div class="row">
+          <div class="col-lg-9">
+            <div class="jumbotron jumbotron-fluid">
+              <h3 style="margin-top: -3rem;">&nbsp;Penjualan Studio per- <?php echo date("Y");?></h3>
+              <?php
+              ?>
+              <?php
+                    $sales1     = $this->studio1;
+                    $sales2     = $this->studio2;
+                    $sales3     = $this->studio3;
+                    $sales4     = $this->studio4;
+                    $sales5     = $this->studio5;
+                    $sales6     = $this->studio6;
+                    $sales7     = $this->studio7;
+                    $sales8     = $this->studio8;
+                    $sales9     = $this->studio9;
+                    $sales10     = $this->studio10;
+                    $sales11     = $this->studio11;
+                    $sales12     = $this->studio12;
+                    //echo($total);
+              ?>
+              <canvas id="myChart3" width="400" height="200"></canvas>
+            </div>
+          </div>
+        </div>
+        <!-- /row -->
+      </section>
+    </section>
+    <!--main content end-->
+    <?php require('partial/main-footer.php');?> 
+  </section>
+  <!-- js placed at the end of the document so the pages load faster -->
+  <script src="<?php echo $this->baseUrl();?>/lib/jquery/jquery.min.js"></script>
+
+  <script src="<?php echo $this->baseUrl();?>/lib/bootstrap/js/bootstrap.min.js"></script>
+  <script class="include" type="text/javascript" src="<?php echo $this->baseUrl();?>/lib/jquery.dcjqaccordion.2.7.js"></script>
+  <script src="<?php echo $this->baseUrl();?>/lib/jquery.scrollTo.min.js"></script>
+  <script src="<?php echo $this->baseUrl();?>/lib/jquery.nicescroll.js" type="text/javascript"></script>
+  <script src="<?php echo $this->baseUrl();?>/lib/jquery.sparkline.js"></script>
+  <!--common script for all pages-->
+  <script src="<?php echo $this->baseUrl();?>/lib/common-scripts.js"></script>
+  <script type="text/javascript" src="<?php echo $this->baseUrl();?>/lib/gritter/js/jquery.gritter.js"></script>
+  <script type="text/javascript" src="<?php echo $this->baseUrl();?>/lib/gritter-conf.js"></script>
+  <!--script for this page-->
+  <script src="<?php echo $this->baseUrl();?>/lib/sparkline-chart.js"></script>
+  <script src="<?php echo $this->baseUrl();?>/lib/zabuto_calendar.js"></script>
+
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js"></script>
+
+  <script>
+var ctx = document.getElementById('myChart').getContext('2d');
+var total1js = '<?php echo $total1?>';
+var total2js = '<?php echo $total2?>';
+var total3js = '<?php echo $total3?>';
+var total4js = '<?php echo $total4?>';
+var total5js = '<?php echo $total5?>';
+var total6js = '<?php echo $total6?>';
+var total7js = '<?php echo $total7?>';
+var total8js = '<?php echo $total8?>';
+var total9js = '<?php echo $total9?>';
+var total10js = '<?php echo $total10?>';
+var total11js = '<?php echo $total11?>';
+var total12js = '<?php echo $total12?>';
+//alert(total1js);
+
+var sale1js = '<?php echo $sale1?>';
+var sale2js = '<?php echo $sale2?>';
+var sale3js = '<?php echo $sale3?>';
+var sale4js = '<?php echo $sale4?>';
+var sale5js = '<?php echo $sale5?>';
+var sale6js = '<?php echo $sale6?>';
+var sale7js = '<?php echo $sale7?>';
+var sale8js = '<?php echo $sale8?>';
+var sale9js = '<?php echo $sale9?>';
+var sale10js = '<?php echo $sale10?>';
+var sale11js = '<?php echo $sale11?>';
+var sale12js = '<?php echo $sale12?>';
+
+var myChart = new Chart(ctx, {
+    type: 'bar',
+  data: {
+    labels: ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'],
+    datasets: [{
+      label: 'Pembelian',
+      yAxisID: 'Pembelian',
+      backgroundColor: [
+                'rgba(255, 0, 0, 0.6)',
+                'rgba(255, 0, 0, 0.6)',
+                'rgba(255, 0, 0, 0.6)',
+                'rgba(255, 0, 0, 0.6)',
+                'rgba(255, 0, 0, 0.6)',
+                'rgba(255, 0, 0, 0.6)',
+                'rgba(255, 0, 0, 0.6)',
+                'rgba(255, 0, 0, 0.6)',
+                'rgba(255, 0, 0, 0.6)',
+                'rgba(255, 0, 0, 0.6)',
+                'rgba(255, 0, 0, 0.6)',
+                'rgba(255, 0, 0, 0.6)'],
+      data: [total1js, total2js, total3js, total4js, total5js, total6js, total7js, total8js, total9js, total10js, total11js, total12js],
+    }, {
+      label: 'Penjualan',
+      yAxisID: 'Penjualan',
+      backgroundColor: [
+                'rgba(0, 0, 255, 0.6)',
+                'rgba(0, 0, 255, 0.6)',
+                'rgba(0, 0, 255, 0.6)',
+                'rgba(0, 0, 255, 0.6)',
+                'rgba(0, 0, 255, 0.6)',
+                'rgba(0, 0, 255, 0.6)',
+                'rgba(0, 0, 255, 0.6)',
+                'rgba(0, 0, 255, 0.6)',
+                'rgba(0, 0, 255, 0.6)',
+                'rgba(0, 0, 255, 0.6)',
+                'rgba(0, 0, 255, 0.6)',
+                'rgba(0, 0, 255, 0.6)',],
+      data: [sale1js, sale2js, sale3js, sale4js, sale5js, sale6js, sale7js, sale8js, sale9js, sale10js, sale11js, sale12js],
+    }]
+  },
+  options: {
+    scales: {
+      yAxes: [{
+        id: 'Pembelian',
+        type: 'linear',
+        position: 'left',
+      }, {
+        id: 'Penjualan',
+        type: 'linear',
+        position: 'right',
+      }]
+    }
+  }
+});
+</script>
+<script>
+var ctx = document.getElementById('myChart2').getContext('2d');
+//alert(total1js);
+
+var saler1js = '<?php echo $saler1?>';
+var saler2js = '<?php echo $saler2?>';
+var saler3js = '<?php echo $saler3?>';
+var saler4js = '<?php echo $saler4?>';
+var saler5js = '<?php echo $saler5?>';
+var saler6js = '<?php echo $saler6?>';
+var saler7js = '<?php echo $saler7?>';
+var saler8js = '<?php echo $saler8?>';
+var saler9js = '<?php echo $saler9?>';
+var saler10js = '<?php echo $saler10?>';
+var saler11js = '<?php echo $saler11?>';
+var saler12js = '<?php echo $saler12?>';
+
+var myChart2 = new Chart(ctx, {
+    type: 'bar',
+  data: {
+    labels: ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'],
+    datasets: [{
+      label: 'Penjualan',
+      yAxisID: 'Penjualan',
+      backgroundColor: [
+                'rgba(255, 201, 16, 0.6)',
+                'rgba(255, 201, 16, 0.6)',
+                'rgba(255, 201, 16, 0.6)',
+                'rgba(255, 201, 16, 0.6)',
+                'rgba(255, 201, 16, 0.6)',
+                'rgba(255, 201, 16, 0.6)',
+                'rgba(255, 201, 16, 0.6)',
+                'rgba(255, 201, 16, 0.6)',
+                'rgba(255, 201, 16, 0.6)',
+                'rgba(255, 201, 16, 0.6)',
+                'rgba(255, 201, 16, 0.6)',
+                'rgba(255, 201, 16, 0.6)'],
+      data: [saler1js, saler2js, saler3js, saler4js, saler5js, saler6js, saler7js, saler8js, saler9js, saler10js, saler11js, saler12js],
+    }]
+  },
+  options: {
+    scales: {
+      yAxes: [{
+        id: 'Penjualan',
+        type: 'linear',
+        position: 'left',
+      }]
+    }
+  }
+});
+</script>
+<script>
+var ctx = document.getElementById('myChart3').getContext('2d');
+//alert(total1js);
+
+var sales1js = '<?php echo $sales1?>';
+var sales2js = '<?php echo $sales2?>';
+var sales3js = '<?php echo $sales3?>';
+var sales4js = '<?php echo $sales4?>';
+var sales5js = '<?php echo $sales5?>';
+var sales6js = '<?php echo $sales6?>';
+var sales7js = '<?php echo $sales7?>';
+var sales8js = '<?php echo $sales8?>';
+var sales9js = '<?php echo $sales9?>';
+var sales10js = '<?php echo $sales10?>';
+var sales11js = '<?php echo $sales11?>';
+var sales12js = '<?php echo $sales12?>';
+
+var myChart3 = new Chart(ctx, {
+    type: 'bar',
+  data: {
+    labels: ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'],
+    datasets: [{
+      label: 'Penjualan',
+      yAxisID: 'Penjualan',
+      backgroundColor: [
+                'rgba(103, 46, 103, 0.6)',
+                'rgba(255, 201, 16, 0.6)',
+                'rgba(255, 201, 16, 0.6)',
+                'rgba(255, 201, 16, 0.6)',
+                'rgba(255, 201, 16, 0.6)',
+                'rgba(255, 201, 16, 0.6)',
+                'rgba(255, 201, 16, 0.6)',
+                'rgba(255, 201, 16, 0.6)',
+                'rgba(255, 201, 16, 0.6)',
+                'rgba(255, 201, 16, 0.6)',
+                'rgba(255, 201, 16, 0.6)',
+                'rgba(255, 201, 16, 0.6)'],
+      data: [sales1js, sales2js, sales3js, sales4js, sales5js, sales6js, sales7js, sales8js, sales9js, sales10js, sales11js, sales12js],
+    }]
+  },
+  options: {
+    scales: {
+      yAxes: [{
+        id: 'Penjualan',
+        type: 'linear',
+        position: 'left',
+      }]
+    }
+  }
+});
+</script>
+  <script type="application/javascript">
+    $(document).ready(function() {
+      $("#date-popover").popover({
+        html: true,
+        trigger: "manual"
+      });
+      $("#date-popover").hide();
+      $("#date-popover").click(function(e) {
+        $(this).hide();
+      });
+
+      $("#my-calendar").zabuto_calendar({
+        action: function() {
+          return myDateFunction(this.id, false);
+        },
+        action_nav: function() {
+          return myNavFunction(this.id);
+        },
+        ajax: {
+          url: "show_data.php?action=1",
+          modal: true
+        }
+      });
+    });
+
+    function myNavFunction(id) {
+      $("#date-popover").hide();
+      var nav = $("#" + id).data("navigation");
+      var to = $("#" + id).data("to");
+      console.log('nav ' + nav + ' to: ' + to.month + '/' + to.year);
+    }
+  </script>
+</body>
+
+</html>
+<?php
+} else { 
+	echo '<script language="javascript">document.location="login";</script>';
+} ?>

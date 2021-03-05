@@ -1,0 +1,119 @@
+<script>
+	$(document).ready(function () {
+		$('#dataTables-emp').dataTable({
+			"bPaginate": true,
+			"bLengthChange": true,
+			"bFilter": true,
+			"bInfo": true,
+			"bAutoWidth": true});
+	});
+	 
+	function pilihEmp(kode_subsale,kode_barang,nama_barang,stok_gudang,harga_jual,qty,sub_total,harga_jual2,jenis_barang,kode_jenis_barang){
+		  
+		  var count_table_tbody_tr = document.getElementById("counterx").value;
+		  
+		  var table = document.getElementById("myTable");	  
+		  var row = table.insertRow(-1);
+		  var cell1 = row.insertCell(0);
+		  var cell2 = row.insertCell(1);
+		  var cell3 = row.insertCell(2);
+		  var cell4 = row.insertCell(3);
+		  var cell5 = row.insertCell(4);
+		  var cell6 = row.insertCell(5);
+		  var cell7 = row.insertCell(6);
+		  var cell8 = row.insertCell(7);
+		  var cell9 = row.insertCell(8);
+		  //var cell10 = row.insertCell(9);
+		  
+		  var rows = table.getElementsByTagName("tr").length - 1;
+		  var rows2 = parseInt(count_table_tbody_tr) + 1;
+		  
+		  document.getElementById("counterx").value=rows2;
+		  
+		  cell1.innerHTML = "<input type='text' class='form-control input-sm' name='kode_barang[]' value='"+kode_barang+"' readonly/> <input type='hidden' name='kode[]' value='"+kode_jenis_barang+"' readonly/><input type='hidden' id='kode_subsale"+rows+"' name='kode_subsale[]' value='"+kode_subsale+"'/>";
+		  cell2.innerHTML = "<input type='text' class='form-control input-sm' name='nama_barang[]' value='"+nama_barang+"' readonly/> <input type='hidden' name='nama_tabel[]' value='"+jenis_barang+"' readonly/>";
+		  cell3.innerHTML = "<input type='text' class='form-control input-sm' id='stok_gudang"+rows+"' name='stok_gudang[]' value='"+stok_gudang+"' readonly/> <input type='hidden' id='stok_gudang1"+rows+"' name='stok_gudang1[]' value='"+stok_gudang+"'/>";
+		  cell4.innerHTML = "<input type='text' class='form-control input-sm' id='harga_jual"+rows+"' name='harga_jual[]' value='"+harga_jual+"' readonly/>";
+		  cell5.innerHTML = "<input type='text' class='form-control input-sm' id='qty"+rows+"' name='qty[]' value='"+qty+"' readonly/><input type='hidden' id='qty1"+rows+"' name='qty1[]' value='"+qty+"'/>";
+		  cell6.innerHTML = "<input type='text' class='form-control input-sm' id='sub_total"+rows+"' name='sub_total[]' value='"+sub_total+"' readonly/><input type='hidden' id='sub_total1"+rows+"' name='sub_total1[]' value='"+sub_total+"'/>";
+		  cell7.innerHTML = "<select class='form-control input-sm' id='alasan"+rows+"' name='alasan[]'><option value=''>--Pilih Alasan--</option><option value='cacat/rusak'>Barang Cacat/Rusak</option><option value='tidak sesuai'>Barang Tidak Sesuai</option></select>";
+		  cell8.innerHTML = "<input type='text' class='form-control input-sm' id='qty_retur"+rows+"' name='qty_retur[]' value='0' onkeyup='retur("+rows+")'/><input type='hidden' id='qty_retur1"+rows+"' name='qty_retur1[]' value=''/>";
+		  cell9.innerHTML = "<input type='text' class='form-control input-sm' id='nominal_retur"+rows+"' name='nominal_retur[]' value='0' readonly/>";
+		  //cell10.innerHTML = "<input type='button' id='delete' class='btn btn-danger btn-sm mar-ed-button' name='delete' onclick='deleterow(this,"+rows+")' value='Hapus'/>";
+		
+		closeDetil();
+	} 
+</script>
+
+<form action="" method="post" name="emplist" id="emplist">
+	<div id="popupContact" style="width:75%; min-height:600px">
+		<table width="100%">
+			<tr>
+				<td>
+					<button class="btn btn-danger btn-circle right" type="button" onclick="closeDetil()"><i class="glyphicon glyphicon-remove"></i></button>
+				</td>
+			</tr>
+		</table>
+	<center>
+	<div id="popupContactx">	
+	<div class="panel panel-info" style="margin-right: 25px;margin-left: 25px;">
+		<div class="panel-heading"><h2 class="title title-custom">List Data Barang</h2></div>	
+		<div class="panel-body">
+			<br>
+			<form action="" method="post" name="insdata" id="insdata">
+				<div class="table-responsive">
+					<div style="overflow:auto;height:440px;">
+					<table style="font-size:12px;" class="table table-striped table-bordered table-hover" id="dataTables-emp" width="200%">
+						<thead>
+							<tr bgcolor="#4ECDC4">
+								<td style="text-align:center;"> <font style="font-size:12px;font-weight:bold;">Kode Barang</font></td>
+								<td style="text-align:center;"> <font style="font-size:12px;font-weight:bold;">Nama Barang</font></td>
+								<td style="text-align:center;"> <font style="font-size:12px;font-weight:bold;">Stok Studio</font></td>
+								<td style="text-align:center;"> <font style="font-size:12px;font-weight:bold;">Harga Jual</font></td>
+								<td style="text-align:center;"> <font style="font-size:12px;font-weight:bold;">QTY</font></td>
+								<td style="text-align:center;"> <font style="font-size:12px;font-weight:bold;">Sub Total</font></td>
+							</tr>
+						</thead>
+						<tbody>
+						<?php
+								 for($d=0; $d<count($this->data); $d++){
+										$kode_subsale 	= $this->data[$d]['kode_subsale'];
+										$kode_barang 	= $this->data[$d]['kode_barang'];
+										$harga_jual 	= number_format($this->data[$d]['harga_jual'],0,",",".");
+										$harga_jual2 	= $this->data[$d]['harga_jual'];
+										$qty 			= $this->data[$d]['qty'];
+										$sub_total		= number_format($this->data[$d]['sub_total'],0,",",".");
+										$jenis_barang	= $this->data[$d]['jenis_barang'];
+										$kode_jenis_barang = $this->data[$d]['kode_jenis_barang'];
+										
+										$barang = $this->Retursalestudio_Service->getdatabarangid($kode_barang);
+										$nama_barang  = $barang[0]['nama_barang'];
+										$ket		  = $barang[0]['ket'];
+										$stok_gudang  = $barang[0]['stok_gudang'];
+									?>		
+										<tr>
+											<td align="center"><a href="#" onclick="javascript:pilihEmp('<?php echo $kode_subsale; ?>','<?php echo $kode_barang; ?>','<?php echo $nama_barang; ?>','<?php echo $stok_gudang; ?>','<?php echo $harga_jual; ?>','<?php echo $qty; ?>','<?php echo $sub_total; ?>','<?php echo $harga_jual2; ?>','<?php echo $jenis_barang; ?>','<?php echo $kode_jenis_barang; ?>')"><?php echo $kode_barang;?></a></td>
+											<td align="center"><?php echo $nama_barang;?></td>
+											<td align="center"><?php echo $stok_gudang;?></td>
+											<td align="center"><?php echo $harga_jual;?></td>
+											<td align="center"><?php echo $qty;?></td>
+											<td align="center"><?php echo $sub_total;?></td>
+										</tr>	
+									<?php 
+										}
+									?>
+						</tbody>
+					</table>
+					</div>
+				</div>
+			</form>
+						
+			<div id='popuptarget'></div>
+		</div>
+	</div>		
+</div>
+</center>
+</div>
+<div id='myDIVx'></div>
+<div id="backgroundPopup"></div>
+</form>

@@ -1,0 +1,184 @@
+<?php
+ini_set("memory_limit", "2048M");
+ini_set('display_errors', 1);
+ini_set('error_reporting', E_ERROR);
+require_once "service/Ordercentral_Service.php";
+$this->Ordercentral_Service = Ordercentral_Service::getInstance();
+
+require_once "share/oa_date.php";
+require_once("share/oa_dec_cur_conv.php");
+//require_once("share/global_function.php");
+
+$dectocurr = new oa_dec_cur_conv();
+$tanggal = new oa_date();
+
+
+	
+require_once 'Zend/View.php';
+$ctrlFrm = new Zend_View();
+
+/*nama bulan*/
+$namaBulan = array("01" => "Januari",
+					"02" => "Februari",
+					"03" => "Maret",
+					"04" => "April",
+					"05" => "Mei",
+					"06" => "Juni",
+					"07" => "Juli",
+					"08" => "Agustus",
+					"09" => "September",
+					"10" => "Oktober",
+					"11" => "November",
+					"12" => "Desember");
+					
+
+$data = $this->data;
+
+$html = '
+<style>
+body{
+	font-size:9pt;
+
+}	table{
+				font-family: tahoma, Helvetica, sans-serif;
+				border: 1px solid black;
+				border-collapse: collapse;
+			  }
+	td {
+				font-family: tahoma, Helvetica, sans-serif;
+				border: 1px solid black;
+				border-collapse: collapse;
+				font-size:9pt;
+			  }
+	th {
+				font-family: Arial, Helvetica, sans-serif;
+				border: 1px solid black;
+				border-collapse: collapse;
+			  }
+	h1,h2,h3{font-family: tahoma, Helvetica, sans-serif;}		  
+	H1{font-size:13pt;}
+	H2{font-size:11pt;}
+	H3{font-size:9pt;}
+	.rotate{
+				-ms-transform: rotate(-90deg);
+				-moz-transform: rotate(-90deg);
+				-webkit-transform: rotate(-90deg);
+				}
+	.break {page-break-before:always}
+   table.fixed { table-layout:fixed; }
+   table.fixed td { overflow: hidden; }
+   .barcode {
+	padding: 1.5mm;
+	margin: 0;
+	vertical-align: top;
+	color: #000000;
+	background:transparent;
+	height:20px;
+}
+@page {  
+    header: html_otherpageheader;
+
+}
+</style>
+';
+$tglSkrg=date('Y-m-d');
+			$tgl=substr($tglSkrg,8,2); 
+			$bln=substr($tglSkrg,5,2);
+			$thn=substr($tglSkrg,0,4);
+			$jam = date('H:i:s');
+			$d_start="$thn-$bln-$tgl -$jam";	
+$html.='
+<table>
+							<thead>
+							<tr bgcolor="#4ECDC4">
+								<th>No</th>
+								<th>Kode Device</th>
+								<th>Merk Device</th>
+								<th>Nama Device</th>
+								<th>Jenis Device</th>
+								<th>Stok Pusat</th>
+								<th>Stok Retail</th>
+								<th>Stok Studio</th>
+								<th>Bad Stock</th>
+								<th>Berat (gr)</th>
+								<th>Harga Beli</th>
+								<th>Harga Jual Agn</th>
+								<th>Harga Jual Ret</th>
+								<th>Harga Jual Whs</th>
+								<th>Nama Supplier </th>
+								<th>Tipe</th>
+								<th>Status</th>
+							</tr>
+							</thead>
+							<tbody>';
+							for($x=0; $x<count($this->data5); $x++){
+
+										$nomer			= $x+1;
+										$kode_device 	= $this->data5[$x]['kode_device'];
+										$merk_device 	= $this->data5[$x]['merk_device'];
+										$nama_device 	= $this->data5[$x]['nama_device'];
+										$jenis_device 	= $this->data5[$x]['jenis_device'];
+										$stok_pusat 	= $this->data5[$x]['stok_pusat'];
+										$stok_retail 	= $this->data5[$x]['stok_retail'];
+										$stok_studio 	= $this->data5[$x]['stok_studio'];
+										$bad_stock	 	= $this->data5[$x]['bad_stock'];
+										$berat		 	= $this->data5[$x]['berat'];
+										$harga_beli	 	= $this->data5[$x]['harga_beli'];
+										$hj_agen	 	= $this->data5[$x]['hj_agen'];
+										$hj_retail	 	= $this->data5[$x]['hj_retail'];
+										$hj_whs		 	= $this->data5[$x]['hj_whs'];
+										$kode_supplier 	= $this->data5[$x]['kode_supplier'];
+										$status 		= $this->data5[$x]['status'];
+										if($status=='1'){
+											$stat = 'Active';
+										} else {
+											$stat = 'Inactive';
+										}
+										
+										$supplier = $this->Laporan_Service->getdatasupplierid($kode_supplier);
+										$nama_supplier  = $supplier[0]['nama_supplier'];
+										$tipe		 	= $supplier[0]['tipe'];
+
+$html.='
+										<tr>
+											<td align="center">'.$nomer.'</td>	  
+											<td align="center">'.$kode_device.'</td>
+											<td align="center">'.$merk_device.'</td>
+											<td align="center">'.$nama_device.'</td>
+											<td align="center">'.$jenis_device.'</td>
+											<td align="center">'.$stok_pusat.'</td>
+											<td align="center">'.$stok_retail.'</td>
+											<td align="center">'.$stok_studio.'</td>
+											<td align="center">'.$bad_stock.'</td>
+											<td align="center">'.$berat.'</td>
+											<td align="center">'.number_format($harga_beli,0,",",".").'</td>
+											<td align="center">'.number_format($hj_agen,0,",",".").'</td>
+											<td align="center">'.number_format($hj_retail,0,",",".").'</td>
+											<td align="center">'.number_format($hj_whs,0,",",".").'</td>
+											<td align="center">'.$nama_supplier.'</td>
+											<td align="center">'.$tipe.'</td>
+											<td align="center">'.$stat.'</td>
+										</tr>';
+							}
+$html.='</tbody>
+		</table>';
+							
+include("mpdf/mpdf.php");
+
+ $mpdf=new mPDF('en-GB-x','A4','','',20,10,37,16,9,9); /*Left, Right, top, , ,*/
+
+$mpdf->SetDisplayMode('fullpage','two');
+
+
+
+$mpdf->list_indent_first_level = 0;	// 1 or 0 - whether to indent the first level of a list
+
+// LOAD a stylesheet
+/* $stylesheet = file_get_contents('mpdf/mpdfstyletables.css');
+$mpdf->WriteHTML($stylesheet,1);	// The parameter 1 tells that this is css/style only and no body/html/text */
+
+$mpdf->WriteHTML($html);
+//echo $html;
+$mpdf->Output('Master Data Device.pdf','I');
+exit;
+?>

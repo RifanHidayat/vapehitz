@@ -1,0 +1,212 @@
+<form id="frm_postdata" name="frm_postdata" enctype="multipart/form-data" method="POST">
+	<input type="hidden" name="currentPage" id="currentPage" size="6" maxlength="6" value="<?php echo $this->numPage;?>" class="inputbox2 narrowkey1"></input>
+		<?php 
+			$seq = substr($this->seq,2,4);
+			$seq += 1;
+			$seq=str_pad($seq, 4, '0', STR_PAD_LEFT);
+			$seq='SL'.$seq;
+		?>
+		<div class="panel">
+            <fieldset class="panel-dt">							
+				<h4><i class="fa fa-angle-right"></i> Tambah Sales</h4>
+						<br>
+					<div class="col-sm-12">
+						<table width="100%">
+							<tr>
+								<td width="10%"><font style="font-size:12px;font-weight:bold;">Kode Sales</font></td>
+								<td width="1%">:</td>
+								<td>
+									<table>
+										<td> <input name="kode_sales" id="kode_sales" type="text" maxlength="50" size="5" class="form-control input-sm" value="<?php echo $seq;?>" readonly> </td>
+										<td> </td>
+									</table>
+								</td>
+							</tr>
+							<tr><td>&nbsp;</td></tr>
+							<tr>
+								<td width="10%"><font style="font-size:12px;font-weight:bold;">Nama Sales</font></td>
+								<td width="1%">:</td>
+								<td>
+									<table>
+										<td> <input name="nama_sales" id="nama_sales" type="text" maxlength="50" size="50" class="form-control input-sm" value=""> </td>
+										<td> &nbsp; <label id="nama_sales-error" for="nama_sales" class="error"></label> </td>
+									</table>
+								</td>
+							</tr> 
+							<tr><td>&nbsp;</td></tr>
+							<tr>
+								<td width="10%"><font style="font-size:12px;font-weight:bold;">Alamat</font></td>
+								<td width="1%">:</td>
+								<td>
+									<table>
+										<td> <input name="alamat_sales" id="alamat_sales" type="text" maxlength="100" size="100" class="form-control input-sm" value=""> </td>
+										<td> &nbsp; <label id="alamat_sales-error" for="alamat_sales" class="error"></td>
+									</table>
+								</td>
+							</tr> 
+							<tr><td>&nbsp;</td></tr>
+							<tr>
+								<td width="10%"><font style="font-size:12px;font-weight:bold;">Nomor Tlp</font></td>
+								<td width="1%">:</td>
+								<td>
+									<table>
+										<td> <input name="no_tlp" id="no_tlp" type="text" maxlength="50" size="20" class="form-control input-sm" value=""> </td>
+										<td> &nbsp; <label id="no_tlp-error" for="no_tlp" class="error"></td>
+									</table>
+								</td>
+							</tr> 
+							<tr><td>&nbsp;</td></tr>
+							<tr>
+								<td width="10%"><font style="font-size:12px;font-weight:bold;">Nomor HP/WA</font></td>
+								<td width="1%">:</td>
+								<td>
+									<table>
+										<td> <input name="no_hp" id="no_hp" type="text" maxlength="50" size="20" class="form-control input-sm" value="" onkeypress="javascript:return isNumber(event)"> </td>
+										<td> &nbsp; <label id="no_hp-error" for="no_hp" class="error"></td>
+									</table>
+								</td>
+							</tr> 
+							<tr><td>&nbsp;</td></tr>
+							<tr>
+								<td width="10%"><font style="font-size:12px;font-weight:bold;">Email</font></td>
+								<td width="1%">:</td>
+								<td>
+									<table>
+										<td> <input name="email" id="email" type="text" maxlength="50" size="50" class="form-control input-sm" value=""> </td>
+										<td> &nbsp; <label id="email-error" for="email" class="error"></td>
+									</table>
+								</td>
+							</tr>
+							<tr><td>&nbsp;</td></tr>
+							<tr>
+								<td width="10%"><font style="font-size:12px;font-weight:bold;">Status</font></td>
+								<td width="1%">:</td>
+								<td>
+									<table>
+										<td> 
+											<select id="status" name="status" class = "form-control input-sm" width="15%">
+												<option value="">--Pilih Status--</option>
+												<option value="1">Active</option>
+												<option value="0">Inactive</option>
+											</select>
+										</td>
+										<td> &nbsp; <label id="status-error" for="status" class="error"></td>
+									</table>
+								</td>
+							</tr>
+							<tr><td>&nbsp;</td></tr>
+						</table>
+					</div>				
+			</fieldset>
+		</div>
+		
+	</div>
+</div>
+<div class="col-lg-12">
+<div class="form-group form-group-bottom" align="right">
+						<input type="hidden" id="proses" name="proses" value="<?php echo $this->proses?>">	
+						<br><br>
+							
+							<a href="sales">
+							<button type="button" class="btn btn-theme02">
+								<span class="fa fa-backward"></span> &nbsp;Kembali
+							</button></a>
+							<button type="button" class="btn btn-theme03" onCLick="PostData()">
+								<span class="fa fa-save"></span> &nbsp;Simpan
+							</button>
+							
+			</div>
+</div>
+</form>
+  <script src="<?php echo $this->baseUrl();?>/lib/jquery/jquery.min.js"></script>
+  <script src="<?php echo $this->baseUrl();?>/lib/bootstrap/js/bootstrap.min.js"></script>
+  <script src="<?php echo $this->baseUrl();?>/lib/jquery.form.js"></script>
+  <script src="<?php echo $this->baseUrl();?>/lib/jquery.scrollTo.min.js"></script>
+  <script src="<?php echo $this->baseUrl();?>/lib/jquery.nicescroll.js" type="text/javascript"></script>
+  <link rel="stylesheet" type="text/css" href="<?php echo $this->baseUrl();?>/css/sweetalert.css">
+  <script src="<?php echo $this->baseUrl();?>/lib/sweetalert.min.js"></script>
+<script>
+	function PostData()
+    {
+		//alert('Testing2');
+        $("#frm_postdata").ajaxSubmit(post_data);
+    }
+	
+	var post_data = {
+		target:'',
+		beforeSubmit: function() {	
+			var nama_sales 	  = document.getElementById('nama_sales').value;
+			var alamat_sales   = document.getElementById('alamat_sales').value;
+			var no_tlp 		  	  = document.getElementById('no_tlp').value;
+			var no_hp 			  = document.getElementById('no_hp').value;
+			var email 			  = document.getElementById('email').value;
+			var status 			  = document.getElementById('status').value;
+			var atps			  = email.indexOf("@");
+			var dots			  = email.lastIndexOf(".");
+			
+				if (!nama_sales) {
+					document.getElementById('nama_sales-error').innerHTML ="<span style='color: red;'>Nama Sales Harus Diisi.</span>";
+					document.getElementById('nama_sales').focus();
+					exit;
+				}else document.getElementById('nama_sales-error').innerHTML ='';
+				
+				if (!alamat_sales) {
+					document.getElementById('alamat_sales-error').innerHTML ="<span style='color: red;'>Alamat Sales Harus Diisi.</span>";
+					document.getElementById('alamat_sales').focus();
+					exit;
+				}else document.getElementById('alamat_sales-error').innerHTML ='';
+				
+				if (!no_tlp) {
+					document.getElementById('no_tlp-error').innerHTML ="<span style='color: red;'>Nomor Tlp Harus Diisi.</span>";
+					document.getElementById('no_tlp').focus();
+					exit;
+				}else document.getElementById('no_tlp-error').innerHTML ='';
+				
+				if (!no_hp) {
+					document.getElementById('no_hp-error').innerHTML ="<span style='color: red;'>Nomor HP Harus Diisi.</span>";
+					document.getElementById('no_hp').focus();
+					exit;
+				}else document.getElementById('no_hp-error').innerHTML ='';
+				
+				if (!email) {
+					document.getElementById('email-error').innerHTML ="<span style='color: red;'>Email Harus Diisi.</span>";
+					document.getElementById('email').focus();
+					exit;
+				}else document.getElementById('email-error').innerHTML ='';
+				
+				if (atps<1 || dots<atps+2 || dots+2>=email.length) {
+					document.getElementById('email-error').innerHTML ="<span style='color: red;'>Alamat email tidak valid.</span>";
+					document.getElementById('email').focus();
+					exit;
+				}else document.getElementById('email-error').innerHTML ='';
+				
+				if (status == '') {
+					document.getElementById('status-error').innerHTML ="<span style='color: red;'>status Harus Dipilih.</span>";
+					document.getElementById('status').focus();
+					exit;
+				}else document.getElementById('status-error').innerHTML ='';
+			}, 
+		success:function(){	
+			swal({
+				    title: 'Tambah Sales Berhasil !',
+				    text: 'Auto Close...',
+				    icon: 'success',
+				    timer: 4000,
+				    showConfirmButton: false,
+				})
+			location.href="#";		
+			location.reload(true)
+		},
+		url: '<?php echo $this->baseUrl();?>/sales/kirimdata',
+		type: 'post',
+		resetForm: false
+	};
+	
+	function isNumber(evt) {
+        var iKeyCode = (evt.which) ? evt.which : evt.keyCode
+        if (iKeyCode != 46 && iKeyCode > 31 && (iKeyCode < 48 || iKeyCode > 57))
+            return false;
+
+        return true;
+    } 
+</script>

@@ -1,0 +1,152 @@
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Struk</title>
+<style type="text/css">
+<!--
+body {
+  -webkit-print-color-adjust: exact !important;
+}
+.style1 {
+	font-weight: bold;
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+}
+
+.style5 {font-family: Verdana, Arial, Helvetica, sans-serif; }
+.style7 {font-family: Verdana, Arial, Helvetica, sans-serif; font-style: italic; }
+-->
+</style>
+</head>
+
+<body onload="window.print();">
+<table width="50%" style="border: 0px solid black;" height="50%" border="1">
+  <tr style="border-style:solid;">
+    <th align="center" style="border-bottom:3px solid black; border-collapse: collapse; border-left:0px; border-top:0px; border-right:0px;" height="71" colspan="2" valign="bottom"><div align="center" class="style5">
+      <p align="center"><img src="<?php echo $this->baseUrl();?>/img/logo.PNG" width="23%" height="38%" style="margin-left:-10px;" /></p>
+      <p align="center"><strong>VAPEHITZ </strong></p>
+      <p align="center">Jalan Palasari No. 20 Bandung</p>
+    </div></th>
+  </tr>
+  <tr>
+    <th align="center" style="border-bottom:0px solid black; border-collapse: collapse; border-left:0px; border-top:0px; border-right:0px;" height="61" colspan="2" valign="top"><div align="center" class="style5">
+      <p><strong><u>NOTA PENJUALAN</u></strong></p>
+      <p><?php echo $this->data[0]['no_invoice'];?></p>
+      </div></th>
+  </tr>
+  <tr>
+    <td style="border-bottom:0px solid black; border-collapse: collapse; border-left:0px; border-top:0px; border-right:0px;" width="65" valign="top"><span class="style5">Tanggal</span></td>
+	<?php $tgl_invoice =  date("d/m/Y", strtotime($this->data[0]['tgl_invoice']));?>
+    <td style="border-bottom:0px solid black; border-collapse: collapse; border-left:0px; border-top:0px; border-right:0px;" width="191" valign="top" width="191" valign="top"><span class="style5">: <?php echo $tgl_invoice;?></span></td>
+  </tr>
+  <tr>
+    <td valign="top" style="border-bottom:0px solid black; border-collapse: collapse; border-left:0px; border-top:0px; border-right:0px;" width="191" valign="top"><span class="style5">User</span></td>
+    <td valign="top" style="border-bottom:0px solid black; border-collapse: collapse; border-left:0px; border-top:0px; border-right:0px;" width="191" valign="top"><span class="style5">: -</span></td>
+  </tr>
+  <tr>
+  <td colspan="2" style="border-bottom:1px solid black; border-collapse: collapse; border-left:0px; border-top:0px; border-right:0px;"></td>
+  </tr>
+  <tr>
+    <td style="border:hidden;" valign="top" width="191" valign="top"><span class="style5">Barang</span></td>
+    <td style="border:hidden;" valign="top" width="191" valign="top"><div align="right" class="style5">Harga</div></td>
+  </tr>
+  <tr>
+  <td colspan="2" style="border-bottom:1px solid black; border-collapse: collapse; border-left:0px; border-top:0px; border-right:0px;"></td>
+  </tr>
+  <?php
+	 for($d=0; $d<count($this->data3); $d++){
+									
+		$kode_barang 	= $this->data3[$d]['kode_barang'];
+		$harga_jual 	= number_format($this->data3[$d]['harga_jual'],0,",",".");
+		$harga_jual2 	= $this->data3[$d]['harga_jual'];
+		$discount 		= number_format($this->data3[$d]['discount'],0,",",".");
+		$qty 			= $this->data3[$d]['qty'];
+		$sub_total		= number_format($this->data3[$d]['sub_total'],0,",",".");
+		$jenis_barang	= $this->data3[$d]['jenis_barang'];
+		$kode_jenis_barang = $this->data3[$d]['kode_jenis_barang'];
+		
+		$barang = $this->Salestudio_Service->getdatabarangid($kode_barang);
+		$nama_barang  = $barang[0]['nama_barang'];
+		$ket		  = $barang[0]['ket'];
+		$stok_studio  = $barang[0]['stok_studio'];
+		$hj_whs    = $barang[0]['hj_whs'];
+		$hj_whs2	  = str_replace(".", "", $hj_whs);
+		?>	
+  <tr>
+    <td valign="top" style="border:hidden;"><span class="style5"><?php echo $nama_barang;?></span></td>
+    <td valign="top" style="border:hidden;"><div align="right"><span class="style5"><?php echo number_format($hj_whs,0,",",".");?></span></div></td>
+  </tr>
+  <tr>
+    <td style="border-bottom:1px solid black; border-collapse: collapse; border-left:0px; border-top:0px; border-right:0px;" valign="top">
+	<div align="right" class="style1">
+      <p>Disc. (%)</p>
+      <p>Qty</p>
+      <p>Subtotal</p>
+    </div></td>
+    <td style="border-bottom:1px solid black; border-collapse: collapse; border-left:0px; border-top:0px; border-right:0px;" valign="top">
+	<div align="right">
+      <p><?php echo $discount;?></p>
+      <p><?php echo $qty;?></p>
+      <p><?php echo $sub_total;?></p>
+    </div></td>
+  </tr>
+	 <?php } ?>
+  <tr>
+    <td style="border:hidden;" valign="top">
+	<div align="right" class="style1">
+      <p>Total</p>
+    </div></td>
+    <td style="border:hidden;" valign="top">
+	<div align="right">
+      <p><?php echo number_format($this->data[0]['total_biaya'],0,",",".");?></p>
+    </div></td>
+  </tr>
+  <tr>
+  <td colspan="2" style="border-bottom:1px solid black; border-collapse: collapse; border-left:0px; border-top:0px; border-right:0px;"></td>
+  </tr>
+  <tr>
+  <td colspan="2" style="border-bottom:0px solid black; border-collapse: collapse; border-left:0px; border-top:0px; border-right:0px;"><span class="style5"><b>Pembayaran</b></span></td>
+  </tr>
+  <tr>
+  <td colspan="2" style="border-bottom:0px solid black; border-collapse: collapse; border-left:0px; border-top:0px; border-right:0px;"><span class="style7"><?php echo $this->data[0]['metode_pembayaran'];?></span></td>
+  </tr>
+  <tr>
+    <td valign="top" style="border:hidden;"><span class="style5"><b>Jumlah Pembayaran</b></span></td>
+    <td valign="top" style="border:hidden;"><div align="right"><span class="style5"><?php echo number_format($this->data[0]['jml_pembayaran'],0,",",".");?></span></div></td>
+  </tr>
+  <?php if($this->data[0]['metode_pembayaran']=='Transfer'){?>
+  <tr>
+    <td valign="top" style="border:hidden;"><span class="style5"><b>Biaya Admin </b></span></td>
+    <td valign="top" style="border:hidden;"><div align="right"><span class="style5"><?php echo number_format($this->data[0]['biaya_admin'],0,",",".");?></span></div></td>
+  </tr>
+  <?php }else{ ?>
+  <tr>
+    <td valign="top" style="border:hidden;"><span class="style5"><b>Kembali </b></span></td>
+    <td valign="top" style="border:hidden;"><div align="right"><span class="style5"><?php echo number_format($this->data[0]['uang_kembali'],0,",",".");?></span></div></td>
+  </tr>
+  <?php } ?>
+  <tr>
+  <td height="140" colspan="2" style="border-bottom:0px solid black; border-collapse: collapse; border-left:0px; border-top:0px; border-right:0px;">&nbsp;</td>
+  </tr>
+  <tr>
+  <th align="center" colspan="2" style="border-bottom:0px solid black; border-collapse: collapse; border-left:0px; border-top:0px; border-right:0px;"><span class="style5"><b>Whatsapp online : 085200002899</b></span></th>
+  </tr>
+  <tr>
+  <th colspan="2" style="border-bottom:0px solid black; border-collapse: collapse; border-left:0px; border-top:0px; border-right:0px;"><span class="style5"><b>Email support : vapehitz.indo@gmail.com</b></span></th>
+  </tr>
+  <tr>
+  <th align="center" colspan="2" style="border-bottom:0px solid black; border-collapse: collapse; border-left:0px; border-top:0px; border-right:0px;"><span class="style5"><b>Instagram : @vapehitz_official</b></span></th>
+  </tr>
+  <tr>
+  <th align="center" colspan="2"
+  style="border-bottom:3px solid black; border-collapse: collapse; border-left:0px; border-top:0px; border-right:0px;" height="71" colspan="2" valign="bottom" align="center"><span class="style5"><p style="margin-top:50px;">Terima Kasih</p><p>Selamat Berbelanja Kembali</p></span></th>
+  </tr>
+</table>
+</body>
+  ';
+
+<?php /*
+  require_once "./mpdf_v8.0.3-master/vendor/autoload.php";
+  $mpdf = new \Mpdf\Mpdf();
+  $mpdf->AddPage("P","","","","","5","90","5","0","","","","","","","","","","","","A5");
+  $mpdf->WriteHTML($content);
+  $mpdf->Output(); */
+?>

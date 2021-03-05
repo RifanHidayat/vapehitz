@@ -1,0 +1,388 @@
+<style>
+#backgroundPopup{  
+
+display:none;  
+position:fixed;  
+_position:absolute; /* hack for internet explorer 6*/  
+height:100%;  
+width:100%;  
+top:0;  
+left:0; 
+/*background: rgba(0, 0, 0, 0) url("../img/popup-bg.png");*/
+background:rgba(0,0,0,0.85);  
+border:1px solid #cecece;  
+z-index:1040;  
+
+
+}  
+ 
+ 
+.box-popup1{
+	position:fixed;
+	top:30px;
+	left:30px;
+	width:40px;
+	height:30px;
+}
+ 
+
+#popupContact{  
+
+display:none;  
+position:fixed;  
+_position:absolute; /* hack for internet explorer 6*/  
+height:100%; 
+width:90%;  
+background:#acacac;  
+z-index:999999;  
+font-size:13px;  
+overflow:auto;
+top:2px;
+bottom:10px;
+padding:15px;
+margin: 1%;
+}  
+
+
+
+
+#popupContact h1{  
+text-align:left;  
+color:#6FA5FD;  
+font-size:22px;  
+font-weight:bold;  
+border-bottom:1px dotted #D3D3D3;  
+padding-bottom:2px;  
+margin-bottom:20px;  
+}  
+#popupContact textarea{width:90%;height:100px;}
+#popupContactClose{  
+font-size:14px;  
+line-height:14px;  
+right:6px;  
+top:4px;  
+position:absolute;  
+color:#6fa5fd;  
+font-weight:bold;  
+width:16px;
+cursor:pointer;
+display:block;  
+background:url(../images/cross.png)
+} 
+
+
+</style>
+<form id="frm_postdata" name="frm_postdata" enctype="multipart/form-data" method="POST">
+	<input type="hidden" name="currentPage" id="currentPage" size="6" maxlength="6" value="<?php echo $this->numPage;?>" class="inputbox2 narrowkey1"></input>
+		<?php 
+			$seq = $this->seq;
+			//var_dump($seq);
+			$seq += 1;
+			$seq=str_pad($seq, 5, '0', STR_PAD_LEFT);
+		?>
+		<input type="hidden" id='seq' name='seq' value ='<?php echo $seq;?>'>
+		<div id="popupview"></div>
+		<div class="panel">
+            <fieldset class="panel-dt">							
+				<!--h4><i class="fa fa-angle-right"></i> Edit Pengeluaran Barang Bad Stock</h4-->
+						<br>
+					<div class="col-sm-12">
+						<table width="100%">
+							<tr>
+								<td width="10%"><font style="font-size:12px;font-weight:bold;">Nomor Request</font></td>
+								<td width="1%">:</td>
+								<td>
+									<table>
+										<td> <input name="no_request" id="no_request" type="text" maxlength="50" size="20" class="form-control input-sm" value="<?php echo $this->data[0]['no_request'];?>" readonly> </td>
+										<td> &nbsp; <label id="no_request-error" for="no_request" class="error"></td>
+									</table>
+								</td>
+							</tr> 
+							<tr><td>&nbsp;</td></tr>
+							<tr>
+								<?php 
+									$tgl_request =  date("d/m/Y", strtotime($this->data[0]['tgl_request']));
+								?>
+								<td width="10%"><font style="font-size:12px;font-weight:bold;">Tanggal Request</font></td>
+								<td width="1%">:</td>
+								<td>
+									<table>
+										<td> 
+											<input name="tgl_request" id="tgl_request" class="form-control form-control-inline input-medium" size="16" type="text" value="<?php echo $tgl_request;?>">
+											<span class="input-group-btn add-on">
+												<button class="btn btn-theme" type="button"><i class="fa fa-calendar"></i></button>
+											</span>
+										</td>
+										<td> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <label id="tgl_request-error" for="tgl_request" class="error"></td>
+									</table>
+								</td>
+							</tr> 
+							<tr><td>&nbsp;</td></tr>
+						</table>
+						
+						<div align='left'>
+							<input type="button" class="right btn btn-success  btn-xs" style="font-weight:bold;" value="Tambah Barang" onclick="dataliquid()">
+							<input type='hidden' name='counterx' id='counterx' value="0">
+						</div>
+						<br>
+						<table width="100%" id="myTable" style="font-size:12px;" class="table-bordered">
+							<tr bgcolor="#4ECDC4">
+								<td width="25%" style="text-align:center;"> <font style="font-size:12px;font-weight:bold;">Kode Barang</font></td>
+								<td width="25%" style="text-align:center;"> <font style="font-size:12px;font-weight:bold;">Nama Barang</font></td>
+								<td width="9%" style="text-align:center;"> <font style="font-size:12px;font-weight:bold;">Keterangan</font></td>
+								<td width="9%" style="text-align:center;"> <font style="font-size:12px;font-weight:bold;">On Hand</font></td>
+								<td width="9%" style="text-align:center;"> <font style="font-size:12px;font-weight:bold;">Stock Pusat</font></td>
+								<td width="9%" style="text-align:center;"> <font style="font-size:12px;font-weight:bold;">Stock Studio</font></td>
+								<td width="9%" style="text-align:center;"> <font style="font-size:12px;font-weight:bold;">Qty</font></td>
+								<td width="5%" style="text-align:center;"> <font style="font-size:12px;font-weight:bold;"></font></td>
+							</tr>
+							<?php
+								 for($d=0; $d<count($this->data3); $d++){
+									
+										$kode_barang 	= $this->data3[$d]['kode_barang'];
+										$qty 			= number_format($this->data3[$d]['qty'],0,",",".");
+										$jenis_barang	= $this->data3[$d]['jenis_barang'];
+										$kode_jenis_barang = $this->data3[$d]['kode_jenis_barang'];
+										
+										$barang = $this->Reqstudiotocentral_Service->getdatabarangid($kode_barang);
+										$nama_barang  = $barang[0]['nama_barang'];
+										$ket	  	  = $barang[0]['ket'];
+										$stok_pusat	  = number_format($barang[0]['stok_pusat'],0,",",".");
+										$on_hand	  = number_format($barang[0]['on_hand'],0,",",".");
+										$stok_studio  = number_format($barang[0]['stok_studio'],0,",",".");
+										
+										$hitung = $barang[0]['on_hand'] - $this->data3[$d]['qty'];
+									?>	
+								<tr>
+									<td><input type='text' class='form-control input-sm' name='kode_barang[]' value='<?php echo $kode_barang;?>' readonly> <input type='hidden' name='nama_tabel[]' value='<?php echo $jenis_barang;?>' readonly></td>
+								    <td><input type='text' class='form-control input-sm' name='nama_barang[]' value='<?php echo $nama_barang;?>' readonly> <input type='hidden' name='kode[]' value='<?php echo $kode_jenis_barang;?>' readonly></td>
+								    <td><input type='text' class='form-control input-sm' id='ket<?php echo $d+1;?>' name='ket[]' value='<?php echo $ket;?>' readonly></td>
+									<td><input type='text' class='form-control input-sm' id='on_hand<?php echo $d+1;?>' name='on_hand[]' value='<?php echo $on_hand;?>' readonly><input type='hidden' id='on_hand_awal<?php echo $d+1;?>' name='on_hand_awal[]' value='<?php echo $hitung;?>' readonly></td>
+								    <td><input type='text' class='form-control input-sm' id='stok_gudang<?php echo $d+1;?>' name='stok_gudang[]' value='<?php echo $stok_pusat;?>' readonly></td>
+								    <td><input type='text' class='form-control input-sm' id='stok_studio<?php echo $d+1;?>' name='stok_studio[]' value='<?php echo $stok_studio;?>' readonly></td>
+								    <td><input type='text' class='form-control input-sm' id='qty<?php echo $d+1;?>' name='qty[]' value='<?php echo $qty;?>' onkeyup='hitung(<?php echo $d+1;?>)'><input type='hidden' id='qty_awal<?php echo $d+1;?>' name='qty_awal[]' value='<?php echo $qty;?>' readonly></td>
+									<td><input type='button' id='delete' class='btn btn-danger btn-sm mar-ed-button' name='delete' onclick='deleterow(this,<?php echo $d+1;?>)' value='Hapus'/></td>
+								</tr>
+						<?php } ?>
+						</table>
+						<br>
+					</div>				
+			</fieldset>
+		</div>
+		
+	</div>
+</div>
+<div class="col-lg-12">
+<div class="form-group form-group-bottom" align="right">
+						<input type="hidden" id="proses" name="proses" value="<?php echo $this->proses?>">	
+						<br><br>
+							
+							<a href="reqstudiotocentral">
+							<button type="button" class="btn btn-theme02">
+								<span class="fa fa-backward"></span> &nbsp;Kembali
+							</button></a>
+							<button type="button" class="btn btn-theme03" onCLick="PostData()">
+								<span class="fa fa-save"></span> &nbsp;Simpan
+							</button>
+							
+			</div>
+</div>
+</form>
+  <script type="text/javascript" src="<?php echo $this->baseUrl();?>/lib/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
+  <script src="<?php echo $this->baseUrl();?>/lib/jquery/jquery.min.js"></script>
+  <script src="<?php echo $this->baseUrl();?>/lib/bootstrap/js/bootstrap.min.js"></script>
+  <script src="<?php echo $this->baseUrl();?>/lib/jquery.form.js"></script>
+  <link rel="stylesheet" type="text/css" href="<?php echo $this->baseUrl();?>/css/sweetalert.css">
+  <script src="<?php echo $this->baseUrl();?>/lib/sweetalert.min.js"></script>
+<script>
+	function PostData(){
+		//alert('Testing2');
+        $("#frm_postdata").ajaxSubmit(post_data);
+    }
+	
+	var post_data = {
+		target:'',
+		beforeSubmit: function() {	
+			var tgl_request = document.getElementById('tgl_request').value;
+			var seq		 	= document.getElementById('seq').value;
+				
+				if (!tgl_request) {
+					document.getElementById('tgl_request-error').innerHTML ="<span style='color: red;'>Tanggal Request Harus Diisi.</span>";
+					document.getElementById('tgl_request').focus();
+					exit;
+				}else document.getElementById('tgl_request-error').innerHTML ='';
+				
+			}, 
+		success:function(){	
+			swal({
+				    title: 'Order Sukses !',
+				    text: 'Auto Close...',
+				    icon: 'success',
+				    timer: 4000,
+				    showConfirmButton: false,
+				})
+			location.href="#";		
+			location.reload(true)
+		},
+		url: '<?php echo $this->baseUrl();?>/reqstudiotocentral/kirimdataedit',
+		type: 'post',
+		resetForm: false
+	};
+	
+	function isNumber(evt) {
+        var iKeyCode = (evt.which) ? evt.which : evt.keyCode
+        if (iKeyCode != 46 && iKeyCode > 31 && (iKeyCode < 48 || iKeyCode > 57))
+            return false;
+
+        return true;
+    } 
+	
+	function closeDetil(){
+	document.getElementById('popupContact').style.display = "none";
+	disablePopup();
+	}
+	
+	function deleterow(button,rows){
+		var x = button.parentNode.parentNode.rowIndex;
+		document.getElementById("myTable").deleteRow(x);
+	}
+
+	function pilih_barang(x){
+		var nilai = x.value;
+		if(nilai == 'Liquid'){
+			dataliquid();
+		} else if(nilai == 'Device'){
+			datadevice();
+		} else if(nilai == 'Aksesoris'){
+			dataaksesoris();
+		} else if(nilai == 'Atomizer'){
+			dataatomizer();
+		} 
+	}
+	
+	function loadPopup() {
+		var popupStatus = 0;
+		if (popupStatus == 0) {
+			jQuery("#backgroundPopup").css({"opacity": "1"});
+			jQuery("#backgroundPopup").fadeIn("fast");
+			jQuery("#popupContact").fadeIn("fast");
+			popupStatus = 1
+		}
+	}
+
+	function centerPopup() {
+		var windowWidth = document.documentElement.clientWidth;
+		var windowHeight = "1000%";
+		var popupHeight = jQuery("#popupContact").height();
+		var popupWidth = jQuery("#popupContact").width();
+	}
+
+	function closePopup() {
+		document.getElementById('popupContact').style.display = "none";
+		document.getElementById('backgroundPopup').style.display = "none";
+	}
+
+	function disablePopup() {
+		document.getElementById('popupContact').style.display = "none";
+		document.getElementById('backgroundPopup').style.display = "none";
+	}
+		
+	function dataliquid(){
+		var seq = document.getElementById('seq').value;
+		
+		//alert('maintain'); 
+		
+		var url = '<?php echo $this->basePath; ?>/reqstudiotocentral/dataliquid';
+		var opt = {seq:seq};
+		
+		jQuery.get(url,opt, function(data) {			
+			jQuery("#popupview").html(data);
+			centerPopup(); 
+			loadPopup();		
+		})
+	}
+	
+	function datadevice(){
+		var seq = document.getElementById('seq').value;
+		
+		//alert('maintain'); 
+		
+		var url = '<?php echo $this->basePath; ?>/reqstudiotocentral/datadevice';
+		var opt = {seq:seq};
+		
+		jQuery.get(url,opt, function(data) {			
+			jQuery("#popupview").html(data);
+			centerPopup(); 
+			loadPopup();		
+		})
+	}
+	
+	function dataaksesoris(){
+		var seq = document.getElementById('seq').value;
+		
+		//alert('maintain'); 
+		
+		var url = '<?php echo $this->basePath; ?>/reqstudiotocentral/dataaksesoris';
+		var opt = {seq:seq};
+		
+		jQuery.get(url,opt, function(data) {			
+			jQuery("#popupview").html(data);
+			centerPopup(); 
+			loadPopup();		
+		})
+	}
+	
+	function dataatomizer(){
+		var seq = document.getElementById('seq').value;
+		
+		//alert('maintain'); 
+		
+		var url = '<?php echo $this->basePath; ?>/reqstudiotocentral/dataatomizer';
+		var opt = {seq:seq};
+		
+		jQuery.get(url,opt, function(data) {			
+			jQuery("#popupview").html(data);
+			centerPopup(); 
+			loadPopup();		
+		})
+	}
+	
+	function hitung(button){
+		var x = button;
+		
+		var on_hand_awal = document.getElementById("on_hand_awal"+x).value;
+		var on_hand_awal2 = on_hand_awal.replaceAll(".", "");
+		
+		var stok_gudang = document.getElementById("stok_gudang"+x).value;
+		var stok_gudang2 = stok_gudang.replaceAll(".", "");
+		
+		var hitung = parseInt(stok_gudang2) - parseInt(on_hand_awal2);
+		
+		var qty = document.getElementById("qty"+x).value;
+		var qty2 = qty.replaceAll(".", "");
+		
+		if(parseInt(qty2) > parseInt(hitung)){
+			alert('maksimal qty adalah ' + hitung );
+			document.getElementById("qty"+x).value='';
+			document.getElementById("on_hand"+x).value=on_hand_awal;
+		} else {
+			var hitung2 = parseInt(qty2) + parseInt(on_hand_awal2);
+			document.getElementById("on_hand"+x).value=hitung2;
+		}
+	}
+	
+</script>
+	<script>
+	 $(document).ready(function(){
+		$(function() {
+			$('#tgl_request').datepicker({
+				format:'dd/mm/yyyy',
+				changeMonth: true,
+				changeYear: true
+			});
+		});
+	});
+	</script>
+  <script src="<?php echo $this->baseUrl();?>/lib/jquery-ui-1.9.2.custom.min.js"></script>
+  <script type="text/javascript" src="<?php echo $this->baseUrl();?>/lib/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
+  <script src="<?php echo $this->baseUrl();?>/lib/advanced-form-components.js"></script>

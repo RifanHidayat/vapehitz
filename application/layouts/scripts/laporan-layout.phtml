@@ -1,0 +1,1475 @@
+<div id="layoutnya">
+<?php require('partial/header.php');?>
+<?php require('partial/menu.php');?>   
+<?php
+require_once 'Zend/View.php';
+require_once 'share/oa_page.php';
+$halaman = new oa_page();
+$ctrlFrm = new Zend_View();
+
+$currentPage  = $this->currentPage;
+?>
+<script>
+	$(document).ready(function () {
+		$('#dataTables-emp').dataTable({
+			"bPaginate": true,
+			"bLengthChange": true,
+			"bFilter": true,
+			"bInfo": true,
+			"bAutoWidth": true});
+	});
+	 
+</script>
+<link rel="stylesheet" href="<?php echo $this->baseUrl();?>/calendar/daterangepicker-master/daterangepicker.css" />
+    <!-- **********************************************************************************************************************************************************
+        MAIN CONTENT
+        *********************************************************************************************************************************************************** -->
+    <!--main content start-->
+	<?php $serialize_permission = unserialize($this->permission);?>
+    <section id="main-content">
+      <section class="wrapper">
+        <h3><i class="fa fa-angle-right"></i> Laporan Vapehitz</h3>
+        <div class="row mb">
+          <!-- page start-->
+          <div class="content-panel">
+            <div class="adv-table">
+			<div id="listprogram" align="center"  class="col-xs-12">
+				<br>
+					<div id="page-content">
+					<div class="col-lg-12">
+						<form name="cari" class="form-horizontal style-form" method="get">
+							<input type="hidden" name="currentPage" id="currentPage" size="6" maxlength="6" value="<?php echo $this->numPage;?>" class="inputbox2 narrowkey1"></input>
+							<table width="100%">
+							<tr>
+								<td width="10%"><font style="font-size:12px;font-weight:bold;">Laporan</font></td>
+								<td width="1%">:</td>
+								<td>
+									<table>
+										<td> 
+											<select id="tipe" name="tipe" class = "form-control input-sm" width="15%" onclick="pilihlaporan(this)">
+												<option value="0"><b>--------- Laporan Master Data ---------</b></option>
+												<?php if($serialize_permission) { if(in_array('laporanSupplier', $serialize_permission)) { ?>
+													<option value="supplier">Master Data Supplier</option>
+												<?php } } ?>
+												<?php if($serialize_permission) { if(in_array('laporanSales', $serialize_permission)) { ?>
+													<option value="sales">Master Data Sales</option>
+												<?php } } ?>
+												<?php if($serialize_permission) { if(in_array('laporanCustomer', $serialize_permission)) { ?>
+													<option value="customer">Master Data Customer</option>
+												<?php } } ?>
+												<?php if($serialize_permission) { if(in_array('laporanLiquid', $serialize_permission)) { ?>
+													<option value="liquid">Master Data Isi Ulang Liquid</option>
+												<?php } } ?>
+												<?php if($serialize_permission) { if(in_array('laporanPerlengkapan', $serialize_permission)) { ?>
+													<option value="device">Master Data Perlengkapan</option>
+												<?php } } ?>
+												<?php if($serialize_permission) { if(in_array('laporanAksesoris', $serialize_permission)) { ?>
+													<option value="accessories">Master Data Aksesoris</option>
+												<?php } } ?>
+												<?php if($serialize_permission) { if(in_array('laporanAtomizer', $serialize_permission)) { ?>
+													<option value="atomizer">Master Data Atomizer</option>
+												<?php } } ?>
+												<option value="1"><b>--------- Laporan Transaksi Pusat ---------</b></option>
+												<?php if($serialize_permission) { if(in_array('laporanOrderCentral', $serialize_permission)) { ?>
+													<option value="ordercentral">Pembelian Barang</option>
+												<?php } } ?>
+												<?php if($serialize_permission) { if(in_array('laporanPembayaranSupplier', $serialize_permission)) { ?>
+													<option value="pembayaransupplier">Pembayaran Supplier</option>
+												<?php } } ?>
+												<?php if($serialize_permission) { if(in_array('laporanReturSupplier', $serialize_permission)) { ?>
+													<option value="retursupplier">Retur Pembelian Barang</option>
+												<?php } } ?>
+												<?php if($serialize_permission) { if(in_array('laporanPenyelesaianPembelian', $serialize_permission)) { ?>
+													<option value="penyelesaianpembelian">Penyelesaian Retur Pembelian</option>
+												<?php } } ?>
+												<?php if($serialize_permission) { if(in_array('laporanSaleCentral', $serialize_permission)) { ?>
+													<option value="salecentral">Penjualan Barang</option>
+												<?php } } ?>
+												<?php if($serialize_permission) { if(in_array('laporanPembayaranCustomer', $serialize_permission)) { ?>
+													<option value="pembayarancustomer">Pembayaran Customer</option>
+												<?php } } ?>
+												<?php if($serialize_permission) { if(in_array('laporanReturCustomer', $serialize_permission)) { ?>
+													<option value="returcustomer">Retur Penjualan Barang</option>
+												<?php } } ?>
+												<?php if($serialize_permission) { if(in_array('laporanPenyelesaianPenjualan', $serialize_permission)) { ?>
+													<option value="penyelesaianpenjualan">Penyelesaian Retur Penjualan</option>
+												<?php } } ?>
+												<?php if($serialize_permission) { if(in_array('laporanSopGudang', $serialize_permission)) { ?>
+													<option value="sopgudang">Stock Opname Gudang</option>
+												<?php } } ?>
+												<?php if($serialize_permission) { if(in_array('laporanBadstockGudang', $serialize_permission)) { ?>
+													<option value="badstockgudang">Pengeluaran Barang Bad Stock</option>
+												<?php } } ?>
+												<?php if($serialize_permission) { if(in_array('laporanReqtoRetail', $serialize_permission)) { ?>
+													<option value="reqtoretail">Permintaan Barang ke Gudang Retail</option>
+												<?php } } ?>
+												<?php if($serialize_permission) { if(in_array('laporanReqtoStudio', $serialize_permission)) { ?>
+													<option value="reqtostudio">Permintaan Barang ke Gudang Studio</option>
+												<?php } } ?>
+												<?php if($serialize_permission) { if(in_array('laporanApprvCentral', $serialize_permission)) { ?>
+													<option value="reqfromretail">Permintaan Barang dari Gudang Retail</option>
+												<?php } } ?>
+												<?php if($serialize_permission) { if(in_array('laporanApprvCentral', $serialize_permission)) { ?>
+													<option value="reqfromstudio">Permintaan Barang dari Gudang Studio</option>
+												<?php } } ?>
+												<option value="2"><b>--------- Laporan Transaksi Retail ---------</b></option>
+												<?php if($serialize_permission) { if(in_array('laporanApprvRetail', $serialize_permission)) { ?>
+													<option value="apprvretail">Permintaan Barang dari Gudang Pusat</option>
+												<?php } } ?>
+												<?php if($serialize_permission) { if(in_array('laporanReqretailToCentral', $serialize_permission)) { ?>
+													<option value="reqretailtocentral">Permintaan Barang Ke Gudang Pusat</option>
+												<?php } } ?>
+												<?php if($serialize_permission) { if(in_array('laporanSaleRetail', $serialize_permission)) { ?>
+													<option value="saleretail">Transaksi Penjualan Barang</option>
+												<?php } } ?>
+												<?php if($serialize_permission) { if(in_array('laporanReturSaleRetail', $serialize_permission)) { ?>
+													<option value="retursaleretail">Retur Penjualan Barang</option>
+												<?php } } ?>
+												<?php if($serialize_permission) { if(in_array('laporanSopRetail', $serialize_permission)) { ?>
+													<option value="sopretail">Stock Opname Retail</option>
+												<?php } } ?>
+												<option value="2"><b>--------- Laporan Transaksi Studio ---------</b></option>
+												<?php if($serialize_permission) { if(in_array('laporanApprvStudio', $serialize_permission)) { ?>
+													<option value="apprvstudio">Permintaan Barang dari Gudang Pusat</option>
+												<?php } } ?>
+												<?php if($serialize_permission) { if(in_array('laporanReqstudioToCentral', $serialize_permission)) { ?>
+													<option value="reqstudiotocentral">Permintaan Barang Ke Gudang Pusat</option>
+												<?php } } ?>
+												<?php if($serialize_permission) { if(in_array('laporanSaleStudio', $serialize_permission)) { ?>
+													<option value="salestudio">Transaksi Penjualan Barang</option>
+												<?php } } ?>
+												<?php if($serialize_permission) { if(in_array('laporanReturSaleStudio', $serialize_permission)) { ?>
+													<option value="retursalestudio">Retur Penjualan Barang</option>
+												<?php } } ?>
+												<?php if($serialize_permission) { if(in_array('laporanSopStudio', $serialize_permission)) { ?>
+													<option value="sopstudio">Stock Opname Studio</option>
+												<?php } } ?>
+											</select>
+										</td>
+										<td> </td>
+									</table>
+								</td>
+							</tr>
+							<tr><td>&nbsp;</td></tr>
+							<tr id="periode1">
+								<td width="10%"><font style="font-size:12px;font-weight:bold;">Periode</font></td>
+								<td width="1%">:</td>
+								<td>
+									<table>
+										<td> <input type="text" class="form-control readonly" id="perioddate" name="perioddate" value="" readonly style="width:14em"/> </td>
+										<td> &nbsp; <label id="perioddate-error" for="perioddate" class="error"></label></td>
+									</table>
+								</td>
+							</tr> 
+							<tr id="periode2"><td>&nbsp;</td></tr>
+							<tr id="search">
+								<td width="10%"></td>
+								<td width="1%"></td>
+								<td>
+									<table>
+										<td> 
+											<button type="button" class="btn btn-info btn-sm">
+												<span class="glyphicon glyphicon-search"></span>
+												&nbsp;Cari
+											</button>
+										</td>
+										<td>&nbsp;&nbsp;
+											<button type="button" class="btn btn-info btn-sm" onCLick="kembali()">
+												<span class="fa fa-refresh"></span>
+												&nbsp;Clear
+											</button>
+										</td>
+									</table>
+								</td>
+							</tr> 
+							<tr id="search2"><td>&nbsp;</td></tr>
+						</table>
+							<input type="hidden" name="sortBy" id="sortBy" value="<?php echo $this->sortBy;?>">
+							<input type="hidden" name="sortOrd" id="sortOrd" value="<?php echo $this->sortOrd;?>">
+						</form>
+					</div>
+					
+						<br><br>
+						<table style="font-size:12px;" align="left" id="tabel_supplier2">
+						<tr>
+							<td>
+								<a href ='/laporan/pdfsupplier'><button type="button" class="btn btn-info btn-sm">
+									<span class="fas fa-file-pdf"></span>&nbsp;PDF
+								</button>&nbsp;&nbsp;</a>
+							</td>
+							<td>
+								<a href ='/laporan/xlssupplier'><button type="button" class="btn btn-info btn-sm">
+									<span class="fa fa-excel"></span>&nbsp;Excel
+								</button>&nbsp;&nbsp;</a>
+							</td>
+							<td>
+								<select id="status" name="status" class = "form-control input-sm" width="15%">
+									<option value="">--Pilih Field--</option>
+									<option value="Kode Customer">Kode Supplier</option>
+									<option value="Nama Customer">Nama Supplier</option>
+									<option value="Alamat">Alamat</option>
+									<option value="No Tlp">No Tlp</option>
+									<option value="No Handphone">No Handphone</option>
+									<option value="Email">Email</option>
+									<option value="Tipe">Tipe</option>
+									<option value="Status">Status</option>
+								</select>
+							</td>
+						</tr>
+						</table>
+						<table style="font-size:12px;" class="table table-striped table-bordered table-hover" id="tabel_supplier">
+							<thead>
+							<tr bgcolor="#4ECDC4">
+								<th width="3%" style="text-align:center;">No</th>
+								<th width="11%" style="text-align:center;">Kode Supplier</th>
+								<th width="12%%" style="text-align:center;">Nama Supplier</th>
+								<th width="12%" style="text-align:center;">Alamat</th>
+								<th width="10%" style="text-align:center;">No Tlp</th>
+								<th width="10%" style="text-align:center;">No Handphone</th>
+								<th width="10%" style="text-align:center;">Email</th>
+								<th width="10%" style="text-align:center;">Tipe</th>
+								<th width="10%" style="text-align:center;">Status</th>
+							</tr>
+							</thead>
+							<tbody>
+							<?php
+								 for($x=0; $x<count($this->data); $x++){
+										
+										$nomer			= $x+1;
+										$kode_supplier 	= $this->data[$x]['kode_supplier'];
+										$nama_supplier 	= $this->data[$x]['nama_supplier'];
+										$alamat_supplier = $this->data[$x]['alamat_supplier'];
+										$no_tlp 		= $this->data[$x]['no_tlp'];
+										$no_hp 			= $this->data[$x]['no_hp'];
+										$email 			= $this->data[$x]['email'];
+										$tipe 			= $this->data[$x]['tipe'];
+										$status 		= $this->data[$x]['status'];
+										if($status=='1'){
+											$stat = 'Active';
+										} else {
+											$stat = 'Inactive';
+										}
+									?>	
+											<td align="center"><?php echo $nomer;?></td>	  
+											<td align="center"><?php echo $kode_supplier;?></td>
+											<td align="center"><?php echo $nama_supplier;?></td>
+											<td align="center"><?php echo $alamat_supplier;?></td>
+											<td align="center"><?php echo $no_tlp;?></td>
+											<td align="center"><?php echo $no_hp;?></td>
+											<td align="center"><?php echo $email;?></td>
+											<td align="center"><?php echo $tipe;?></td>
+											<td align="center"><?php echo $stat;?></td>
+										</tr>	
+									<?php 
+										}
+									?>
+								
+							</tbody>
+						</table>
+						
+						<table style="font-size:12px;" align="left" id="tabel_sales2">
+						<tr>
+							<td>
+								<a href ='/laporan/pdfsales'><button type="button" class="btn btn-info btn-sm">
+									<span class="fas fa-file-pdf"></span>&nbsp;PDF
+								</button>&nbsp;&nbsp;</a>
+							</td>
+							<td>
+								<a href ='/laporan/xlssales'><button type="button" class="btn btn-info btn-sm">
+									<span class="fa fa-excel"></span>&nbsp;Excel
+								</button>&nbsp;&nbsp;</a>
+							</td>
+							<td>
+								<select id="status" name="status" class = "form-control input-sm" width="15%">
+									<option value="">--Pilih Field--</option>
+									<option value="Kode Customer">Kode Sales</option>
+									<option value="Nama Customer">Nama Sales</option>
+									<option value="Alamat">Alamat</option>
+									<option value="No Tlp">No Tlp</option>
+									<option value="No Handphone">No Handphone</option>
+									<option value="Email">Email</option>
+									<option value="Status">Status</option>
+								</select>
+							</td>
+						</tr>
+						</table>
+						<table style="font-size:12px;" class="table table-striped table-bordered table-hover" id="tabel_sales">
+							<thead>
+							<tr bgcolor="#4ECDC4">
+								<th width="3%" style="text-align:center;">No</th>
+								<th width="11%" style="text-align:center;">Kode Sales</th>
+								<th width="12%%" style="text-align:center;">Nama Sales</th>
+								<th width="12%" style="text-align:center;">Alamat</th>
+								<th width="10%" style="text-align:center;">No Tlp</th>
+								<th width="10%" style="text-align:center;">No Handphone</th>
+								<th width="10%" style="text-align:center;">Email</th>
+								<th width="10%" style="text-align:center;">Status</th>
+							</tr>
+							</thead>
+							<tbody>
+							<?php
+								 for($x=0; $x<count($this->data2); $x++){
+
+										$nomer			= $x+1;
+										$kode_sales 	= $this->data2[$x]['kode_sales'];
+										$nama_sales 	= $this->data2[$x]['nama_sales'];
+										$alamat_sales   = $this->data2[$x]['alamat_sales'];
+										$no_tlp 		= $this->data2[$x]['no_tlp'];
+										$no_hp 			= $this->data2[$x]['no_hp'];
+										$email 			= $this->data2[$x]['email'];
+										$status 		= $this->data2[$x]['status'];
+										if($status=='1'){
+											$stat = 'Active';
+										} else {
+											$stat = 'Inactive';
+										}
+									?>	
+											<td align="center"><?php echo $nomer;?></td>	  
+											<td align="center"><?php echo $kode_sales;?></td>
+											<td align="center"><?php echo $nama_sales;?></td>
+											<td align="center"><?php echo $alamat_sales;?></td>
+											<td align="center"><?php echo $no_tlp;?></td>
+											<td align="center"><?php echo $no_hp;?></td>
+											<td align="center"><?php echo $email;?></td>
+											<td align="center"><?php echo $stat;?></td>	
+										</tr>	
+									<?php 
+										}
+									?>
+								
+							</tbody>
+						</table>
+						
+						<table style="font-size:12px;" align="left" id="tabel_customer2">
+						<tr>
+							<td>
+								<a href ='/laporan/pdfcustomer'><button type="button" class="btn btn-info btn-sm">
+									<span class="fas fa-file-pdf"></span>&nbsp;PDF
+								</button>&nbsp;&nbsp;</a>
+							</td>
+							<td>
+								<a href ='/laporan/xlscustomer'><button type="button" class="btn btn-info btn-sm">
+									<span class="fa fa-excel"></span>&nbsp;Excel
+								</button>&nbsp;&nbsp;</a>
+							</td>
+							<td>
+								<select id="status" name="status" class = "form-control input-sm" width="15%">
+									<option value="">--Pilih Field--</option>
+									<option value="Kode Customer">Kode Customer</option>
+									<option value="Nama Customer">Nama Customer</option>
+									<option value="Alamat">Alamat</option>
+									<option value="No Tlp">No Tlp</option>
+									<option value="No Handphone">No Handphone</option>
+									<option value="Email">Email</option>
+									<option value="Status">Status</option>
+								</select>
+							</td>
+						</tr>
+						</table>
+						<table style="font-size:12px;" class="table table-striped table-bordered table-hover" id="tabel_customer">
+							<thead>
+							<tr bgcolor="#4ECDC4">
+								<th width="3%" style="text-align:center;">No</th>
+								<th width="11%" style="text-align:center;">Kode Customer</th>
+								<th width="12%%" style="text-align:center;">Nama Customer</th>
+								<th width="12%" style="text-align:center;">Alamat</th>
+								<th width="10%" style="text-align:center;">No Tlp</th>
+								<th width="10%" style="text-align:center;">No Handphone</th>
+								<th width="10%" style="text-align:center;">Email</th>
+								<th width="10%" style="text-align:center;">Status</th>
+							</tr>
+							</thead>
+							<tbody>
+							<?php
+								 for($x=0; $x<count($this->data3); $x++){
+
+										$nomer			= $x+1;
+										$kode_customer 	= $this->data3[$x]['kode_customer'];
+										$nama_customer 	= $this->data3[$x]['nama_customer'];
+										$alamat_customer = $this->data3[$x]['alamat_customer'];
+										$no_tlp 		= $this->data3[$x]['no_tlp'];
+										$no_hp 			= $this->data3[$x]['no_hp'];
+										$email 			= $this->data3[$x]['email'];
+										$status 		= $this->data3[$x]['status'];
+										if($status=='1'){
+											$stat = 'Active';
+										} else {
+											$stat = 'Inactive';
+										}
+									?>	
+											<td align="center"><?php echo $nomer;?></td>	  
+											<td align="center"><?php echo $kode_customer;?></td>
+											<td align="center"><?php echo $nama_customer;?></td>
+											<td align="center"><?php echo $alamat_customer;?></td>
+											<td align="center"><?php echo $no_tlp;?></td>
+											<td align="center"><?php echo $no_hp;?></td>
+											<td align="center"><?php echo $email;?></td>
+											<td align="center"><?php echo $stat;?></td>
+										</tr>	
+									<?php 
+										}
+									?>
+								
+							</tbody>
+						</table>
+						
+						<table style="font-size:12px;" align="left" id="tabel_liquid2">
+						<tr>
+							<td>
+								<a href ='/laporan/pdfliquid'><button type="button" class="btn btn-info btn-sm">
+									<span class="fas fa-file-pdf"></span>&nbsp;PDF
+								</button>&nbsp;&nbsp;</a>
+							</td>
+							<td>
+								<a href ='/laporan/xlsliquid'><button type="button" class="btn btn-info btn-sm">
+									<span class="fa fa-excel"></span>&nbsp;Excel
+								</button>&nbsp;&nbsp;</a>
+							</td>
+							<td>
+								<select id="status" name="status" class = "form-control input-sm" width="15%">
+									<option value="">--Pilih Field--</option>
+									<option value="Kode Customer">Kode Barang</option>
+									<option value="Kode Customer">Nama Barang</option>
+									<option value="Kode Customer">Nic (mg)</option>
+									<option value="Kode Customer">Vol (ml)</option>
+									<option value="Kode Customer">Stok Pusat</option>
+									<option value="Kode Customer">Stok Retail</option>
+									<option value="Kode Customer">Stok Studio</option>
+									<option value="Kode Customer">Bad Stock</option>
+									<option value="Kode Customer">Berat (gr)</option>
+									<option value="Kode Customer">Harga Beli</option>
+									<option value="Kode Customer">Harga Jual Agn</option>
+									<option value="Kode Customer">Harga Jual Ret</option>
+									<option value="Kode Customer">Harga Jual Whs</option>
+									<option value="Kode Customer">Nama Supplier</option>
+									<option value="Kode Customer">Tipe</option>
+									<option value="Kode Customer">Status</option>
+								</select>
+							</td>
+						</tr>
+						</table>
+						<table style="font-size:12px;" class="table table-striped table-bordered table-hover" id="tabel_liquid">
+						<thead>
+							<tr bgcolor="#4ECDC4">
+								<th width="3%" style="text-align:center;">No</th>
+								<th width="7%" style="text-align:center;">Kode Barang</th>
+								<th width="20%" style="text-align:center;">Nama Barang</th>
+								<th width="10%" style="text-align:center;">Nic (mg)</th>
+								<th width="10%" style="text-align:center;">Vol (ml)</th>
+								<th width="10%" style="text-align:center;">Stok Pusat</th>
+								<th width="10%" style="text-align:center;">Stok Retail</th>
+								<th width="10%" style="text-align:center;">Stok Studio</th>
+								<th width="10%" style="text-align:center;">Bad Stock</th>
+								<th width="10%" style="text-align:center;">Berat (gr)</th>
+								<th width="10%" style="text-align:center;">Harga Beli</th>
+								<th width="10%" style="text-align:center;">Harga Jual Agn</th>
+								<th width="10%" style="text-align:center;">Harga Jual Ret</th>
+								<th width="10%" style="text-align:center;">Harga Jual Whs</th>
+								<th width="10%" style="text-align:center;">Nama Supplier</th>
+								<th width="10%" style="text-align:center;">Tipe</th>
+								<th width="10%" style="text-align:center;">Status</th>
+							</tr>
+							</thead>
+							<tbody>
+							<?php
+								 for($x=0; $x<count($this->data4); $x++){
+
+										$nomer			= $x+1;
+										$kode_barang 	= $this->data4[$x]['kode_barang'];
+										$merk_barang 	= $this->data4[$x]['merk_barang'];
+										$nama_barang 	= $this->data4[$x]['nama_barang'];
+										$nic		 	= $this->data4[$x]['nic'];
+										$volume		 	= $this->data4[$x]['volume'];
+										$stok_pusat 	= $this->data4[$x]['stok_pusat'];
+										$stok_retail 	= $this->data4[$x]['stok_retail'];
+										$stok_studio 	= $this->data4[$x]['stok_studio'];
+										$bad_stock	 	= $this->data4[$x]['bad_stock'];
+										$berat		 	= $this->data4[$x]['berat'];
+										$harga_beli	 	= $this->data4[$x]['harga_beli'];
+										$hj_agen	 	= $this->data4[$x]['hj_agen'];
+										$hj_retail	 	= $this->data4[$x]['hj_retail'];
+										$hj_whs		 	= $this->data4[$x]['hj_whs'];
+										$kode_supplier 	= $this->data4[$x]['kode_supplier'];
+										$status 		= $this->data4[$x]['status'];
+										if($status=='1'){
+											$stat = 'Active';
+										} else {
+											$stat = 'Inactive';
+										}
+										
+										$supplier = $this->Laporan_Service->getdatasupplierid($kode_supplier);
+										$nama_supplier  = $supplier[0]['nama_supplier'];
+										$tipe		 	= $supplier[0]['tipe'];
+									?>	
+											<td align="center"><?php echo $nomer;?></td>	  
+											<td align="center"><?php echo $kode_barang;?></td>
+											<td align="center"><?php echo $merk_barang;?> - <?php echo $nama_barang;?></td>
+											<td align="center"><?php echo $nic;?></td>
+											<td align="center"><?php echo $volume;?></td>
+											<td align="center"><?php echo $stok_pusat;?></td>
+											<td align="center"><?php echo $stok_retail;?></td>
+											<td align="center"><?php echo $stok_studio;?></td>
+											<td align="center"><?php echo $bad_stock;?></td>
+											<td align="center"><?php echo $berat;?></td>
+											<td align="center"><?php echo number_format($harga_beli,0,",",".");?></td>
+											<td align="center"><?php echo number_format($hj_agen,0,",",".");?></td>
+											<td align="center"><?php echo number_format($hj_retail,0,",",".");?></td>
+											<td align="center"><?php echo number_format($hj_whs,0,",",".");?></td>
+											<td align="center"><?php echo $nama_supplier;?></td>
+											<td align="center"><?php echo $tipe;?></td>
+											<td align="center"><?php echo $stat;?></td>
+										</tr>	
+									<?php 
+										}
+									?>
+								
+							</tbody>
+						</table>
+						
+						<table style="font-size:12px;" align="left" id="tabel_device2">
+						<tr>
+							<td>
+								<a href ='/laporan/pdfdevice'><button type="button" class="btn btn-info btn-sm">
+									<span class="fas fa-file-pdf"></span>&nbsp;PDF
+								</button>&nbsp;&nbsp;</a>
+							</td>
+							<td>
+								<a href ='/laporan/xlsdevice'><button type="button" class="btn btn-info btn-sm">
+									<span class="fa fa-excel"></span>&nbsp;Excel
+								</button>&nbsp;&nbsp;</a>
+							</td>
+							<td>
+								<select id="status" name="status" class = "form-control input-sm" width="15%">
+									<option value="">--Pilih Field--</option>
+									<option value="Kode Device">Kode Device</option>
+									<option value="Merk Device">Merk Device</option>
+									<option value="Nama Device">Nama Device</option>
+									<option value="Jenis Device">Jenis Device</option>
+									<option value="Stok Pusat">Stok Pusat</option>
+									<option value="Stok Retail">Stok Retail</option>
+									<option value="Stok Studio">Stok Studio</option>
+									<option value="Bad Stock">Bad Stock</option>
+									<option value="Berat (gr)">Berat (gr)</option>
+									<option value="Harga Beli">Harga Beli</option>
+									<option value="Harga Jual Agn">Harga Jual Agn</option>
+									<option value="Harga Jual Ret">Harga Jual Ret</option>
+									<option value="Harga Jual Whs">Harga Jual Whs</option>
+									<option value="Nama Supplier ">Nama Supplier </option>
+									<option value="Tipe">Tipe</option>
+									<option value="Status">Status</option>
+								</select>
+							</td>
+						</tr>
+						</table>
+						<table style="font-size:12px;" class="table table-striped table-bordered table-hover" id="tabel_device">
+							<thead>
+							<tr bgcolor="#4ECDC4">
+								<th width="3%" style="text-align:center;">No</th>
+								<th width="7%" style="text-align:center;">Kode Device</th>
+								<th width="20%" style="text-align:center;">Merk Device</th>
+								<th width="10%" style="text-align:center;">Nama Device</th>
+								<th width="10%" style="text-align:center;">Jenis Device</th>
+								<th width="10%" style="text-align:center;">Stok Pusat</th>
+								<th width="10%" style="text-align:center;">Stok Retail</th>
+								<th width="10%" style="text-align:center;">Stok Studio</th>
+								<th width="10%" style="text-align:center;">Bad Stock</th>
+								<th width="10%" style="text-align:center;">Berat (gr)</th>
+								<th width="10%" style="text-align:center;">Harga Beli</th>
+								<th width="10%" style="text-align:center;">Harga Jual Agn</th>
+								<th width="10%" style="text-align:center;">Harga Jual Ret</th>
+								<th width="10%" style="text-align:center;">Harga Jual Whs</th>
+								<th width="10%" style="text-align:center;">Nama Supplier </th>
+								<th width="10%" style="text-align:center;">Tipe</th>
+								<th width="10%" style="text-align:center;">Status</th>
+							</tr>
+							</thead>
+							<tbody>
+							<?php
+								 for($x=0; $x<count($this->data5); $x++){
+
+										$nomer			= $x+1;
+										$kode_device 	= $this->data5[$x]['kode_device'];
+										$merk_device 	= $this->data5[$x]['merk_device'];
+										$nama_device 	= $this->data5[$x]['nama_device'];
+										$jenis_device 	= $this->data5[$x]['jenis_device'];
+										$stok_pusat 	= $this->data5[$x]['stok_pusat'];
+										$stok_retail 	= $this->data5[$x]['stok_retail'];
+										$stok_studio 	= $this->data5[$x]['stok_studio'];
+										$bad_stock	 	= $this->data5[$x]['bad_stock'];
+										$berat		 	= $this->data5[$x]['berat'];
+										$harga_beli	 	= $this->data5[$x]['harga_beli'];
+										$hj_agen	 	= $this->data5[$x]['hj_agen'];
+										$hj_retail	 	= $this->data5[$x]['hj_retail'];
+										$hj_whs		 	= $this->data5[$x]['hj_whs'];
+										$kode_supplier 	= $this->data5[$x]['kode_supplier'];
+										$status 		= $this->data5[$x]['status'];
+										if($status=='1'){
+											$stat = 'Active';
+										} else {
+											$stat = 'Inactive';
+										}
+										
+										$supplier = $this->Laporan_Service->getdatasupplierid($kode_supplier);
+										$nama_supplier  = $supplier[0]['nama_supplier'];
+										$tipe		 	= $supplier[0]['tipe'];
+									?>	
+											<td align="center"><?php echo $nomer;?></td>	  
+											<td align="center"><?php echo $kode_device;?></td>
+											<td align="center"><?php echo $merk_device;?></td>
+											<td align="center"><?php echo $nama_device;?></td>
+											<td align="center"><?php echo $jenis_device;?></td>
+											<td align="center"><?php echo $stok_pusat;?></td>
+											<td align="center"><?php echo $stok_retail;?></td>
+											<td align="center"><?php echo $stok_studio;?></td>
+											<td align="center"><?php echo $bad_stock;?></td>
+											<td align="center"><?php echo $berat;?></td>
+											<td align="center"><?php echo number_format($harga_beli,0,",",".");?></td>
+											<td align="center"><?php echo number_format($hj_agen,0,",",".");?></td>
+											<td align="center"><?php echo number_format($hj_retail,0,",",".");?></td>
+											<td align="center"><?php echo number_format($hj_whs,0,",",".");?></td>
+											<td align="center"><?php echo $nama_supplier;?></td>
+											<td align="center"><?php echo $tipe;?></td>
+											<td align="center"><?php echo $stat;?></td>
+										</tr>	
+									<?php 
+										}
+									?>
+								
+							</tbody>
+						</table>
+						
+						<table style="font-size:12px;" align="left" id="tabel_aksesoris2">
+						<tr>
+							<td>
+								<a href ='/laporan/pdfaksesoris'><button type="button" class="btn btn-info btn-sm">
+									<span class="fas fa-file-pdf"></span>&nbsp;PDF
+								</button>&nbsp;&nbsp;</a>
+							</td>
+							<td>
+								<a href ='/laporan/xlsaksesoris'><button type="button" class="btn btn-info btn-sm">
+									<span class="fa fa-excel"></span>&nbsp;Excel
+								</button>&nbsp;&nbsp;</a>
+							</td>
+							<td>
+								<select id="status" name="status" class = "form-control input-sm" width="15%">
+									<option value="">--Pilih Field--</option>
+									<option value="Kode Aksesoris">Kode Aksesoris</option>
+									<option value="Nama Aksesoris">Nama Aksesoris</option>
+									<option value="Jenis Aksesoris">Jenis Aksesoris</option>
+									<option value="Stok Pusat">Stok Pusat</option>
+									<option value="Stok Retail">Stok Retail</option>
+									<option value="Stok Studio">Stok Studio</option>
+									<option value="Bad Stock">Bad Stock</option>
+									<option value="Berat (gr)">Berat (gr)</option>
+									<option value="Harga Beli">Harga Beli</option>
+									<option value="Harga Jual Agn">Harga Jual Agn</option>
+									<option value="Harga Jual Ret">Harga Jual Ret</option>
+									<option value="Harga Jual Whs">Harga Jual Whs</option>
+									<option value="Nama Supplier">Nama Supplier	</option>
+									<option value="Tipe">Tipe</option>
+									<option value="Status">Status</option>
+								</select>
+							</td>
+						</tr>
+						</table>
+						<table style="font-size:12px;" class="table table-striped table-bordered table-hover" id="tabel_aksesoris">
+							<thead>
+							<tr bgcolor="#4ECDC4">
+								<th width="3%" style="text-align:center;">No</th>
+								<th width="7%" style="text-align:center;">Kode Aksesoris</th>
+								<th width="20%" style="text-align:center;">Nama Aksesoris</th>
+								<th width="10%" style="text-align:center;">Jenis Aksesoris</th>
+								<th width="10%" style="text-align:center;">Stok Pusat</th>
+								<th width="10%" style="text-align:center;">Stok Retail</th>
+								<th width="10%" style="text-align:center;">Stok Studio</th>
+								<th width="10%" style="text-align:center;">Bad Stock</th>
+								<th width="10%" style="text-align:center;">Berat (gr)</th>
+								<th width="10%" style="text-align:center;">Harga Beli</th>
+								<th width="10%" style="text-align:center;">Harga Jual Agn</th>
+								<th width="10%" style="text-align:center;">Harga Jual Ret</th>
+								<th width="10%" style="text-align:center;">Harga Jual Whs</th>
+								<th width="10%" style="text-align:center;">Nama Supplier</th>
+								<th width="10%" style="text-align:center;">Tipe</th>
+								<th width="10%" style="text-align:center;">Status</th>
+							</tr>
+							</thead>
+							<tbody>
+							<?php
+								 for($x=0; $x<count($this->data6); $x++){
+
+										$nomer			= $x+1;
+										$kode_aksesoris 	= $this->data6[$x]['kode_aksesoris'];
+										$nama_aksesoris 	= $this->data6[$x]['nama_aksesoris'];
+										$jenis_aksesoris	= $this->data6[$x]['jenis_aksesoris'];
+										$stok_pusat 	= $this->data6[$x]['stok_pusat'];
+										$stok_retail 	= $this->data6[$x]['stok_retail'];
+										$stok_studio 	= $this->data6[$x]['stok_studio'];
+										$bad_stock	 	= $this->data6[$x]['bad_stock'];
+										$berat		 	= $this->data6[$x]['berat'];
+										$harga_beli	 	= $this->data6[$x]['harga_beli'];
+										$hj_agen	 	= $this->data6[$x]['hj_agen'];
+										$hj_retail	 	= $this->data6[$x]['hj_retail'];
+										$hj_whs		 	= $this->data6[$x]['hj_whs'];
+										$kode_supplier 	= $this->data6[$x]['kode_supplier'];
+										$status 		= $this->data6[$x]['status'];
+										if($status=='1'){
+											$stat = 'Active';
+										} else {
+											$stat = 'Inactive';
+										}
+										
+										$supplier = $this->Laporan_Service->getdatasupplierid($kode_supplier);
+										$nama_supplier  = $supplier[0]['nama_supplier'];
+										$tipe		 	= $supplier[0]['tipe'];
+									?>	
+											<td align="center"><?php echo $nomer;?></td>	  
+											<td align="center"><?php echo $kode_aksesoris;?></td>
+											<td align="center"><?php echo $nama_aksesoris;?></td>
+											<td align="center"><?php echo $jenis_aksesoris;?></td>
+											<td align="center"><?php echo $stok_pusat;?></td>
+											<td align="center"><?php echo $stok_retail;?></td>
+											<td align="center"><?php echo $stok_studio;?></td>
+											<td align="center"><?php echo $bad_stock;?></td>
+											<td align="center"><?php echo $berat;?></td>
+											<td align="center"><?php echo number_format($harga_beli,0,",",".");?></td>
+											<td align="center"><?php echo number_format($hj_agen,0,",",".");?></td>
+											<td align="center"><?php echo number_format($hj_retail,0,",",".");?></td>
+											<td align="center"><?php echo number_format($hj_whs,0,",",".");?></td>
+											<td align="center"><?php echo $nama_supplier;?></td>
+											<td align="center"><?php echo $tipe;?></td>
+											<td align="center"><?php echo $stat;?></td>
+										</tr>	
+									<?php 
+										}
+									?>
+								
+							</tbody>
+						</table>
+						
+						<table style="font-size:12px;" align="left" id="tabel_atomizer2">
+						<tr>
+							<td>
+								<a href ='/laporan/pdfatomizer'><button type="button" class="btn btn-info btn-sm">
+									<span class="fas fa-file-pdf"></span>&nbsp;PDF
+								</button>&nbsp;&nbsp;</a>
+							</td>
+							<td>
+								<a href ='/laporan/xlsatomizer'><button type="button" class="btn btn-info btn-sm">
+									<span class="fa fa-excel"></span>&nbsp;Excel
+								</button>&nbsp;&nbsp;</a>
+							</td>
+							<td>
+								<select id="status" name="status" class = "form-control input-sm" width="15%">
+									<option value="">--Pilih Field--</option>
+									<option value="Kode Atomizer">Kode Atomizer</option>
+									<option value="Nama Atomizer">Nama Atomizer</option>
+									<option value="Jenis Atomizer">Jenis Atomizer</option>
+									<option value="Stok Pusat">Stok Pusat</option>
+									<option value="Stok Retail">Stok Retail</option>
+									<option value="Stok Studio">Stok Studio</option>
+									<option value="Bad Stock">Bad Stock</option>
+									<option value="Berat (gr)">Berat (gr)</option>
+									<option value="Harga Beli">Harga Beli</option>
+									<option value="Harga Jual Agn">Harga Jual Agn</option>
+									<option value="Harga Jual Ret">Harga Jual Ret</option>
+									<option value="Harga Jual Whs">Harga Jual Whs</option>
+									<option value="Nama Supplier">Nama Supplier</option>
+									<option value="Tipe">Tipe</option>
+									<option value="Status">Status</option>
+								</select>
+							</td>
+						</tr>
+						</table>
+						<table style="font-size:12px;" class="table table-striped table-bordered table-hover" id="tabel_atomizer">
+							<thead>
+							<tr bgcolor="#4ECDC4">
+								<th width="3%" style="text-align:center;">No</th>
+								<th width="7%" style="text-align:center;"> Kode Atomizer</th>
+								<th width="20%" style="text-align:center;">Nama Atomizer</th>
+								<th width="10%" style="text-align:center;">Jenis Atomizer</th>
+								<th width="10%" style="text-align:center;">Stok Pusat</th>
+								<th width="10%" style="text-align:center;">Stok Retail</th>
+								<th width="10%" style="text-align:center;">Stok Studio</th>
+								<th width="10%" style="text-align:center;">Bad Stock</th>
+								<th width="10%" style="text-align:center;">Berat (gr)</th>
+								<th width="10%" style="text-align:center;">Harga Beli</th>
+								<th width="10%" style="text-align:center;">Harga Jual Agn</th>
+								<th width="10%" style="text-align:center;">Harga Jual Ret</th>
+								<th width="10%" style="text-align:center;">Harga Jual Whs</th>
+								<th width="10%" style="text-align:center;">Nama Supplier</th>
+								<th width="10%" style="text-align:center;">Tipe</th>
+								<th width="10%" style="text-align:center;">Status</th>
+							</tr>
+							</thead>
+							<tbody>
+							<?php
+								 for($x=0; $x<count($this->data7); $x++){
+
+										$nomer			= $x+1;
+										$kode_atomizer 	= $this->data7[$x]['kode_atomizer'];
+										$merk_atomizer 	= $this->data7[$x]['merk_atomizer'];
+										$nama_atomizer 	= $this->data7[$x]['nama_atomizer'];
+										$jenis_atomizer	= $this->data7[$x]['jenis_atomizer'];
+										$stok_pusat 	= $this->data7[$x]['stok_pusat'];
+										$stok_retail 	= $this->data7[$x]['stok_retail'];
+										$stok_studio 	= $this->data7[$x]['stok_studio'];
+										$bad_stock	 	= $this->data7[$x]['bad_stock'];
+										$berat		 	= $this->data7[$x]['berat'];
+										$harga_beli	 	= $this->data7[$x]['harga_beli'];
+										$hj_agen	 	= $this->data7[$x]['hj_agen'];
+										$hj_retail	 	= $this->data7[$x]['hj_retail'];
+										$hj_whs		 	= $this->data7[$x]['hj_whs'];
+										$kode_supplier 	= $this->data7[$x]['kode_supplier'];
+										$status 		= $this->data7[$x]['status'];
+										if($status=='1'){
+											$stat = 'Active';
+										} else {
+											$stat = 'Inactive';
+										}
+										
+										$supplier = $this->Laporan_Service->getdatasupplierid($kode_supplier);
+										$nama_supplier  = $supplier[0]['nama_supplier'];
+										$tipe		 	= $supplier[0]['tipe'];
+									?>	
+											<td align="center"><?php echo $nomer;?></td>	  
+											<td align="center"><?php echo $kode_atomizer;?></td>
+											<td align="center"><?php echo $merk_atomizer;?> - <?php echo $nama_atomizer;?></td>
+											<td align="center"><?php echo $jenis_atomizer;?></td>
+											<td align="center"><?php echo $stok_pusat;?></td>
+											<td align="center"><?php echo $stok_retail;?></td>
+											<td align="center"><?php echo $stok_studio;?></td>
+											<td align="center"><?php echo $bad_stock;?></td>
+											<td align="center"><?php echo $berat;?></td>
+											<td align="center"><?php echo number_format($harga_beli,0,",",".");?></td>
+											<td align="center"><?php echo number_format($hj_agen,0,",",".");?></td>
+											<td align="center"><?php echo number_format($hj_retail,0,",",".");?></td>
+											<td align="center"><?php echo number_format($hj_whs,0,",",".");?></td>
+											<td align="center"><?php echo $nama_supplier;?></td>
+											<td align="center"><?php echo $tipe;?></td>
+											<td align="center"><?php echo $stat;?></td>
+										</tr>	
+									<?php 
+										}
+									?>
+								
+							</tbody>
+						</table>
+						
+						<table style="font-size:12px;" class="table table-striped table-bordered table-hover" id="tabel_ordercentral">
+							<thead>
+							<tr bgcolor="#4ECDC4">
+								<th width="3%" style="text-align:center;">No</th>
+								<th width="7%" style="text-align:center;">Nomor Order</th>
+								<th width="20%" style="text-align:center;">Nama Supplier</th>
+								<th width="10%" style="text-align:center;">Kode Supplier</th>
+								<th width="10%" style="text-align:center;">Status Barang</th>
+								<th width="10%" style="text-align:center;">Total</th>
+								<th width="10%" style="text-align:center;">Biaya Kirim</th>
+								<th width="10%" style="text-align:center;">Diskon</th>
+								<th width="10%" style="text-align:center;">Net Total</th>
+								<th width="10%" style="text-align:center;">Jumah Bayar/DP</th>
+								<th width="10%" style="text-align:center;">Sisa Pembayaran</th>
+								<th width="10%" style="text-align:center;">Tanggal Order</th>
+							</tr>
+							</thead>
+							<tbody>
+							<?php
+								 for($x=0; $x<count($this->data8); $x++){
+
+										$nomer			= $x+1;
+										$no_order 		= $this->data8[$x]['no_order'];
+										$kode_supplier 	= $this->data8[$x]['kode_supplier'];
+										$total 			= number_format($this->data8[$x]['total'],0,",",".");
+										$biaya_kirim	= number_format($this->data8[$x]['biaya_kirim'],0,",",".");
+										$diskon 		= number_format($this->data8[$x]['diskon'],0,",",".");
+										$net_total	 	= number_format($this->data8[$x]['net_total'],0,",",".");
+										$jml_bayar_dp 	= number_format($this->data8[$x]['jml_bayar_dp'],0,",",".");
+										$sisa_bayar	 	= number_format($this->data8[$x]['sisa_bayar'],0,",",".");
+										$tgl_order	 	= date_create($this->data8[$x]['tgl_order']);
+										$tgl_order		= date_format($tgl_order,"d-m-Y");
+										
+										$supplier = $this->Laporan_Service->getdatasupplierid($kode_supplier);
+										$nama_supplier  = $supplier[0]['nama_supplier'];
+										$tipe		 	= $supplier[0]['tipe'];
+										
+										$hutang = $this->Laporan_Service->getDataHutang($no_order);
+									?>	
+										<tr>
+											<td align="center"><?php echo $nomer;?></td>	  
+											<td align="center"><?php echo $no_order;?></td>
+											<td align="center"><?php echo $nama_supplier;?></td>
+											<td align="center"><?php echo $kode_supplier;?></td>
+											<td align="center"><?php echo $tipe;?></td>
+											<td align="center"><?php echo $total;?></td>
+											<td align="center"><?php echo $biaya_kirim;?></td>
+											<td align="center"><?php echo $diskon;?></td>
+											<td align="center"><?php echo $net_total;?></td>
+											<td align="center"><?php echo $jml_bayar_dp;?></td>
+											<td align="center"><?php echo $sisa_bayar;?></td>
+											<td align="center"><?php echo $tgl_order;?></td>
+										</tr>	
+									<?php 
+										}
+									?>
+								
+							</tbody>
+						</table>
+						
+						<table style="font-size:12px;" class="table table-striped table-bordered table-hover" id="tabel_pembayaransupplier">
+							<thead>
+							<tr bgcolor="#4ECDC4">
+								<th width="3%" style="text-align:center;">No</th>
+								<th width="7%" style="text-align:center;">Nomor Order</th>
+								<th width="10%" style="text-align:center;">Tanggal Order</th>
+								<th width="20%" style="text-align:center;">Nama Supplier</th>
+								<th width="10%" style="text-align:center;">Total</th>
+								<th width="10%" style="text-align:center;">Biaya Kirim</th>
+								<th width="10%" style="text-align:center;">Diskon</th>
+								<th width="10%" style="text-align:center;">Grand Total</th>
+								<th width="10%" style="text-align:center;">Jumah Pembayaran</th>
+								<th width="10%" style="text-align:center;">Sisa Pembayaran</th>
+								<th width="10%" style="text-align:center;">Status</th>
+							</tr>
+							</thead>
+							<tbody>
+							<?php
+								 for($x=0; $x<count($this->data8); $x++){
+
+										$nomer			= $x+1;
+										$no_order 		= $this->data8[$x]['no_order'];
+										$kode_supplier 	= $this->data8[$x]['kode_supplier'];
+										$total 			= number_format($this->data8[$x]['total'],0,",",".");
+										$biaya_kirim	= number_format($this->data8[$x]['biaya_kirim'],0,",",".");
+										$diskon 		= number_format($this->data8[$x]['diskon'],0,",",".");
+										$net_total	 	= number_format($this->data8[$x]['net_total'],0,",",".");
+										$jml_bayar_dp 	= number_format($this->data8[$x]['jml_bayar_dp'],0,",",".");
+										$sisa_bayar	 	= number_format($this->data8[$x]['sisa_bayar'],0,",",".");
+										$tgl_order	 	= date_create($this->data8[$x]['tgl_order']);
+										$tgl_order		= date_format($tgl_order,"d-m-Y");
+										
+										$supplier = $this->Laporan_Service->getdatasupplierid($kode_supplier);
+										$nama_supplier  = $supplier[0]['nama_supplier'];
+										$tipe		 	= $supplier[0]['tipe'];
+										
+										if($net_total == $jml_bayar_dp){
+											$status = 'Finished';
+										} else {
+											$status = 'Un-Finished';
+										}
+									?>	
+										<tr>
+											<td align="center"><?php echo $nomer;?></td>	  
+											<td align="center"><?php echo $no_order;?></td>
+											<td align="center"><?php echo $tgl_order;?></td>
+											<td align="center"><?php echo $nama_supplier;?></td>
+											<td align="center"><?php echo $total;?></td>
+											<td align="center"><?php echo $biaya_kirim;?></td>
+											<td align="center"><?php echo $diskon;?></td>
+											<td align="center"><?php echo $net_total;?></td>
+											<td align="center"><?php echo $jml_bayar_dp;?></td>
+											<td align="center"><?php echo $sisa_bayar;?></td>
+											<td align="center"><?php echo $status;?></td>
+										</tr>	
+									<?php 
+										}
+									?>
+								
+							</tbody>
+						</table>
+						
+						<table style="font-size:12px;" class="table table-striped table-bordered table-hover" id="tabel_retursupplier">
+							<thead>
+							<tr bgcolor="#4ECDC4">
+								<th width="3%" style="text-align:center;">No</th>
+								<th width="7%" style="text-align:center;">Nomor Order</th>
+								<th width="10%" style="text-align:center;">Tanggal Order</th>
+								<th width="20%" style="text-align:center;">Nama Supplier</th>
+								<th width="10%" style="text-align:center;">Total</th>
+								<th width="10%" style="text-align:center;">Biaya Kirim</th>
+								<th width="10%" style="text-align:center;">Diskon</th>
+								<th width="10%" style="text-align:center;">Grand Total</th>
+								<th width="10%" style="text-align:center;">Jumah Pembayaran</th>
+								<th width="10%" style="text-align:center;">Sisa Pembayaran</th>
+								<th width="10%" style="text-align:center;">Status</th>
+							</tr>
+							</thead>
+							<tbody>
+							<?php
+								 for($x=0; $x<count($this->data8); $x++){
+
+										$nomer			= $x+1;
+										$no_order 		= $this->data8[$x]['no_order'];
+										$kode_supplier 	= $this->data8[$x]['kode_supplier'];
+										$total 			= number_format($this->data8[$x]['total'],0,",",".");
+										$biaya_kirim	= number_format($this->data8[$x]['biaya_kirim'],0,",",".");
+										$diskon 		= number_format($this->data8[$x]['diskon'],0,",",".");
+										$net_total	 	= number_format($this->data8[$x]['net_total'],0,",",".");
+										$jml_bayar_dp 	= number_format($this->data8[$x]['jml_bayar_dp'],0,",",".");
+										$sisa_bayar	 	= number_format($this->data8[$x]['sisa_bayar'],0,",",".");
+										$tgl_order	 	= date_create($this->data8[$x]['tgl_order']);
+										$tgl_order		= date_format($tgl_order,"d-m-Y");
+										
+										$supplier = $this->Laporan_Service->getdatasupplierid($kode_supplier);
+										$nama_supplier  = $supplier[0]['nama_supplier'];
+										$tipe		 	= $supplier[0]['tipe'];
+										
+										if($net_total == $jml_bayar_dp){
+											$status = 'Finished';
+										} else {
+											$status = 'Un-Finished';
+										}
+									?>	
+										<tr>
+											<td align="center"><?php echo $nomer;?></td>	  
+											<td align="center"><?php echo $no_order;?></td>
+											<td align="center"><?php echo $tgl_order;?></td>
+											<td align="center"><?php echo $nama_supplier;?></td>
+											<td align="center"><?php echo $total;?></td>
+											<td align="center"><?php echo $biaya_kirim;?></td>
+											<td align="center"><?php echo $diskon;?></td>
+											<td align="center"><?php echo $net_total;?></td>
+											<td align="center"><?php echo $jml_bayar_dp;?></td>
+											<td align="center"><?php echo $sisa_bayar;?></td>
+											<td align="center"><?php echo $status;?></td>
+										</tr>	
+									<?php 
+										}
+									?>
+								
+							</tbody>
+						</table>
+						
+						<table style="font-size:12px;" class="table table-striped table-bordered table-hover" id="tabel_penyelesaianpembelian">
+							<thead>
+							<tr bgcolor="#4ECDC4">
+								<th width="3%" style="text-align:center;">No</th>
+								<th width="7%" style="text-align:center;">Nomor Retur</th>
+								<th width="10%" style="text-align:center;">Tanggal Retur</th>
+								<th width="7%" style="text-align:center;">Nomor Order</th>
+								<th width="10%" style="text-align:center;">Tanggal Order</th>
+								<th width="20%" style="text-align:center;">Nama Supplier</th>
+								<th width="10%" style="text-align:center;">Selisih Pembayaran</th>
+								<th width="10%" style="text-align:center;">Action</th>
+							</tr>
+							</thead>
+							<tbody>
+							<?php
+								 for($x=0; $x<count($this->data9); $x++){
+
+										$nomer			= $x+1;
+										$no_order 		= $this->data9[$x]['no_order'];
+										$tgl_order	 	= date_create($this->data9[$x]['tgl_order']);
+										$tgl_order		= date_format($tgl_order,"d-m-Y");
+										$sisa_bayar	 	= number_format($this->data9[$x]['sisa_bayar'],0,",",".");
+										$kode_supplier 	= $this->data9[$x]['kode_supplier'];
+										$no_retur 		= $this->data9[$x]['no_retur'];
+										$tgl_retur	 	= date_create($this->data9[$x]['tgl_retur']);
+										$tgl_retur		= date_format($tgl_retur,"d-m-Y");
+										
+										$supplier = $this->Laporan_Service->getdatasupplierid($kode_supplier);
+										$nama_supplier  = $supplier[0]['nama_supplier'];
+										$tipe		 	= $supplier[0]['tipe'];
+									?>	
+										<tr>
+											<td align="center"><?php echo $nomer;?></td>	
+											<td align="center"><?php echo $no_retur;?></td>
+											<td align="center"><?php echo $tgl_retur;?></td>	
+											<td align="center"><?php echo $no_order;?></td>
+											<td align="center"><?php echo $tgl_order;?></td>
+											<td align="center"><?php echo $nama_supplier;?></td>
+											<td align="center"><?php echo $sisa_bayar;?></td>
+											<td width="7%" align="center">
+												<a href="#" title="Detail" onclick="open_url_to_div('/penyelesaianpembelian/detail?id=<?php echo $no_retur;?>')" class="btn-warning btn-sm mar-ed-button">Detail</a>
+                                            </td>
+										</tr>	
+									<?php 
+										}
+									?>
+								
+							</tbody>
+						</table>
+						
+						<table style="font-size:12px;" class="table table-striped table-bordered table-hover" id="tabel_salecentral">
+							<thead>
+							<tr bgcolor="#4ECDC4">
+								<th width="2%" style="text-align:center;">No</th>
+								<th width="18%" style="text-align:center;">Nomor Invoice</th>
+								<th width="4%" style="text-align:center;">Tanggal Invoice</th>
+								<th width="4%" style="text-align:center;">Shipment</th>
+								<th width="4%" style="text-align:center;">Sales</th>
+								<th width="5%" style="text-align:center;">Total</th>
+								<th width="2%" style="text-align:center;">%</th>
+								<th width="5%" style="text-align:center;">Discount</th>
+								<th width="5%" style="text-align:center;">Shipping</th>
+								<th width="5%" style="text-align:center;">Grand Total</th>
+								<th width="5%" style="text-align:center;">Pembayaran 1</th>
+								<th width="5%" style="text-align:center;">Pembayaran 2</th>
+								<th width="5%" style="text-align:center;">Sisa</th>
+								<th width="5%" style="text-align:center;">Nama Penerima</th>
+								<th width="5%" style="text-align:center;">Status Gudang</th>
+								<th width="5%" style="text-align:center;">Status Bayar</th>
+								<th width="5%" style="text-align:center;">Berat (Gr)</th>
+								<th width="5%" style="text-align:center;">Nama Kurir</th>
+							</tr>
+							</thead>
+							<tbody>
+							<?php
+								 for($x=0; $x<count($this->data10); $x++){
+
+										$nomer			 = $x+1;
+										$no_invoice 	 = $this->data10[$x]['no_invoice'];
+										$kode_customer 	 = $this->data10[$x]['kode_customer'];
+										$shipment 		 = $this->data10[$x]['shipment'];
+										$nama_kurir 	 = $this->data10[$x]['nama_kurir'];
+										$total_berat 	 = number_format($this->data10[$x]['total_berat'],0,",",".");
+										$total_biaya 	 = number_format($this->data10[$x]['total_biaya'],0,",",".");
+										$diskon 		 = number_format($this->data10[$x]['diskon'],0,",",".");
+										$biaya_kirim	 = number_format($this->data10[$x]['biaya_kirim'],0,",",".");
+										$net_total	 	 = number_format($this->data10[$x]['net_total'],0,",",".");
+										$jml_penerimaan  = number_format($this->data10[$x]['jml_penerimaan'],0,",",".");
+										$jml_penerimaan2 = number_format($this->data10[$x]['jml_penerimaan2'],0,",",".");
+										$jml_bayar 		 = number_format($this->data10[$x]['jml_bayar'],0,",",".");
+										$sisa_bayar	 	 = number_format($this->data10[$x]['sisa_bayar'],0,",",".");
+										$tgl_invoice	 = date_create($this->data10[$x]['tgl_invoice']);
+										$tgl_invoice	 = date_format($tgl_invoice,"d-m-Y");
+										$nama_penerima 	 = $this->data10[$x]['nama_penerima'];
+										$alamat_penerima = $this->data10[$x]['alamat_penerima'];
+										$keterangan 	 = $this->data10[$x]['keterangan'];
+										$kode_sales 	 = $this->data10[$x]['kode_sales'];
+										$status 	 	 = $this->data10[$x]['status'];
+										$nama_customer   = '';
+										$nama_sales  	 = '';
+										
+										if($kode_customer){
+											$customer = $this->Laporan_Service->getdatacustomerid($kode_customer);
+											$nama_customer  = $customer[0]['nama_customer'];
+										}
+										
+										if($kode_sales){
+											$sales = $this->Laporan_Service->getdatasalesid($kode_sales);
+											$nama_sales  = $sales[0]['nama_sales'];
+										}
+										
+										if($sisa_bayar == '0'){
+											$statusbayar = 'finished';
+										}else{
+											$statusbayar = 'un-finished';	
+										}
+									?>	
+										<tr>
+											<td align="center"><?php echo $nomer;?></td>	  
+											<td align="center"><?php echo $no_invoice;?></td>
+											<td align="center"><?php echo $tgl_invoice;?></td>
+											<td align="center"><?php echo $shipment;?></td>
+											<td align="center"><?php echo $nama_sales;?></td>
+											<td align="center"><?php echo $total_biaya;?></td>
+											<td align="center">-</td>
+											<td align="center"><?php echo $diskon;?></td>
+											<td align="center"><?php echo $biaya_kirim;?></td>
+											<td align="center"><?php echo $net_total;?></td>
+											<td align="center"><?php echo $jml_penerimaan;?></td>
+											<td align="center"><?php echo $jml_penerimaan2;?></td>
+											<td align="center"><?php echo $sisa_bayar;?></td>
+											<td align="center"><?php echo $nama_penerima;?></td>
+											<td align="center">-</td>
+											<td align="center"><?php echo $statusbayar;?></td>
+											<td align="center"><?php echo $total_berat;?></td>
+											<td align="center"><?php echo $nama_kurir;?></td>
+										</tr>	
+									<?php 
+										}
+									?>
+								
+							</tbody>
+						</table>
+						
+					  </div>
+				</div>
+            </div>
+          </div>
+          <!-- page end-->
+        </div>
+        <!-- /row -->
+      </section>
+      <!-- /wrapper -->
+    </section>
+    <!--main content end-->
+    <?php require('partial/main-footer.php');?> 
+  </section>
+   <!-- js placed at the end of the document so the pages load faster -->
+  <script src="lib/jquery/jquery.min.js"></script>
+  <script type="text/javascript" language="javascript" src="lib/advanced-datatable/js/jquery.js"></script>
+  <script src="lib/bootstrap/js/bootstrap.min.js"></script>
+  <script class="include" type="text/javascript" src="lib/jquery.dcjqaccordion.2.7.js"></script>
+  <script src="lib/jquery.scrollTo.min.js"></script>
+  <script src="lib/jquery.nicescroll.js" type="text/javascript"></script>
+  <script type="text/javascript" language="javascript" src="lib/advanced-datatable/js/jquery.dataTables.js"></script>
+  <script type="text/javascript" src="lib/advanced-datatable/js/DT_bootstrap.js"></script>
+  <script type="text/javascript" src="<?php echo $this->baseUrl(); ?>/calendar/daterangepicker-master/moment.min.js"></script>
+  <script type="text/javascript" src="<?php echo $this->baseUrl(); ?>/calendar/daterangepicker-master/daterangepicker.js"></script>
+  <!--common script for all pages-->
+  <script src="lib/common-scripts.js"></script>
+  <!--script for this page-->
+  <script type="text/javascript">
+	$("#tabel_supplier").hide();
+	$("#tabel_supplier2").hide();
+	$("#tabel_sales").hide();
+	$("#tabel_sales2").hide();
+	$("#tabel_customer").hide();
+	$("#tabel_customer2").hide();
+	$("#tabel_liquid").hide(); $("#tabel_liquid2").hide();
+	$("#tabel_device").hide(); $("#tabel_device2").hide();
+	$("#tabel_aksesoris").hide(); $("#tabel_aksesoris2").hide();
+	$("#tabel_atomizer").hide(); $("#tabel_atomizer2").hide();
+	$("#tabel_ordercentral").hide();
+	$("#tabel_pembayaransupplier").hide();
+	$("#tabel_retursupplier").hide();
+	$("#tabel_penyelesaianpembelian").hide();
+	$("#tabel_salecentral").hide();
+			
+	function getCari(){
+		var kata_kunci = document.getElementById('kata_kunci').value;
+		var perioddate = document.getElementById('perioddate').value;
+		
+		var url = "<?php echo $this->basePath; ?>/laporan/index";
+		var opt = {kata_kunci:kata_kunci, perioddate:perioddate};
+		
+		jQuery.get(url, opt, function(data) {
+			jQuery("#layoutnya").html(data);
+			//location.reload(true)
+		}); 
+	}
+  
+	function pilihlaporan(x){
+		var nilai = x.value;
+		
+		if(nilai == 'supplier' || nilai == 'sales' || nilai == 'customer' || nilai == 'liquid' ||
+		   nilai == 'device' || nilai == 'accessories' || nilai == 'atomizer'){
+			$("#periode1").hide();
+			$("#periode2").hide();
+			$("#search").hide();
+			$("#search2").hide();
+		} else {
+			$("#periode1").show();
+			$("#periode2").show();
+			$("#search").show();
+			$("#search2").show();
+		}
+		
+		if (nilai == 'supplier'){
+			$("#tabel_supplier").show();
+			$("#tabel_supplier2").show();
+			$("#tabel_sales").hide();
+			$("#tabel_sales2").hide();
+			$("#tabel_customer").hide();
+			$("#tabel_customer2").hide();
+			$("#tabel_liquid").hide(); $("#tabel_liquid2").hide();
+			$("#tabel_device").hide(); $("#tabel_device2").hide();
+			$("#tabel_aksesoris").hide(); $("#tabel_aksesoris2").hide();
+			$("#tabel_atomizer").hide(); $("#tabel_atomizer2").hide();
+			$("#tabel_ordercentral").hide();
+			$("#tabel_pembayaransupplier").hide();
+			$("#tabel_retursupplier").hide();
+			$("#tabel_penyelesaianpembelian").hide();
+			$("#tabel_salecentral").hide();
+		} else if (nilai == 'sales'){
+			$("#tabel_supplier").hide();
+			$("#tabel_supplier2").hide();
+			$("#tabel_sales").show();
+			$("#tabel_sales2").show();
+			$("#tabel_customer").hide();
+			$("#tabel_customer2").hide();
+			$("#tabel_liquid").hide(); $("#tabel_liquid2").hide();
+			$("#tabel_device").hide(); $("#tabel_device2").hide();
+			$("#tabel_aksesoris").hide(); $("#tabel_aksesoris2").hide();
+			$("#tabel_atomizer").hide(); $("#tabel_atomizer2").hide();
+			$("#tabel_ordercentral").hide();
+			$("#tabel_pembayaransupplier").hide();
+			$("#tabel_retursupplier").hide();
+			$("#tabel_penyelesaianpembelian").hide();
+			$("#tabel_salecentral").hide();
+		} else if (nilai == 'customer'){
+			$("#tabel_supplier").hide();
+			$("#tabel_supplier2").hide();
+			$("#tabel_sales").hide();
+			$("#tabel_sales2").hide();
+			$("#tabel_customer").show();
+			$("#tabel_customer2").show();
+			$("#tabel_liquid").hide(); $("#tabel_liquid2").hide();
+			$("#tabel_device").hide(); $("#tabel_device2").hide();
+			$("#tabel_aksesoris").hide(); $("#tabel_aksesoris2").hide();
+			$("#tabel_atomizer").hide(); $("#tabel_atomizer2").hide();
+			$("#tabel_ordercentral").hide();
+			$("#tabel_pembayaransupplier").hide();
+			$("#tabel_retursupplier").hide();
+			$("#tabel_penyelesaianpembelian").hide();
+			$("#tabel_salecentral").hide();
+		} else if (nilai == 'liquid'){
+			$("#tabel_supplier").hide();
+			$("#tabel_supplier2").hide();
+			$("#tabel_sales").hide();
+			$("#tabel_sales2").hide();
+			$("#tabel_customer").hide();
+			$("#tabel_customer2").hide();
+			$("#tabel_liquid").show(); $("#tabel_liquid2").show();
+			$("#tabel_device").hide(); $("#tabel_device2").hide();
+			$("#tabel_aksesoris").hide(); $("#tabel_aksesoris2").hide();
+			$("#tabel_atomizer").hide(); $("#tabel_atomizer2").hide();
+			$("#tabel_ordercentral").hide();
+			$("#tabel_pembayaransupplier").hide();
+			$("#tabel_retursupplier").hide();
+			$("#tabel_penyelesaianpembelian").hide();
+			$("#tabel_salecentral").hide();
+		} else if (nilai == 'device'){
+			$("#tabel_supplier").hide();
+			$("#tabel_supplier2").hide();
+			$("#tabel_sales").hide();
+			$("#tabel_sales2").hide();
+			$("#tabel_customer").hide();
+			$("#tabel_customer2").hide();
+			$("#tabel_liquid").hide(); $("#tabel_liquid2").hide();
+			$("#tabel_device").show(); $("#tabel_device2").show();
+			$("#tabel_aksesoris").hide(); $("#tabel_aksesoris2").hide();
+			$("#tabel_atomizer").hide(); $("#tabel_atomizer2").hide();
+			$("#tabel_ordercentral").hide();
+			$("#tabel_pembayaransupplier").hide();
+			$("#tabel_retursupplier").hide();
+			$("#tabel_penyelesaianpembelian").hide();
+			$("#tabel_salecentral").hide();
+		} else if (nilai == 'accessories'){
+			$("#tabel_supplier").hide();
+			$("#tabel_supplier2").hide();
+			$("#tabel_sales").hide();
+			$("#tabel_sales2").hide();
+			$("#tabel_customer").hide();
+			$("#tabel_customer2").hide();
+			$("#tabel_liquid").hide(); $("#tabel_liquid2").hide();
+			$("#tabel_device").hide(); $("#tabel_device2").hide();
+			$("#tabel_aksesoris").show(); $("#tabel_aksesoris2").show();
+			$("#tabel_atomizer").hide(); $("#tabel_atomizer2").hide();
+			$("#tabel_ordercentral").hide();
+			$("#tabel_pembayaransupplier").hide();
+			$("#tabel_retursupplier").hide();
+			$("#tabel_penyelesaianpembelian").hide();
+			$("#tabel_salecentral").hide();
+		} else if (nilai == 'atomizer'){
+			$("#tabel_supplier").hide();
+			$("#tabel_supplier2").hide();
+			$("#tabel_sales").hide();
+			$("#tabel_sales2").hide();
+			$("#tabel_customer").hide();
+			$("#tabel_customer2").hide();
+			$("#tabel_liquid").hide(); $("#tabel_liquid2").hide();
+			$("#tabel_device").hide(); $("#tabel_device2").hide();
+			$("#tabel_aksesoris").hide(); $("#tabel_aksesoris2").hide();
+			$("#tabel_atomizer").show(); $("#tabel_atomizer2").show();
+			$("#tabel_ordercentral").hide();
+			$("#tabel_pembayaransupplier").hide();
+			$("#tabel_retursupplier").hide();
+			$("#tabel_penyelesaianpembelian").hide();
+			$("#tabel_salecentral").hide();
+		} else if (nilai == 'ordercentral'){
+			$("#tabel_supplier").hide();
+			$("#tabel_supplier2").hide();
+			$("#tabel_sales").hide();
+			$("#tabel_sales2").hide();
+			$("#tabel_customer").hide();
+			$("#tabel_customer2").hide();
+			$("#tabel_liquid").hide(); $("#tabel_liquid2").hide();
+			$("#tabel_device").hide(); $("#tabel_device2").hide();
+			$("#tabel_aksesoris").hide(); $("#tabel_aksesoris2").hide();
+			$("#tabel_atomizer").hide(); $("#tabel_atomizer2").hide();
+			$("#tabel_ordercentral").show();
+			$("#tabel_pembayaransupplier").hide();
+			$("#tabel_retursupplier").hide();
+			$("#tabel_penyelesaianpembelian").hide();
+			$("#tabel_salecentral").hide();
+		} else if (nilai == 'pembayaransupplier'){
+			$("#tabel_supplier").hide();
+			$("#tabel_supplier2").hide();
+			$("#tabel_sales").hide();
+			$("#tabel_sales2").hide();
+			$("#tabel_customer").hide();
+			$("#tabel_customer2").hide();
+			$("#tabel_liquid").hide(); $("#tabel_liquid2").hide();
+			$("#tabel_device").hide(); $("#tabel_device2").hide();
+			$("#tabel_aksesoris").hide(); $("#tabel_aksesoris2").hide();
+			$("#tabel_atomizer").hide(); $("#tabel_atomizer2").hide();
+			$("#tabel_ordercentral").hide();
+			$("#tabel_pembayaransupplier").show();
+			$("#tabel_retursupplier").hide();
+			$("#tabel_penyelesaianpembelian").hide();
+			$("#tabel_salecentral").hide();
+		} else if (nilai == 'retursupplier'){
+			$("#tabel_supplier").hide();
+			$("#tabel_supplier2").hide();
+			$("#tabel_sales").hide();
+			$("#tabel_sales2").hide();
+			$("#tabel_customer").hide();
+			$("#tabel_customer2").hide();
+			$("#tabel_liquid").hide(); $("#tabel_liquid2").hide();
+			$("#tabel_device").hide(); $("#tabel_device2").hide();
+			$("#tabel_aksesoris").hide(); $("#tabel_aksesoris2").hide();
+			$("#tabel_atomizer").hide(); $("#tabel_atomizer2").hide();
+			$("#tabel_ordercentral").hide();
+			$("#tabel_pembayaransupplier").hide();
+			$("#tabel_retursupplier").show();
+			$("#tabel_penyelesaianpembelian").hide();
+			$("#tabel_salecentral").hide();
+		} else if (nilai == 'penyelesaianpembelian'){
+			$("#tabel_supplier").hide();
+			$("#tabel_supplier2").hide();
+			$("#tabel_sales").hide();
+			$("#tabel_sales2").hide();
+			$("#tabel_customer").hide();
+			$("#tabel_customer2").hide();
+			$("#tabel_liquid").hide(); $("#tabel_liquid2").hide();
+			$("#tabel_device").hide(); $("#tabel_device2").hide();
+			$("#tabel_aksesoris").hide(); $("#tabel_aksesoris2").hide();
+			$("#tabel_atomizer").hide(); $("#tabel_atomizer2").hide();
+			$("#tabel_ordercentral").hide();
+			$("#tabel_pembayaransupplier").hide();
+			$("#tabel_retursupplier").hide();
+			$("#tabel_penyelesaianpembelian").show();
+			$("#tabel_salecentral").hide();
+		} else if (nilai == 'salecentral'){
+			$("#tabel_supplier").hide();
+			$("#tabel_supplier2").hide();
+			$("#tabel_sales").hide();
+			$("#tabel_sales2").hide();
+			$("#tabel_customer").hide();
+			$("#tabel_customer2").hide();
+			$("#tabel_liquid").hide(); $("#tabel_liquid2").hide();
+			$("#tabel_device").hide(); $("#tabel_device2").hide();
+			$("#tabel_aksesoris").hide(); $("#tabel_aksesoris2").hide();
+			$("#tabel_atomizer").hide(); $("#tabel_atomizer2").hide();
+			$("#tabel_ordercentral").hide();
+			$("#tabel_pembayaransupplier").hide();
+			$("#tabel_retursupplier").hide();
+			$("#tabel_penyelesaianpembelian").hide();
+			$("#tabel_salecentral").show();
+		}
+		
+	}
+	
+	$('#perioddate').daterangepicker({
+      autoUpdateInput: true,
+      "opens": "left",
+      locale: {
+        "format": "DD/MM/YYYY",
+        "separator": " - ",
+        "applyLabel": "Apply",
+        "cancelLabel": "Clear",
+        "firstDay": 1
+      }
+    });
+
+    $('#perioddate').on('cancel.daterangepicker', function(ev, picker) {
+      //do something, like clearing an input
+      $('#perioddate').val('');
+    });
+  </script>
+</div>
+</body>
+
+</html>

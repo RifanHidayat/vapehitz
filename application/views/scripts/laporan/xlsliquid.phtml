@@ -1,0 +1,127 @@
+<?php
+/* require_once 'Zend/View.php';
+require_once 'share/oa_page.php';
+   
+$halaman = new oa_page();
+$ctrlFrm = new Zend_View();
+
+require_once "service/procurement/Matreqreport_Service.php";
+$this->pur_serv = Matreqreport_Service::getInstance();	
+	
+ini_set('memory_limit', '2688M');
+ini_set('max_execution_time', 1800);	
+$file_type = "vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+$file_ending = "xls";
+header("Content-Type: application/xls");
+header("Content-Disposition: attachment; filename=FPBJ_Report.xls");
+header("Pragma: no-cache");
+header("Expires: 0");  */
+
+//header("Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet; charset=utf-8");
+//header("Content-Disposition: attachment; filename=FPBJ_Report");  
+
+//header('Content-type: application/vnd.ms-excel');
+//header('Content-Disposition: attachment; filename="Report.xlsx"');
+
+$file_type = "vnd.ms-excel";
+$file_ending = "xls";
+header("Content-Type: application/$file_type");
+header("Content-Disposition: attachment; filename=Master Data Liquid.$file_ending");
+header("Pragma: no-cache");
+header("Expires: 0");
+
+
+/* $n_dcr = $this->n_dcr;
+$n_doc_number = $this->n_doc_number;
+$e_title = $this->e_title; */
+
+//header("Expires: 0");
+//header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
+//header("Cache-Control: private",false);
+
+$html = "<h3>Report - Master Data Liquid</h3>";	
+
+		$html .= "<table class=tbl  middle width='99%' valign=top border=1 cellpadding=2 cellspacing=1>
+							<tr>
+							    <th>No</th>
+								<th>Kode Barang</th>
+								<th>Nama Barang</th>
+								<th>Nic (mg)</th>
+								<th>Vol (ml)</th>
+								<th>Stok Pusat</th>
+								<th>Stok Retail</th>
+								<th>Stok Studio</th>
+								<th>Bad Stock</th>
+								<th>Berat (gr)</th>
+								<th>Harga Beli</th>
+								<th>Harga Jual Agn</th>
+								<th>Harga Jual Ret</th>
+								<th>Harga Jual Whs</th>
+								<th>Nama Supplier</th>
+								<th>Tipe</th>
+								<th>Status</th>
+							</tr>
+			";
+
+			if(!count($this->data4)){ 
+				?>
+				<tr>
+					<td colspan=11><i> </i></td>
+				</tr>
+				<?php 
+			}else{
+				for($x=0; $x<count($this->data4); $x++){
+
+										$nomer			= $x+1;
+										$kode_barang 	= $this->data4[$x]['kode_barang'];
+										$merk_barang 	= $this->data4[$x]['merk_barang'];
+										$nama_barang 	= $this->data4[$x]['nama_barang'];
+										$nic		 	= $this->data4[$x]['nic'];
+										$volume		 	= $this->data4[$x]['volume'];
+										$stok_pusat 	= $this->data4[$x]['stok_pusat'];
+										$stok_retail 	= $this->data4[$x]['stok_retail'];
+										$stok_studio 	= $this->data4[$x]['stok_studio'];
+										$bad_stock	 	= $this->data4[$x]['bad_stock'];
+										$berat		 	= $this->data4[$x]['berat'];
+										$harga_beli	 	= $this->data4[$x]['harga_beli'];
+										$hj_agen	 	= $this->data4[$x]['hj_agen'];
+										$hj_retail	 	= $this->data4[$x]['hj_retail'];
+										$hj_whs		 	= $this->data4[$x]['hj_whs'];
+										$kode_supplier 	= $this->data4[$x]['kode_supplier'];
+										$status 		= $this->data4[$x]['status'];
+										if($status=='1'){
+											$stat = 'Active';
+										} else {
+											$stat = 'Inactive';
+										}
+										
+										$supplier = $this->Laporan_Service->getdatasupplierid($kode_supplier);
+										$nama_supplier  = $supplier[0]['nama_supplier'];
+										$tipe		 	= $supplier[0]['tipe'];
+									 	
+
+			$html.='
+										<tr>
+											<td align="center">'.$nomer.'</td>	  
+											<td align="center">'.$kode_barang.'</td>
+											<td align="center">'.$merk_barang.' - '.$nama_barang.'</td>
+											<td align="center">'.$nic.'</td>
+											<td align="center">'.$volume.'</td>
+											<td align="center">'.$stok_pusat.'</td>
+											<td align="center">'.$stok_retail.'</td>
+											<td align="center">'.$stok_studio.'</td>
+											<td align="center">'.$bad_stock.'</td>
+											<td align="center">'.$berat.'</td>
+											<td align="center">'.number_format($harga_beli,0,",",".").'</td>
+											<td align="center">'.number_format($hj_agen,0,",",".").'</td>
+											<td align="center">'.number_format($hj_retail,0,",",".").'</td>
+											<td align="center">'.number_format($hj_whs,0,",",".").'</td>
+											<td align="center">'.$nama_supplier.'</td>
+											<td align="center">'.$tipe.'</td>
+											<td align="center">'.$stat.'</td>
+										</tr>';
+			}
+			}
+		$html .= "</table>";
+	echo $html;		
+?>

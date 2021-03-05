@@ -1,0 +1,176 @@
+<!DOCTYPE html PUBLIC "-//W3C//Dth XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/Dth/xhtml1-transitional.dth">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Faktur Pembelian Barang</title>
+<style type="text/css">
+<!--
+body {
+  -webkit-print-color-adjust: exact !important;
+}
+@media print
+{
+    @page
+    {
+         size: 148mm 210mm; 
+    }
+}
+.style1 {font-family: Arial, Helvetica, sans-serif}
+.style2 {
+  font-size: 12px;
+  font-weight: bold;
+}
+.style3 {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 12px;
+  font-weight: bold;
+}
+.style4 {font-family: Arial, Helvetica, sans-serif; font-size: 12px; }
+.style5 {
+  font-size: 11px;
+  font-weight: bold;
+}
+.style6 {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 11px;
+  font-weight: bold;
+}
+-->
+</style>
+</head>
+
+<body onload="window.print();">
+<table width="937" height="554" border="1" style="border:solid; border-collapse:collapse;">
+  <tr>
+    <th width="115" height="102" valign="top" style="border-bottom:0px solid black; border-collapse: collapse; border-left:0px; border-top:0px; border-right:0px;">
+		<img src="<?php echo $this->baseUrl();?>/img/logo.PNG" alt="" width="111" height="100"/>
+	</th>
+    <th style="border-bottom:0px solid black; border-collapse: collapse; border-left:0px; border-top:0px; border-right:0px;" colspan="3" valign="top"><p align="center" class="style1"><strong>FAKTUR PEMBELIAN BARANG </strong></p>
+        <p align="center" class="style1 style5">VAPEHITZ Premium Vape Lounge</p>
+    <p align="center" class="style6">Jalan Palasari No. 20 Bandung Jawa Barat 40262</p></th>
+</tr>
+  <tr>
+    <th height="24" colspan="4" valign="top" style="border-bottom:0px solid black; border-collapse: collapse; border-left:0px; border-top:3px solid black; border-right:0px;"><p align="center"></p></th>
+  </tr>
+  <tr align="left">
+    <th align="left" style="border-bottom:0px solid black; border-collapse: collapse; border-left:0px; border-top:0px; border-right:0px;" height="99" valign="top">
+		<p class="style1 style2">Nomor Order</p>
+        <p class="style3">Tanggal Order</p></th>
+    <th align="left" width="300" valign="top" style="border-bottom:0px solid black; border-collapse: collapse; border-left:0px; border-top:0px; border-right:0px;">
+		<p class="style4"><strong>: <?php echo $this->no_order_data;?> </strong></p>
+		<?php 
+			$tgl_order =  date("d/m/Y", strtotime($this->data[0]['tgl_order']));
+		?>
+        <p class="style4"><strong>: <?php echo $tgl_order;?></strong></p></th>
+    <th align="left" width="106" valign="top" style="border-bottom:0px solid black; border-collapse: collapse; border-left:0px; border-top:0px; border-right:0px;">
+		<p class="style4"><strong>Kd. Supp. </strong></p>
+        <p class="style4"><strong>Nama Supp. </strong></p>
+		<p class="style4"><strong>Alamat</strong></p></th>
+    <th align="left" width="393" valign="top" style="border-bottom:0px solid black; border-collapse: collapse; border-left:0px; border-top:0px; border-right:0px;">
+		<p class="style4">: <?php echo $this->data2[0]['kode_supplier']?></p>
+        <p class="style4">: <?php echo $this->data2[0]['nama_supplier']?></p>
+		<p class="style4">: <?php echo $this->data2[0]['alamat_supplier']?></p></th>
+  </tr>
+  <tr align="left">
+    <th height="311" colspan="4" valign="top" style="border-bottom:0px solid black; border-collapse:collapse; border-left:0px; border-top:0px;  border-right:0px;"><table width="930" border="1" style="border-bottom:0px solid black; border-collapse:collapse; border-left:0px; border-top:0px;  border-right:0px;">
+      <tr>
+        <th style="border-bottom:2px solid black; border-collapse:collapse; border-left:2px solid black; border-top:2px solid black; border-right:2px solid black;" width="117" valign="top" bgcolor="#CCCCCC"><div align="center" class="style1">Kode Barang</div></th>
+        <th style="border-bottom:2px solid black; border-collapse: collapse; border-left:2px solid black; border-top:2px solid black; border-right:2px solid black;" width="80" valign="top" bgcolor="#CCCCCC"><div align="center" class="style1">Nama Barang</div></th>
+        <th style="border-bottom:2px solid black; border-collapse: collapse; border-left:2px solid black; border-top:2px solid black; border-right:2px solid black;" width="210" valign="top" bgcolor="#CCCCCC"><div align="center" class="style1">Keterangan</div></th>
+        <th style="border-bottom:2px solid black; border-collapse: collapse; border-left:2px solid black; border-top:2px solid black; border-right:2px solid black;" width="63" valign="top" bgcolor="#CCCCCC"><div align="center" class="style1">Stok Gudang</div></th>
+        <th style="border-bottom:2px solid black; border-collapse: collapse; border-left:2px solid black; border-top:2px solid black; border-right:2px solid black;" width="151" valign="top" bgcolor="#CCCCCC"><div align="center" class="style1">Harga Beli</div></th>
+        <th style="border-bottom:2px solid black; border-collapse: collapse; border-left:2px solid black; border-top:2px solid black; border-right:2px solid black;" width="38" valign="top" bgcolor="#CCCCCC"><div align="center" class="style1">Qty</div></th>
+        <th style="border-bottom:2px solid black; border-collapse: collapse; border-left:2px solid black; border-top:2px solid black; border-right:2px solid black;" width="159" valign="top" bgcolor="#CCCCCC"><div align="center" class="style1">Sub Total</div></th>
+      </tr>
+	  <?php
+			$nama_barang  = '';
+			$ket		  = '';
+			$stok_gudang  = '';
+		 for($d=0; $d<count($this->data3); $d++){
+			
+				$kode_barang 	= $this->data3[$d]['kode_barang'];
+				$harga_beli 	= number_format($this->data3[$d]['harga_beli'],0,",",".");
+				$harga_beli2 	= $this->data3[$d]['harga_beli'];
+				$qty 			= $this->data3[$d]['qty'];
+				$sub_total		= number_format($this->data3[$d]['sub_total'],0,",",".");
+				$jenis_barang	= $this->data3[$d]['jenis_barang'];
+				$kode_jenis_barang = $this->data3[$d]['kode_jenis_barang'];
+				
+				$barang = $this->Ordercentral_Service->getdatabarangid($kode_barang);
+				if(isset($barang[0]['nama_barang'])){ $nama_barang = $barang[0]['nama_barang'];}
+				if(isset($barang[0]['ket'])){ $ket = $barang[0]['ket'];}
+				if(isset($barang[0]['stok_gudang'])){ $stok_gudang = $barang[0]['stok_gudang'];}
+			 /* $nama_barang  = $barang[0]['nama_barang'];
+				$ket		  = $barang[0]['ket'];
+				$stok_gudang  = $barang[0]['stok_gudang']; */
+			?>	
+      <tr>
+        <th valign="top" style="border-left:hidden;"><div align="center"><span class="style1"><?php echo $kode_barang;?></span></div></th>
+        <th valign="top" style="border-left:hidden;"><div align="center"><span class="style1"><?php echo $nama_barang;?></span></div></th>
+        <th valign="top" style="border-left:hidden;"><div align="center"><span class="style1"><?php echo $ket;?></span></div></th>
+        <th valign="top" style="border-left:hidden;"><div align="center"><span class="style1"><?php echo $stok_gudang;?></span></div></th>
+        <th valign="top" style="border-left:hidden;"><div align="center"><span class="style1"><?php echo $harga_beli;?></span></div></th>
+        <th valign="top" style="border-left:hidden;"><div align="center"><span class="style1"><?php echo $qty;?></span></div></th>
+        <th valign="top" style="border-right:hidden; border-left:hidden;"><div align="center"><span class="style1"><?php echo $sub_total;?></span></div></th>
+      </tr>
+	  <?php } ?>
+      <tr align="right">
+        <th height="69" colspan="8" valign="top" style="border-bottom:0px solid black; border-collapse: collapse; border-left:0px solid black; border-top:2px solid black; border-right:0px solid black;">&nbsp;</th>
+      </tr>
+    </table>
+      <table width="929" border="1" style="border:solid; border-collapse:collapse;">
+        <tr>
+			<td width="630" rowspan="6" style="border-left:hidden; border-collapse:collapse; border-bottom:hidden; border-top:hidden;"></td>
+			<td style="border-left:2px solid; border-collapse:collapse; border-right:2px solid; border-bottom:2px solid; border-top:1px solid;" width="137">
+				<span class="style1">TOTAL</span>
+			</td>
+			<td style="border-right:1px solid; border-bottom:1px solid; border-top:2px solid; border-left:2px solid;" width="134">
+				<div align="right" class="style1"><?php echo number_format($this->data[0]['total'],0,",",".");?></div>
+			</td>
+        </tr>
+        <tr>
+			<td style="border-right:1px solid; border-bottom:1px solid; border-top:2px solid; border-left:2px solid;">
+				<span class="style1">SHIPPING</span>
+			</td>
+			<td style="border-right:1px solid; border-bottom:1px solid; border-top:2px solid; border-left:2px solid;">
+				<div align="right" class="style1"><?php echo number_format($this->data[0]['biaya_kirim'],0,",",".");?></div>
+			</td>
+        </tr>
+		<tr>
+			<td style="border-right:1px solid; border-bottom:1px solid; border-top:2px solid; border-left:2px solid;">
+				<span class="style1">DISCOUNT</span>
+			</td>
+			<td style="border-right:1px solid; border-bottom:1px solid; border-top:2px solid; border-left:2px solid;">
+				<div align="right" class="style1"><?php echo number_format($this->data[0]['diskon'],0,",",".");?></div>
+			</td>
+        </tr>
+        <tr>
+			<td style="border-right:1px solid; border-bottom:1px solid; border-top:2px solid; border-left:2px solid;">
+				<span class="style1">GRAND TOTAL</span>
+			</td>
+			<td style="border-right:1px solid; border-bottom:1px solid; border-top:2px solid; border-left:2px solid;">
+				<div align="right" class="style1"><?php echo number_format($this->data[0]['net_total'],0,",",".");?></div>
+			</td>
+        </tr>
+        <tr>
+			<td style="border-right:1px solid; border-bottom:1px solid; border-top:2px solid; border-left:2px solid;">
+				<span class="style1">DP</span>
+			</td>
+			<td style="border-right:1px solid; border-bottom:1px solid; border-top:2px solid; border-left:2px solid;">
+				<div align="right" class="style1"><?php echo number_format($this->data[0]['jml_bayar_dp'],0,",",".");?></div>
+			</td>
+        </tr>
+        <tr>
+			<td style="border-right:1px solid; border-bottom:1px solid; border-top:2px solid; border-left:2px solid;">
+				<span class="style1">SISA</span>
+			</td>
+			<td style="border-right:1px solid; border-bottom:1px solid; border-top:2px solid; border-left:2px solid;">
+				<div align="right" class="style1"><?php echo number_format($this->data[0]['sisa_bayar'],0,",",".");?></div>
+			</td>
+        </tr>
+      </table>
+    <p>&nbsp;</p></th>
+  </tr>
+</table>
+</body>
+</html>
