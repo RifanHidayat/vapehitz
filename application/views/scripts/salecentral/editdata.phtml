@@ -227,6 +227,32 @@ background:url(../images/cross.png)
 								</td>
 							</tr> 
 							<tr><td>&nbsp;</td></tr>
+							<tr>
+								<td width="10%"><font style="font-size:12px;font-weight:bold;">Termin Hutang</font></td>
+								<td width="1%">:</td>
+								<td>
+									<table>
+										<td> 
+											<?php 
+												$termin_hutang = $this->data[0]['termin_hutang'];
+												function setSelectedTermin($termin, $value)
+												{
+													return ($termin == $value) ? 'selected' : ''; 
+												}
+
+											?>
+											<select id="termin_hutang" name="termin_hutang" class="form-control select_group product" width="15%" >
+												<option value="">0 Hari</option>
+												<option value="7" <?= setSelectedTermin($termin_hutang, 7) ?>>7 Hari</option>
+												<option value="15" <?= setSelectedTermin($termin_hutang, 15) ?>>15 Hari</option>
+												<option value="30" <?= setSelectedTermin($termin_hutang, 30) ?>>30 Hari</option>
+											</select>
+										</td>
+										<td> &nbsp; <label id="shipment-error" for="shipment" class="error"></td>
+									</table>
+								</td>
+							</tr> 
+							<tr><td>&nbsp;</td></tr>
 						</table>
 						<hr>
 						<div align='left'>

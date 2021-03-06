@@ -20,7 +20,13 @@ $currentPage  = $this->currentPage;
 	});
 	 
 </script>
+<link href="<?php echo $this->baseUrl();?>/css/select2.min.css" rel="stylesheet">
 <link rel="stylesheet" href="<?php echo $this->baseUrl();?>/calendar/daterangepicker-master/daterangepicker.css" />
+<style>
+	.select2-selection__rendered {
+		font-size: 13px;
+	}
+</style>
     <!-- **********************************************************************************************************************************************************
         MAIN CONTENT
         *********************************************************************************************************************************************************** -->
@@ -46,28 +52,28 @@ $currentPage  = $this->currentPage;
 								<td>
 									<table>
 										<td> 
-											<select id="tipe" name="tipe" class = "form-control input-sm" width="15%" onclick="pilihlaporan(this)">
-												<option value="0"><b>--------- Laporan Master Data ---------</b></option>
+											<select id="tipe" name="tipe" class = "form-control input-sm select-laporan" width="15%" onclick="pilihlaporan(this)">
+												<option value="0">--------- Laporan Master Data ---------</option>
 												<?php if($serialize_permission) { if(in_array('laporanSupplier', $serialize_permission)) { ?>
-													<option value="supplier">Master Data Supplier</option>
+													<option value="supplier">Supplier</option>
 												<?php } } ?>
 												<?php if($serialize_permission) { if(in_array('laporanSales', $serialize_permission)) { ?>
-													<option value="sales">Master Data Sales</option>
+													<option value="sales">Sales</option>
 												<?php } } ?>
 												<?php if($serialize_permission) { if(in_array('laporanCustomer', $serialize_permission)) { ?>
-													<option value="customer">Master Data Customer</option>
+													<option value="customer">Customer</option>
 												<?php } } ?>
 												<?php if($serialize_permission) { if(in_array('laporanLiquid', $serialize_permission)) { ?>
-													<option value="liquid">Master Data Isi Ulang Liquid</option>
+													<option value="liquid">Isi Ulang Liquid</option>
 												<?php } } ?>
 												<?php if($serialize_permission) { if(in_array('laporanPerlengkapan', $serialize_permission)) { ?>
-													<option value="device">Master Data Perlengkapan</option>
+													<option value="device">Perlengkapan</option>
 												<?php } } ?>
 												<?php if($serialize_permission) { if(in_array('laporanAksesoris', $serialize_permission)) { ?>
-													<option value="accessories">Master Data Aksesoris</option>
+													<option value="accessories">Aksesoris</option>
 												<?php } } ?>
 												<?php if($serialize_permission) { if(in_array('laporanAtomizer', $serialize_permission)) { ?>
-													<option value="atomizer">Master Data Atomizer</option>
+													<option value="atomizer">Atomizer</option>
 												<?php } } ?>
 												<option value="1"><b>--------- Laporan Transaksi Pusat ---------</b></option>
 												<?php if($serialize_permission) { if(in_array('laporanOrderCentral', $serialize_permission)) { ?>
@@ -1207,6 +1213,7 @@ $currentPage  = $this->currentPage;
   <script type="text/javascript" src="lib/advanced-datatable/js/DT_bootstrap.js"></script>
   <script type="text/javascript" src="<?php echo $this->baseUrl(); ?>/calendar/daterangepicker-master/moment.min.js"></script>
   <script type="text/javascript" src="<?php echo $this->baseUrl(); ?>/calendar/daterangepicker-master/daterangepicker.js"></script>
+  <script src="<?php echo $this->baseUrl();?>/lib/select2.full.min.js"></script>
   <!--common script for all pages-->
   <script src="lib/common-scripts.js"></script>
   <!--script for this page-->
@@ -1226,6 +1233,8 @@ $currentPage  = $this->currentPage;
 	$("#tabel_retursupplier").hide();
 	$("#tabel_penyelesaianpembelian").hide();
 	$("#tabel_salecentral").hide();
+
+	$('.select-laporan').select2();
 			
 	function getCari(){
 		var kata_kunci = document.getElementById('kata_kunci').value;

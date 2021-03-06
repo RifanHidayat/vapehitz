@@ -233,6 +233,7 @@ class Salecentral_Service {
 						 "alamat_penerima" => $data['alamat_penerima'],
 						 "keterangan" => $data['keterangan'],
 						 "seq" => $data['seq'],
+						 "termin_hutang" => $data['termin_hutang'],
 						 "kode_inv" => $data['kode_inv']);
 
 
@@ -322,6 +323,7 @@ class Salecentral_Service {
 						 "alamat_penerima" => $data['alamat_penerima'],
 						 "keterangan" => $data['keterangan'],
 						 "seq" => $data['seq'],
+						 "termin_hutang" => $data['termin_hutang'],
 						 "kode_inv" => $data['kode_inv']);
 
 						 

@@ -113,6 +113,7 @@ class SalecentralController extends Zend_Controller_Action {
 		$alamat_penerima 	= '';
 		$keterangan		 	= '';
 		$seq		 	 	= ''; 
+		$termin_hutang		= ''; 
 		$kode_inv 		 	= date('dmy');
 		
 		$kode_barang	 	= '';
@@ -147,6 +148,7 @@ class SalecentralController extends Zend_Controller_Action {
 		if(isset($_POST['alamat_penerima'])){ $alamat_penerima = $_POST['alamat_penerima'];}
 		if(isset($_POST['keterangan'])){ $keterangan = $_POST['keterangan'];}
 		if(isset($_POST['seq'])){ $seq = $_POST['seq'];}
+		if(isset($_POST['termin_hutang'])){ $termin_hutang = $_POST['termin_hutang'];}
 		
 		if(isset($_POST['kode_barang'])){ $kode_barang = $_POST['kode_barang'];}
 		if(isset($_POST['hj_retail'])){ $hj_retail = $_POST['hj_retail'];}
@@ -199,6 +201,7 @@ class SalecentralController extends Zend_Controller_Action {
 					  'alamat_penerima' => $alamat_penerima,
 					  'keterangan' => $keterangan,
 					  'seq' => $seq,
+					  'termin_hutang' => $termin_hutang,
 					  'kode_inv' => $kode_inv,
 					  'kode_barang' => $kode_barang,
 					  'hj_retail' => $hj_retail,
@@ -316,6 +319,7 @@ class SalecentralController extends Zend_Controller_Action {
 		$alamat_penerima 	= '';
 		$keterangan		 	= '';
 		$seq		 	 	= ''; 
+		$termin_hutang		 	 	= ''; 
 		$kode_inv 		 	= date('dmy');
 		
 		$kode_barang	 	= '';
@@ -350,6 +354,7 @@ class SalecentralController extends Zend_Controller_Action {
 		if(isset($_POST['alamat_penerima'])){ $alamat_penerima = $_POST['alamat_penerima'];}
 		if(isset($_POST['keterangan'])){ $keterangan = $_POST['keterangan'];}
 		if(isset($_POST['seq'])){ $seq = $_POST['seq'];}
+		if(isset($_POST['termin_hutang'])){ $termin_hutang = $_POST['termin_hutang'];}
 		
 		if(isset($_POST['kode_barang'])){ $kode_barang = $_POST['kode_barang'];}
 		if(isset($_POST['hj_retail'])){ $hj_retail = $_POST['hj_retail'];}
@@ -399,6 +404,7 @@ class SalecentralController extends Zend_Controller_Action {
 					  'alamat_penerima' => $alamat_penerima,
 					  'keterangan' => $keterangan,
 					  'seq' => $seq,
+					  'termin_hutang' => $termin_hutang,
 					  'kode_inv' => $kode_inv,
 					  'kode_barang' => $kode_barang,
 					  'hj_retail' => $hj_retail,

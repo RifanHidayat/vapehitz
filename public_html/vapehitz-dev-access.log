@@ -19241,3 +19241,13 @@
 127.0.0.1 - - [05/Mar/2021:17:29:24 +0700] "GET /returcustomer HTTP/1.1" 200 80491
 127.0.0.1 - - [05/Mar/2021:17:29:24 +0700] "GET /lib/bootstrap-datetimepicker/datertimepicker.css HTTP/1.1" 200 759
 127.0.0.1 - - [05/Mar/2021:17:29:24 +0700] "GET /img/nav-expand.png HTTP/1.1" 200 759
+127.0.0.1 - - [06/Mar/2021:13:36:22 +0700] "GET / HTTP/1.1" 200 1162
+127.0.0.1 - - [06/Mar/2021:13:36:24 +0700] "GET / HTTP/1.1" 200 1162
+127.0.0.1 - - [06/Mar/2021:13:36:25 +0700] "GET /favicon.ico HTTP/1.1" 200 1162
+127.0.0.1 - - [06/Mar/2021:13:36:41 +0700] "GET / HTTP/1.1" 200 65
+127.0.0.1 - - [06/Mar/2021:13:36:43 +0700] "GET /login HTTP/1.1" 200 6528
+127.0.0.1 - - [06/Mar/2021:13:36:49 +0700] "POST /login/login HTTP/1.1" 200 -
+127.0.0.1 - - [06/Mar/2021:13:36:49 +0700] "GET /index HTTP/1.1" 200 86491
+127.0.0.1 - - [06/Mar/2021:13:36:50 +0700] "GET /lib/bootstrap-datetimepicker/datertimepicker.css HTTP/1.1" 200 837
+127.0.0.1 - - [06/Mar/2021:13:36:51 +0700] "GET /img/nav-expand.png HTTP/1.1" 200 837
+127.0.0.1 - - [06/Mar/2021:13:36:51 +0700] "GET /show_data.php?action=1&year=2021&month=3 HTTP/1.1" 200 837
