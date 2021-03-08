@@ -137,6 +137,7 @@ class Accessories_Service {
 						 "hj_agen" => $data['hj_agen'],
 						 "hj_retail" => $data['hj_retail'],
 						 "hj_whs" => $data['hj_whs'],
+						 "otorisasi_harga" => $data['otorisasi_harga'],
 						 "status" => $data['status']);
 					
 		$db->insert('accessories',$insdata);

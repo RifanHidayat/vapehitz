@@ -81,6 +81,7 @@ class AtomizerController extends Zend_Controller_Action {
 		if(isset($_POST['hj_retail'])){ $hj_retail = $_POST['hj_retail'];}
 		if(isset($_POST['hj_whs'])){ $hj_whs = $_POST['hj_whs'];}
 		if(isset($_POST['status'])){ $status = $_POST['status'];}
+		if(isset($_POST['otorisasi_harga'])){ $otorisasi_harga = $_POST['otorisasi_harga'];}
 		
 		$harga_beli = str_replace(".", "", $harga_beli);
 		$hj_agen 	= str_replace(".", "", $hj_agen);
@@ -104,6 +105,7 @@ class AtomizerController extends Zend_Controller_Action {
 					  'hj_agen' => $hj_agen,
 					  'hj_retail' => $hj_retail,
 					  'hj_whs' => $hj_whs,
+					  'otorisasi_harga' => $otorisasi_harga,
 					  'status' => $status);
 		//var_dump($data);
 		$this->view->datainsert=$this->Atomizer_Service->insertdata($data);

@@ -45,7 +45,7 @@
 			  <li <?php if($source == "liquid") echo "class='active'";?>><a href="liquid">Master Data Isi Ulang Liquid</a></li>
 			<?php } } ?>
 			<?php if($serialize_permission) { if(in_array('viewPerlengkapan', $serialize_permission)) { ?>
-			  <li <?php if($source == "device") echo "class='active'";?>><a href="device">Master Data Perlengkapan (Device)</a></li>
+			  <li <?php if($source == "device") echo "class='active'";?>><a href="device">Master Data Device</a></li>
 			<?php } } ?>
 			<?php if($serialize_permission) { if(in_array('viewAksesoris', $serialize_permission)) { ?>
 			  <li <?php if($source == "accessories") echo "class='active'";?>><a href="accessories">Master Data Aksesoris</a></li>
@@ -284,7 +284,7 @@
 			
 			
 			
-			</ul>a
+			</ul>
           </li>
 		  <?php } } ?>
         </ul>

@@ -20,7 +20,13 @@ $currentPage  = $this->currentPage;
 	});
 	 
 </script>
+<link href="<?php echo $this->baseUrl();?>/css/select2.min.css" rel="stylesheet">
 <link rel="stylesheet" href="<?php echo $this->baseUrl();?>/calendar/daterangepicker-master/daterangepicker.css" />
+<style>
+	.select2-selection__rendered {
+		font-size: 13px;
+	}
+</style>
     <!-- **********************************************************************************************************************************************************
         MAIN CONTENT
         *********************************************************************************************************************************************************** -->
@@ -46,28 +52,28 @@ $currentPage  = $this->currentPage;
 								<td>
 									<table>
 										<td> 
-											<select id="tipe" name="tipe" class = "form-control input-sm" width="15%" onclick="pilihlaporan(this)">
-												<option value="0"><b>--------- Laporan Master Data ---------</b></option>
+											<select id="tipe" name="tipe" class = "form-control input-sm select-laporan" width="15%" >
+												<option value="0">--------- Laporan Master Data ---------</option>
 												<?php if($serialize_permission) { if(in_array('laporanSupplier', $serialize_permission)) { ?>
-													<option value="supplier">Master Data Supplier</option>
+													<option value="supplier">Supplier</option>
 												<?php } } ?>
 												<?php if($serialize_permission) { if(in_array('laporanSales', $serialize_permission)) { ?>
-													<option value="sales">Master Data Sales</option>
+													<option value="sales">Sales</option>
 												<?php } } ?>
 												<?php if($serialize_permission) { if(in_array('laporanCustomer', $serialize_permission)) { ?>
-													<option value="customer">Master Data Customer</option>
+													<option value="customer">Customer</option>
 												<?php } } ?>
 												<?php if($serialize_permission) { if(in_array('laporanLiquid', $serialize_permission)) { ?>
-													<option value="liquid">Master Data Isi Ulang Liquid</option>
+													<option value="liquid">Isi Ulang Liquid</option>
 												<?php } } ?>
 												<?php if($serialize_permission) { if(in_array('laporanPerlengkapan', $serialize_permission)) { ?>
-													<option value="device">Master Data Perlengkapan</option>
+													<option value="device">Perlengkapan</option>
 												<?php } } ?>
 												<?php if($serialize_permission) { if(in_array('laporanAksesoris', $serialize_permission)) { ?>
-													<option value="accessories">Master Data Aksesoris</option>
+													<option value="accessories">Aksesoris</option>
 												<?php } } ?>
 												<?php if($serialize_permission) { if(in_array('laporanAtomizer', $serialize_permission)) { ?>
-													<option value="atomizer">Master Data Atomizer</option>
+													<option value="atomizer">Atomizer</option>
 												<?php } } ?>
 												<option value="1"><b>--------- Laporan Transaksi Pusat ---------</b></option>
 												<?php if($serialize_permission) { if(in_array('laporanOrderCentral', $serialize_permission)) { ?>
@@ -168,13 +174,13 @@ $currentPage  = $this->currentPage;
 								<td>
 									<table>
 										<td> 
-											<button type="button" class="btn btn-info btn-sm">
+											<button type="button" class="btn btn-info btn-sm" onclick="pilihlaporan()">
 												<span class="glyphicon glyphicon-search"></span>
 												&nbsp;Cari
 											</button>
 										</td>
 										<td>&nbsp;&nbsp;
-											<button type="button" class="btn btn-info btn-sm" onCLick="kembali()">
+											<button type="button" class="btn btn-info btn-sm" >
 												<span class="fa fa-refresh"></span>
 												&nbsp;Clear
 											</button>
@@ -855,7 +861,7 @@ $currentPage  = $this->currentPage;
 							</tbody>
 						</table>
 						
-						<table style="font-size:12px;" class="table table-striped table-bordered table-hover" id="tabel_ordercentral">
+						<table style="font-size:12px;" class="table table-striped table-bordered table-hover table-datatable" id="tabel_ordercentral">
 							<thead>
 							<tr bgcolor="#4ECDC4">
 								<th width="3%" style="text-align:center;">No</th>
@@ -895,18 +901,18 @@ $currentPage  = $this->currentPage;
 										$hutang = $this->Laporan_Service->getDataHutang($no_order);
 									?>	
 										<tr>
-											<td align="center"><?php echo $nomer;?></td>	  
-											<td align="center"><?php echo $no_order;?></td>
-											<td align="center"><?php echo $nama_supplier;?></td>
-											<td align="center"><?php echo $kode_supplier;?></td>
-											<td align="center"><?php echo $tipe;?></td>
-											<td align="center"><?php echo $total;?></td>
-											<td align="center"><?php echo $biaya_kirim;?></td>
-											<td align="center"><?php echo $diskon;?></td>
-											<td align="center"><?php echo $net_total;?></td>
-											<td align="center"><?php echo $jml_bayar_dp;?></td>
-											<td align="center"><?php echo $sisa_bayar;?></td>
-											<td align="center"><?php echo $tgl_order;?></td>
+											<td class="text-center"><?php echo $nomer;?></td>	  
+											<td class="text-center"><?php echo $no_order;?></td>
+											<td class="text-center"><?php echo $nama_supplier;?></td>
+											<td class="text-center"><?php echo $kode_supplier;?></td>
+											<td class="text-center"><?php echo $tipe;?></td>
+											<td class="text-center"><?php echo $total;?></td>
+											<td class="text-center"><?php echo $biaya_kirim;?></td>
+											<td class="text-center"><?php echo $diskon;?></td>
+											<td class="text-center"><?php echo $net_total;?></td>
+											<td class="text-center"><?php echo $jml_bayar_dp;?></td>
+											<td class="text-center"><?php echo $sisa_bayar;?></td>
+											<td class="text-center"><?php echo $tgl_order;?></td>
 										</tr>	
 									<?php 
 										}
@@ -1203,14 +1209,20 @@ $currentPage  = $this->currentPage;
   <script class="include" type="text/javascript" src="lib/jquery.dcjqaccordion.2.7.js"></script>
   <script src="lib/jquery.scrollTo.min.js"></script>
   <script src="lib/jquery.nicescroll.js" type="text/javascript"></script>
-  <script type="text/javascript" language="javascript" src="lib/advanced-datatable/js/jquery.dataTables.js"></script>
+  <!-- <script type="text/javascript" language="javascript" src="lib/advanced-datatable/js/jquery.dataTables.js"></script> -->
+  <script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.23/datatables.min.js"></script>
   <script type="text/javascript" src="lib/advanced-datatable/js/DT_bootstrap.js"></script>
   <script type="text/javascript" src="<?php echo $this->baseUrl(); ?>/calendar/daterangepicker-master/moment.min.js"></script>
   <script type="text/javascript" src="<?php echo $this->baseUrl(); ?>/calendar/daterangepicker-master/daterangepicker.js"></script>
+  <script src="<?php echo $this->baseUrl();?>/lib/select2.full.min.js"></script>
   <!--common script for all pages-->
   <script src="lib/common-scripts.js"></script>
   <!--script for this page-->
   <script type="text/javascript">
+
+	
+	var orderCentralTable = $('#tabel_ordercentral').DataTable();
+	// $('.dataTables_wrapper').hide();
 	$("#tabel_supplier").hide();
 	$("#tabel_supplier2").hide();
 	$("#tabel_sales").hide();
@@ -1221,11 +1233,14 @@ $currentPage  = $this->currentPage;
 	$("#tabel_device").hide(); $("#tabel_device2").hide();
 	$("#tabel_aksesoris").hide(); $("#tabel_aksesoris2").hide();
 	$("#tabel_atomizer").hide(); $("#tabel_atomizer2").hide();
-	$("#tabel_ordercentral").hide();
+	$("#tabel_ordercentral_wrapper").hide();
 	$("#tabel_pembayaransupplier").hide();
 	$("#tabel_retursupplier").hide();
 	$("#tabel_penyelesaianpembelian").hide();
 	$("#tabel_salecentral").hide();
+
+
+	$('.select-laporan').select2();
 			
 	function getCari(){
 		var kata_kunci = document.getElementById('kata_kunci').value;
@@ -1240,21 +1255,32 @@ $currentPage  = $this->currentPage;
 		}); 
 	}
   
-	function pilihlaporan(x){
-		var nilai = x.value;
+	function pilihlaporan(){
 		
-		if(nilai == 'supplier' || nilai == 'sales' || nilai == 'customer' || nilai == 'liquid' ||
-		   nilai == 'device' || nilai == 'accessories' || nilai == 'atomizer'){
-			$("#periode1").hide();
-			$("#periode2").hide();
-			$("#search").hide();
-			$("#search2").hide();
-		} else {
-			$("#periode1").show();
-			$("#periode2").show();
-			$("#search").show();
-			$("#search2").show();
-		}
+		// var nilai = x.value;
+		nilai = $('#tipe').val();
+		let perioddate = $("#perioddate").val();
+		let newPeriodDate = perioddate.split('-'); 
+		let periodDate1 = newPeriodDate[0].trim().split('/');
+		let periodDate2 = newPeriodDate[1].trim().split('/');
+		
+		let newPeriodDate1 = new Date(`${periodDate1[2]}-${periodDate1[1]}-${periodDate1[0]}`)
+		let newPeriodDate2 = new Date(`${periodDate2[2]}-${periodDate2[1]}-${periodDate2[0]}`)
+		// console.log(newDate1, newDate2);
+
+		// console.log('clicked');
+		// if(nilai == 'supplier' || nilai == 'sales' || nilai == 'customer' || nilai == 'liquid' ||
+		//    nilai == 'device' || nilai == 'accessories' || nilai == 'atomizer'){
+		// 	$("#periode1").hide();
+		// 	$("#periode2").hide();
+		// 	$("#search").hide();
+		// 	$("#search2").hide();
+		// } else {
+		// 	$("#periode1").show();
+		// 	$("#periode2").show();
+		// 	$("#search").show();
+		// 	$("#search2").show();
+		// }
 		
 		if (nilai == 'supplier'){
 			$("#tabel_supplier").show();
@@ -1267,7 +1293,7 @@ $currentPage  = $this->currentPage;
 			$("#tabel_device").hide(); $("#tabel_device2").hide();
 			$("#tabel_aksesoris").hide(); $("#tabel_aksesoris2").hide();
 			$("#tabel_atomizer").hide(); $("#tabel_atomizer2").hide();
-			$("#tabel_ordercentral").hide();
+			$("#tabel_ordercentral_wrapper").hide();
 			$("#tabel_pembayaransupplier").hide();
 			$("#tabel_retursupplier").hide();
 			$("#tabel_penyelesaianpembelian").hide();
@@ -1283,7 +1309,7 @@ $currentPage  = $this->currentPage;
 			$("#tabel_device").hide(); $("#tabel_device2").hide();
 			$("#tabel_aksesoris").hide(); $("#tabel_aksesoris2").hide();
 			$("#tabel_atomizer").hide(); $("#tabel_atomizer2").hide();
-			$("#tabel_ordercentral").hide();
+			$("#tabel_ordercentral_wrapper").hide();
 			$("#tabel_pembayaransupplier").hide();
 			$("#tabel_retursupplier").hide();
 			$("#tabel_penyelesaianpembelian").hide();
@@ -1299,7 +1325,7 @@ $currentPage  = $this->currentPage;
 			$("#tabel_device").hide(); $("#tabel_device2").hide();
 			$("#tabel_aksesoris").hide(); $("#tabel_aksesoris2").hide();
 			$("#tabel_atomizer").hide(); $("#tabel_atomizer2").hide();
-			$("#tabel_ordercentral").hide();
+			$("#tabel_ordercentral_wrapper").hide();
 			$("#tabel_pembayaransupplier").hide();
 			$("#tabel_retursupplier").hide();
 			$("#tabel_penyelesaianpembelian").hide();
@@ -1315,7 +1341,7 @@ $currentPage  = $this->currentPage;
 			$("#tabel_device").hide(); $("#tabel_device2").hide();
 			$("#tabel_aksesoris").hide(); $("#tabel_aksesoris2").hide();
 			$("#tabel_atomizer").hide(); $("#tabel_atomizer2").hide();
-			$("#tabel_ordercentral").hide();
+			$("#tabel_ordercentral_wrapper").hide();
 			$("#tabel_pembayaransupplier").hide();
 			$("#tabel_retursupplier").hide();
 			$("#tabel_penyelesaianpembelian").hide();
@@ -1331,7 +1357,7 @@ $currentPage  = $this->currentPage;
 			$("#tabel_device").show(); $("#tabel_device2").show();
 			$("#tabel_aksesoris").hide(); $("#tabel_aksesoris2").hide();
 			$("#tabel_atomizer").hide(); $("#tabel_atomizer2").hide();
-			$("#tabel_ordercentral").hide();
+			$("#tabel_ordercentral_wrapper").hide();
 			$("#tabel_pembayaransupplier").hide();
 			$("#tabel_retursupplier").hide();
 			$("#tabel_penyelesaianpembelian").hide();
@@ -1347,7 +1373,7 @@ $currentPage  = $this->currentPage;
 			$("#tabel_device").hide(); $("#tabel_device2").hide();
 			$("#tabel_aksesoris").show(); $("#tabel_aksesoris2").show();
 			$("#tabel_atomizer").hide(); $("#tabel_atomizer2").hide();
-			$("#tabel_ordercentral").hide();
+			$("#tabel_ordercentral_wrapper").hide();
 			$("#tabel_pembayaransupplier").hide();
 			$("#tabel_retursupplier").hide();
 			$("#tabel_penyelesaianpembelian").hide();
@@ -1363,12 +1389,34 @@ $currentPage  = $this->currentPage;
 			$("#tabel_device").hide(); $("#tabel_device2").hide();
 			$("#tabel_aksesoris").hide(); $("#tabel_aksesoris2").hide();
 			$("#tabel_atomizer").show(); $("#tabel_atomizer2").show();
-			$("#tabel_ordercentral").hide();
+			$("#tabel_ordercentral_wrapper").hide();
 			$("#tabel_pembayaransupplier").hide();
 			$("#tabel_retursupplier").hide();
 			$("#tabel_penyelesaianpembelian").hide();
 			$("#tabel_salecentral").hide();
 		} else if (nilai == 'ordercentral'){
+			let data = orderCentralTable.data();
+			let newData = [];
+
+			orderCentralTable.clear();
+			for($i = 0; $i < data.length; $i++) {
+				let columnIndex = 11;
+				let date = data[$i][columnIndex].split('-');
+				let day = date[0]; 
+				let month = date[1]; 
+				let year = date[2];
+				let newDate = new Date(`${year}-${month}-${day}`);
+				// console.log(newDate); 
+				if( (newDate >= newPeriodDate1) && (newDate <= newPeriodDate2)) {
+					newData.push(data[$i]);
+				}
+			}
+
+			for($i = 0; $i < newData.length; $i++) {
+				orderCentralTable.row.add(newData[$i]).draw();
+			}
+
+
 			$("#tabel_supplier").hide();
 			$("#tabel_supplier2").hide();
 			$("#tabel_sales").hide();
@@ -1379,7 +1427,7 @@ $currentPage  = $this->currentPage;
 			$("#tabel_device").hide(); $("#tabel_device2").hide();
 			$("#tabel_aksesoris").hide(); $("#tabel_aksesoris2").hide();
 			$("#tabel_atomizer").hide(); $("#tabel_atomizer2").hide();
-			$("#tabel_ordercentral").show();
+			$("#tabel_ordercentral_wrapper").show();
 			$("#tabel_pembayaransupplier").hide();
 			$("#tabel_retursupplier").hide();
 			$("#tabel_penyelesaianpembelian").hide();
@@ -1395,7 +1443,7 @@ $currentPage  = $this->currentPage;
 			$("#tabel_device").hide(); $("#tabel_device2").hide();
 			$("#tabel_aksesoris").hide(); $("#tabel_aksesoris2").hide();
 			$("#tabel_atomizer").hide(); $("#tabel_atomizer2").hide();
-			$("#tabel_ordercentral").hide();
+			$("#tabel_ordercentral_wrapper").hide();
 			$("#tabel_pembayaransupplier").show();
 			$("#tabel_retursupplier").hide();
 			$("#tabel_penyelesaianpembelian").hide();
@@ -1411,7 +1459,7 @@ $currentPage  = $this->currentPage;
 			$("#tabel_device").hide(); $("#tabel_device2").hide();
 			$("#tabel_aksesoris").hide(); $("#tabel_aksesoris2").hide();
 			$("#tabel_atomizer").hide(); $("#tabel_atomizer2").hide();
-			$("#tabel_ordercentral").hide();
+			$("#tabel_ordercentral_wrapper").hide();
 			$("#tabel_pembayaransupplier").hide();
 			$("#tabel_retursupplier").show();
 			$("#tabel_penyelesaianpembelian").hide();
@@ -1427,7 +1475,7 @@ $currentPage  = $this->currentPage;
 			$("#tabel_device").hide(); $("#tabel_device2").hide();
 			$("#tabel_aksesoris").hide(); $("#tabel_aksesoris2").hide();
 			$("#tabel_atomizer").hide(); $("#tabel_atomizer2").hide();
-			$("#tabel_ordercentral").hide();
+			$("#tabel_ordercentral_wrapper").hide();
 			$("#tabel_pembayaransupplier").hide();
 			$("#tabel_retursupplier").hide();
 			$("#tabel_penyelesaianpembelian").show();
@@ -1443,7 +1491,7 @@ $currentPage  = $this->currentPage;
 			$("#tabel_device").hide(); $("#tabel_device2").hide();
 			$("#tabel_aksesoris").hide(); $("#tabel_aksesoris2").hide();
 			$("#tabel_atomizer").hide(); $("#tabel_atomizer2").hide();
-			$("#tabel_ordercentral").hide();
+			$("#tabel_ordercentral_wrapper").hide();
 			$("#tabel_pembayaransupplier").hide();
 			$("#tabel_retursupplier").hide();
 			$("#tabel_penyelesaianpembelian").hide();
@@ -1463,6 +1511,11 @@ $currentPage  = $this->currentPage;
         "firstDay": 1
       }
     });
+
+	$('#perioddate').on('apply.daterangepicker', function(ev, picker) {
+		console.log(picker.startDate.format('YYYY-MM-DD'));
+		console.log(picker.endDate.format('YYYY-MM-DD'));
+	})
 
     $('#perioddate').on('cancel.daterangepicker', function(ev, picker) {
       //do something, like clearing an input
