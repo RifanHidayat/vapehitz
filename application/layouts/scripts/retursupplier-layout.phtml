@@ -85,12 +85,11 @@
 											<td align="center"><?php echo $sisa_bayar;?></td>
 											<td align="center"><?php echo $status;?></td>
 											<td width="7%" align="center">
-											<?php if($status == 'Finished'){ ?>
-											<?php } else { ?>
+											
 												<?php if($serialize_permission) { if(in_array('tambahReturSupplier', $serialize_permission)) { ?>
 													<a href="#" title="Retur" onclick="open_url_to_div('/retursupplier/editdata?id=<?php echo $no_order;?>')" class="btn-warning btn-sm mar-ed-button">Retur</a>
 												<?php } } ?>
-											<?php } ?>
+											
                                             </td>
 										</tr>	
 									<?php 

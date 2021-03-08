@@ -120,8 +120,14 @@ class SalecentralController extends Zend_Controller_Action {
 		$hj_retail		 	= '';
 		$qty			 	= '';
 		$free			 	= '';
-		$sub_total		 	= '';
 		$sub_total_berat 	= '';
+		
+		$sub_total_barang = '';
+		$sub_total		 	= '';
+		$biaya_lain		 	= '';
+		$ket_biaya_lain		 	= '';
+		$deposit		 	= '';
+		$jenis_diskon		 	= '';
 			
 		$nama_tabel 	 	= '';
 		$on_hand 		 	= '';
@@ -154,8 +160,14 @@ class SalecentralController extends Zend_Controller_Action {
 		if(isset($_POST['hj_retail'])){ $hj_retail = $_POST['hj_retail'];}
 		if(isset($_POST['qty'])){ $qty = $_POST['qty'];}
 		if(isset($_POST['free'])){ $free = $_POST['free'];}
-		if(isset($_POST['sub_total'])){ $sub_total = $_POST['sub_total'];}
 		if(isset($_POST['sub_total_berat'])){ $sub_total_berat = $_POST['sub_total_berat'];}
+		
+		if(isset($_POST['sub_total_barang'])){ $sub_total_barang = $_POST['sub_total_barang'];}
+		if(isset($_POST['sub_total'])){ $sub_total = $_POST['sub_total'];}
+		if(isset($_POST['jenis_diskon'])){ $jenis_diskon = $_POST['jenis_diskon'];}
+		if(isset($_POST['biaya_lain'])){ $biaya_lain = $_POST['biaya_lain'];}
+		if(isset($_POST['ket_biaya_lain'])){ $ket_biaya_lain = $_POST['ket_biaya_lain'];}
+		if(isset($_POST['deposit'])){ $deposit = $_POST['deposit'];}
 		
 		if(isset($_POST['nama_tabel'])){ $nama_tabel = $_POST['nama_tabel'];}
 		if(isset($_POST['on_hand'])){ $on_hand = $_POST['on_hand'];}
@@ -178,6 +190,8 @@ class SalecentralController extends Zend_Controller_Action {
 		$qty= str_replace(".", "", $qty);
 		$free= str_replace(".", "", $free);
 		$sub_total= str_replace(".", "", $sub_total);
+		$biaya_lain= str_replace(".", "", $biaya_lain);
+		$deposit= str_replace(".", "", $deposit);
 		$sub_total_berat= str_replace(".", "", $sub_total_berat);
 		$on_hand= str_replace(".", "", $on_hand);
 		
@@ -207,7 +221,12 @@ class SalecentralController extends Zend_Controller_Action {
 					  'hj_retail' => $hj_retail,
 					  'qty' => $qty,
 					  'free' => $free,
+					  'sub_total_barang' => $sub_total_barang,
 					  'sub_total' => $sub_total,
+					  'biaya_lain' => $biaya_lain,
+					  'ket_biaya_lain' => $ket_biaya_lain,
+					  'deposit' => $deposit,
+					  'jenis_diskon' => $jenis_diskon,
 					  'sub_total_berat' => $sub_total_berat,
 					  'nama_tabel' => $nama_tabel,
 					  'on_hand' => $on_hand,
@@ -326,8 +345,15 @@ class SalecentralController extends Zend_Controller_Action {
 		$hj_retail		 	= '';
 		$qty			 	= '';
 		$free			 	= '';
-		$sub_total		 	= '';
+		// $sub_total		 	= '';
 		$sub_total_berat 	= '';
+
+		$sub_total_barang = '';
+		$sub_total		 	= '';
+		$biaya_lain		 	= '';
+		$ket_biaya_lain		 	= '';
+		$deposit		 	= '';
+		$jenis_diskon		 	= '';
 			
 		$nama_tabel 	 	= '';
 		$on_hand 		 	= '';
@@ -360,8 +386,15 @@ class SalecentralController extends Zend_Controller_Action {
 		if(isset($_POST['hj_retail'])){ $hj_retail = $_POST['hj_retail'];}
 		if(isset($_POST['qty'])){ $qty = $_POST['qty'];}
 		if(isset($_POST['free'])){ $free = $_POST['free'];}
-		if(isset($_POST['sub_total'])){ $sub_total = $_POST['sub_total'];}
+		// if(isset($_POST['sub_total'])){ $sub_total = $_POST['sub_total'];}
 		if(isset($_POST['sub_total_berat'])){ $sub_total_berat = $_POST['sub_total_berat'];}
+
+		if(isset($_POST['sub_total_barang'])){ $sub_total_barang = $_POST['sub_total_barang'];}
+		if(isset($_POST['sub_total'])){ $sub_total = $_POST['sub_total'];}
+		if(isset($_POST['jenis_diskon'])){ $jenis_diskon = $_POST['jenis_diskon'];}
+		if(isset($_POST['biaya_lain'])){ $biaya_lain = $_POST['biaya_lain'];}
+		if(isset($_POST['ket_biaya_lain'])){ $ket_biaya_lain = $_POST['ket_biaya_lain'];}
+		if(isset($_POST['deposit'])){ $deposit = $_POST['deposit'];}
 		
 		if(isset($_POST['nama_tabel'])){ $nama_tabel = $_POST['nama_tabel'];}
 		if(isset($_POST['on_hand'])){ $on_hand = $_POST['on_hand'];}
@@ -380,6 +413,8 @@ class SalecentralController extends Zend_Controller_Action {
 		$hj_retail= str_replace(".", "", $hj_retail);
 		$qty= str_replace(".", "", $qty);
 		$free= str_replace(".", "", $free);
+		$biaya_lain= str_replace(".", "", $biaya_lain);
+		$deposit= str_replace(".", "", $deposit);
 		$sub_total= str_replace(".", "", $sub_total);
 		$sub_total_berat= str_replace(".", "", $sub_total_berat);
 		$on_hand= str_replace(".", "", $on_hand);
@@ -410,7 +445,12 @@ class SalecentralController extends Zend_Controller_Action {
 					  'hj_retail' => $hj_retail,
 					  'qty' => $qty,
 					  'free' => $free,
+					  'sub_total_barang' => $sub_total_barang,
 					  'sub_total' => $sub_total,
+					  'biaya_lain' => $biaya_lain,
+					  'ket_biaya_lain' => $ket_biaya_lain,
+					  'deposit' => $deposit,
+					  'jenis_diskon' => $jenis_diskon,
 					  'sub_total_berat' => $sub_total_berat,
 					  'nama_tabel' => $nama_tabel,
 					  'on_hand' => $on_hand,

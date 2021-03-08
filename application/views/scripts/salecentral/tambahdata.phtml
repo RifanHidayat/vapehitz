@@ -368,9 +368,9 @@ body {font-family: Arial, Helvetica, sans-serif;}
 								<td><font style="font-size:12px;font-weight:bold;">Diskon</font></td>
 								<td> 
 								<input type='text' class="form-control input-sm" name='diskon' id='diskon' value='0' onkeyup='datadiskon()' style="width: 55%; display: inline"> 
-								<select class="form-control input-sm" id="jenis_diskon" style="width: 43%; display: inline">
+								<select class="form-control input-sm" id="jenis_diskon" name="jenis_diskon" style="width: 43%; display: inline">
 									<option value="nominal">Nominal</option>
-									<option value="percentage">Persen (%)</option>
+									<option value="persen">Persen (%)</option>
 								</select>
 								</td>
 							</tr>
@@ -405,7 +405,7 @@ body {font-family: Arial, Helvetica, sans-serif;}
 							<tr><td>&nbsp;</td></tr>
 							<tr>
 								<td colspan='5' align="right">&nbsp;</td>
-								<td><font style="font-size:12px;font-weight:bold;">Deposit</font></td>
+								<td><font style="font-size:12px;font-weight:bold;">Deposit Customer</font></td>
 								<td> <input type='text' class="form-control input-sm" name='deposit' id='deposit' value='0' onkeyup='onDepositChange()'> </td>
 							</tr>
 							<tr><td>&nbsp;</td></tr>
@@ -694,12 +694,14 @@ body {font-family: Arial, Helvetica, sans-serif;}
 					document.getElementById('tgl_invoice-error').innerHTML ="<span style='color: red;'>Tanggal Invoice Harus Diisi.</span>";
 					document.getElementById('tgl_invoice').focus();
 					// exit;
+					return false;
 				}else document.getElementById('tgl_invoice-error').innerHTML ='';
 				
 				if (shipment=='') {
 					document.getElementById('shipment-error').innerHTML ="<span style='color: red;'>Shipment Harus Dipilih.</span>";
 					document.getElementById('shipment').focus();
 					// exit;
+					return false;
 				}else document.getElementById('shipment-error').innerHTML ='';
 				
 				if (shipment=='Kurir') {
@@ -707,6 +709,7 @@ body {font-family: Arial, Helvetica, sans-serif;}
 						document.getElementById('nama_kurir-error').innerHTML ="<span style='color: red;'>Nama Kurir Harus Diisi.</span>";
 						document.getElementById('nama_kurir').focus();
 						// exit;
+						return false;
 					}else document.getElementById('nama_kurir-error').innerHTML ='';
 				}
 				
@@ -714,7 +717,10 @@ body {font-family: Arial, Helvetica, sans-serif;}
 					document.getElementById('kode_customer-error').innerHTML ="<span style='color: red;'>Nama Pelanggan Harus Dipilih.</span>";
 					document.getElementById('kode_customer').focus();
 					// exit;
+					return false;
 				}else document.getElementById('kode_customer-error').innerHTML ='';
+
+				return true;
 				
 				/* if (!biaya_kirim) {
 					document.getElementById('biaya_kirim-error').innerHTML ="<span style='color: red;'>Biaya Kirim Harus Diisi.</span>";
@@ -774,8 +780,8 @@ body {font-family: Arial, Helvetica, sans-serif;}
     } 
 	
 	function closeDetil(){
-	document.getElementById('popupContact').style.display = "none";
-	disablePopup();
+		document.getElementById('popupContact').style.display = "none";
+		disablePopup();
 	}
 	
 	function deleterow(button,rows){
@@ -799,6 +805,11 @@ body {font-family: Arial, Helvetica, sans-serif;}
 		var biaya_kirim2 = biaya_kirim.replaceAll(".", "");
 		var diskon = document.getElementById("diskon").value;
 		var diskon2 = diskon.replaceAll(".", "");
+
+		if(document.getElementById("jenis_diskon").value == 'persen') {
+			diskon2 = (parseInt(diskon2) / 100) * parseInt(total_biaya2);
+		}
+
 		var jml_bayar = document.getElementById("jml_bayar").value;
 		var jml_bayar2 = jml_bayar.replaceAll(".", "");
 		
@@ -830,7 +841,7 @@ body {font-family: Arial, Helvetica, sans-serif;}
 	
 	function jual(button){
 		var x = button;
-		
+
 		var modal = document.getElementById("myModal");
 		var span = document.getElementsByClassName("close")[0];
 		
@@ -845,6 +856,8 @@ body {font-family: Arial, Helvetica, sans-serif;}
 		var total_biaya2 = total_biaya.replaceAll(".", "");
 		var sub_total = document.getElementById("sub_total"+x).value;
 		var sub_total2 = sub_total.replaceAll(".", "");
+		var sub_total3 = sub_total2.toString().replaceAll(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1.");
+		document.getElementById("sub_total"+x).value=sub_total3;
 		
 		var hitung_total = parseInt(total_biaya2) - parseInt(sub_total2);
 		var qty = document.getElementById("qty"+x).value;
@@ -857,18 +870,22 @@ body {font-family: Arial, Helvetica, sans-serif;}
 		var hj_retail_lama = document.getElementById("hj_retail_lama"+x).value;
 		var hj_retail_lama2 = hj_retail_lama.replaceAll(".", "");
 		var hj_retail_lama3 = hj_retail_lama2.toString().replaceAll(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1.");
+
+		var otorisasi_harga = document.getElementById("otorisasi_harga"+x).value;
 		
 		if(parseInt(hj_retail2) < parseInt(hj_retail_lama2)){
 		//alert('harga jual baru tidak boleh lebih rendah dari harga jual awal !');
 		
-			modal.style.display = "block";
+			if(otorisasi_harga == '1') {
+				modal.style.display = "block";
+			}
 			
 			span.onclick = function() {
-			  modal.style.display = "none";
+			  	modal.style.display = "none";
 			  
-			  document.getElementById("hj_retail"+x).value=hj_retail_lama3;
-			  var hj_retail = document.getElementById("hj_retail"+x).value;
-			  var hj_retail2 = hj_retail.replaceAll(".", "");
+				document.getElementById("hj_retail"+x).value=hj_retail_lama3;
+				var hj_retail = document.getElementById("hj_retail"+x).value;
+				var hj_retail2 = hj_retail.replaceAll(".", "");
 			  
 				var kali = qty * hj_retail2;
 				var kali2 = kali.toString().replaceAll(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1.");
@@ -881,7 +898,7 @@ body {font-family: Arial, Helvetica, sans-serif;}
 				var free = document.getElementById("free"+x).value;
 				var free2 = free.replaceAll(".", "");
 
-				var hitung_qty_berat = (parseInt(qty) + parseInt(free)) * berat2;
+				var hitung_qty_berat = (parseInt(qty) + parseInt(free2)) * parseInt(berat2);
 				var hitung_qty_berat2 = hitung_qty_berat.toString().replaceAll(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1.");
 				document.getElementById("sub_total_berat"+x).value=hitung_qty_berat2;
 				
@@ -927,6 +944,10 @@ body {font-family: Arial, Helvetica, sans-serif;}
 				var biaya_kirim2 = biaya_kirim.replaceAll(".", "");
 				var diskon = document.getElementById("diskon").value;
 				var diskon2 = diskon.replaceAll(".", "");
+
+				if(document.getElementById("jenis_diskon").value == 'persen') {
+					diskon2 = (parseInt(diskon2) / 100) * parseInt(total_biaya2);
+				}
 				
 				// Sub Total
 				var main_sub_total = parseInt(kurangin) - parseInt(diskon2);
@@ -973,9 +994,16 @@ body {font-family: Arial, Helvetica, sans-serif;}
 		var berat2 = berat.replaceAll(".", "");
 
 		var free = document.getElementById("free"+x).value;
+		if(free == '') {
+			free = '0';
+		}
 		var free2 = free.replaceAll(".", "");
 
-		var hitung_qty_berat = (parseInt(qty) + parseInt(free2)) * berat2;
+		if(qty == '') {
+			qty = '0';
+		}
+		// console.log(qty, free2, berat2);
+		var hitung_qty_berat = (parseInt(qty) + parseInt(free2)) * parseInt(berat2);
 		var hitung_qty_berat2 = hitung_qty_berat.toString().replaceAll(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1.");
 		document.getElementById("sub_total_berat"+x).value=hitung_qty_berat2;
 		
@@ -1013,6 +1041,8 @@ body {font-family: Arial, Helvetica, sans-serif;}
 		var kurangin2 = kurangin.toString().replaceAll(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1.");
 		document.getElementById("total_biaya").value=kurangin2;
 		
+		// console.log(hitung_total_berat, hitung_qty_berat);
+
 		var tambahin = parseInt(hitung_total_berat) + parseInt(hitung_qty_berat);
 		var tambahin2 = tambahin.toString().replaceAll(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1.");
 		document.getElementById("total_berat").value=tambahin2;
@@ -1021,6 +1051,10 @@ body {font-family: Arial, Helvetica, sans-serif;}
 		var biaya_kirim2 = biaya_kirim.replaceAll(".", "");
 		var diskon = document.getElementById("diskon").value;
 		var diskon2 = diskon.replaceAll(".", "");
+
+		if(document.getElementById("jenis_diskon").value == 'persen') {
+			diskon2 = (parseInt(diskon2) / 100) * parseInt(total_biaya2);
+		}
 
 		// Sub Total
 		var main_sub_total = parseInt(kurangin) - parseInt(diskon2);
@@ -1158,6 +1192,10 @@ body {font-family: Arial, Helvetica, sans-serif;}
 						var diskon = document.getElementById("diskon").value;
 						var diskon2 = diskon.replaceAll(".", "");
 
+						if(document.getElementById("jenis_diskon").value == 'persen') {
+							diskon2 = (parseInt(diskon2) / 100) * parseInt(total_biaya2);
+						}
+
 						// Sub Total
 						var main_sub_total = parseInt(kurangin) - parseInt(diskon2);
 						var main_sub_total2 = sub_total.toString().replaceAll(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1.");
@@ -1213,6 +1251,10 @@ body {font-family: Arial, Helvetica, sans-serif;}
 		var diskon = document.getElementById("diskon").value;
 		var diskon2 = diskon.replaceAll(".", "");
 
+		if(document.getElementById("jenis_diskon").value == 'persen') {
+			diskon2 = (parseInt(diskon2) / 100) * parseInt(total_biaya2);
+		}
+
 		// Sub Total
 		var main_sub_total = parseInt(total_biaya2) - parseInt(diskon2);
 		var main_sub_total2 = main_sub_total.toString().replaceAll(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1.");
@@ -1245,6 +1287,10 @@ body {font-family: Arial, Helvetica, sans-serif;}
 		
 		var diskon = document.getElementById("diskon").value;
 		var diskon2 = diskon.replaceAll(".", "");
+
+		if(document.getElementById("jenis_diskon").value == 'persen') {
+			diskon2 = (parseInt(diskon2) / 100) * parseInt(total_biaya2);
+		}
 
 		// Sub Total
 		var main_sub_total = parseInt(total_biaya2) - parseInt(diskon2);
@@ -1281,6 +1327,10 @@ body {font-family: Arial, Helvetica, sans-serif;}
 		var diskon = document.getElementById("diskon").value;
 		var diskon2 = diskon.replaceAll(".", "");
 
+		if(document.getElementById("jenis_diskon").value == 'persen') {
+			diskon2 = (parseInt(diskon2) / 100) * parseInt(total_biaya2);
+		}
+
 		// Sub Total
 		var main_sub_total = parseInt(total_biaya2) - parseInt(diskon2);
 		var main_sub_total2 = main_sub_total.toString().replaceAll(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1.");
@@ -1315,6 +1365,12 @@ body {font-family: Arial, Helvetica, sans-serif;}
 		var diskon = document.getElementById("diskon").value;
 		var diskon2 = diskon.replaceAll(".", "");
 		var diskon3 = diskon2.toString().replaceAll(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1.");
+
+		if(document.getElementById("jenis_diskon").value == 'persen') {
+			// diskon3 = diskon2;
+			diskon2 = (parseInt(diskon2) / 100) * parseInt(total_biaya2);
+		}
+
 		document.getElementById("diskon").value=diskon3;
 		
 		var sub_total = parseInt(total_biaya2)-parseInt(diskon2);
@@ -1336,6 +1392,51 @@ body {font-family: Arial, Helvetica, sans-serif;}
 		
 		document.getElementById("sisa_bayar").value=net_total2;
 	}
+
+	function calculate() {
+		var total_biaya = document.getElementById("total_biaya").value;
+		var total_biaya2 = total_biaya.replaceAll(".", "");
+		var biaya_kirim = document.getElementById("biaya_kirim").value;
+		var biaya_kirim2 = biaya_kirim.replaceAll(".", "");
+		var diskon = document.getElementById("diskon").value;
+		var diskon2 = diskon.replaceAll(".", "");
+
+		if(document.getElementById("jenis_diskon").value == 'persen') {
+			diskon2 = (parseInt(diskon2) / 100) * parseInt(total_biaya2);
+		}
+		
+		var sub_total = parseInt(total_biaya2)-parseInt(diskon2);
+		var sub_total2 = sub_total.toString().replaceAll(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1.");
+		document.getElementById("sub_total").value=sub_total2;
+
+		var biaya_lain = document.getElementById("biaya_lain").value;
+		var biaya_lain2 = biaya_lain.replaceAll(".", "");
+
+		var deposit = document.getElementById("deposit").value;
+		var deposit2 = deposit.replaceAll(".", "");
+
+		var net_total = sub_total + parseInt(biaya_kirim2) + parseInt(biaya_lain2) - parseInt(deposit2);
+		var net_total2 = net_total.toString().replaceAll(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1.");
+		document.getElementById("net_total").value=net_total2;
+		// var net_total = parseInt(total_biaya2)+parseInt(biaya_kirim2)-parseInt(diskon2);
+		// var net_total2 = net_total.toString().replaceAll(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1.");
+		// document.getElementById("net_total").value=net_total2;
+		
+		document.getElementById("sisa_bayar").value=net_total2;
+	}
+
+	$('#jenis_diskon').on('change', function() {
+		calculate();
+		var diskon = document.getElementById("diskon").value;
+		var diskon2 = diskon.replaceAll(".", "");
+		var diskon3 = diskon2.toString().replaceAll(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1.");
+
+		if(document.getElementById("jenis_diskon").value == 'persen') {
+			diskon3 = diskon2;
+		}
+
+		document.getElementById("diskon").value=diskon3;
+	})
 	
 	function jumlahdp(){
 		var net_total = document.getElementById("net_total").value;

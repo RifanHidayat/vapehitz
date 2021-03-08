@@ -284,6 +284,36 @@
 								</td>
 							</tr>
 							<tr><td>&nbsp;</td></tr>
+							<tr>
+								<td width="10%"><font style="font-size:12px;font-weight:bold;">Izinkan Perubahan Harga</font></td>
+								<td width="1%">:</td>
+								<td>
+									<table>
+										<td> 
+										<?php 
+											$otorisasi_harga = $this->data[0]['otorisasi_harga'];
+										?>
+											<select id="otorisasi_harga" name="otorisasi_harga" class="form-control select_group product" width="15%">
+												<option value="1" <?php if($otorisasi_harga == '1'){ echo 'selected'; } ?>>Tidak</option>
+												<option value="0" <?php if($otorisasi_harga == '0'){ echo 'selected'; } ?>>Ya</option>
+											</select>
+											
+										</td>
+									
+										<td> &nbsp; <label id="status-error" for="status" class="error"></td>
+										
+									</table>
+									
+								</td>
+							</tr>
+							<tr class="ket_otorisasi_harga">
+								<td width="10%"></td>
+								<td width="1%"></td>
+								<td>
+								<small>*Pengguna harus melakukan otorisasi (username, password) ketika melakukan<br>perubahan harga ke lebih rendah untuk item ini</small>
+								</td>
+							</tr>
+							<tr><td>&nbsp;</td></tr>
 						</table>
 					</div>				
 			</fieldset>
@@ -313,6 +343,22 @@
   <script src="<?php echo $this->baseUrl();?>/lib/jquery.scrollTo.min.js"></script>
   <script src="<?php echo $this->baseUrl();?>/lib/jquery.nicescroll.js" type="text/javascript"></script>
 <script>
+	
+	let oto_harga = $('#otorisasi_harga').val();
+	if(oto_harga == '1') {
+		$('.ket_otorisasi_harga').show();
+	} else {
+		$('.ket_otorisasi_harga').hide();
+	}
+
+	$('#otorisasi_harga').on('change', function() {
+		let otorisasi_harga = $(this).val();
+		if(otorisasi_harga == '1') {
+			$('.ket_otorisasi_harga').show();
+		} else {
+			$('.ket_otorisasi_harga').hide();
+		}
+	})
 	function getSelectValue(){
 		var selectedValue = document.getElementById("kode_supplier").value;
 		var res = selectedValue.split(",");
