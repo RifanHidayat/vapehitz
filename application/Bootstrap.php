@@ -1,8 +1,10 @@
 <?php
 
-class Bootstrap extends Zend_Application_Bootstrap_Bootstrap {
+class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
+{
 
-    protected function _initApp() {
+    protected function _initApp()
+    {
         $autoloader = Zend_Loader_Autoloader::getInstance();
         Zend_Registry::set('basepath', '');
         Zend_Registry::set('baseData', '../library/');
@@ -16,7 +18,8 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap {
         Zend_Registry::set('after2MCE', '/webptdi-new/public_html/');
     }
 
-     protected function _initDbAdaptersToRegistry() {
+    protected function _initDbAdaptersToRegistry()
+    {
         $this->bootstrap('multidb');
         $resource = $this->getPluginResource('multidb');
 
@@ -32,7 +35,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap {
         Zend_Registry::set('dbpublic', $Adapter4);
         Zend_Registry::set('dbsdm', $Adapter5);
         Zend_Registry::set('dbfis', $Adapter6); */
-	/* $db_config['username'] = 'dbfisp0';
+        /* $db_config['username'] = 'dbfisp0';
 	$db_config['password'] = 'fis2017';
 	$db_config['dbname'] = '(DESCRIPTION =
                  (ADDRESS = (PROTOCOL = TCP)(HOST = 10.1.94.72)(PORT = 1521))
@@ -41,30 +44,32 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap {
                  )
                  )';
         Zend_Registry::set('db_config', $db_config); */
-	
     }
 
-    protected function _initSession() {
+    protected function _initSession()
+    {
         Zend_Session::start();
         return;
     }
-	
-	protected function _initRoutes()
-	{
-		$this->bootstrap('frontController');
-		$frontController = $this->getResource('frontController');
-		$router = $frontController->getRouter();
 
-		/* $router->addRoute(
+    protected function _initRoutes()
+    {
+        $this->bootstrap('frontController');
+        $frontController = $this->getResource('frontController');
+        $router = $frontController->getRouter();
+
+        /* $router->addRoute(
 			'name_for_the_route',
 			new Zend_Controller_Router_Route('controller/action/:key1/:key2/:key3', array('module' => 'default', 'controller' => 'theController', 'action' => 'theAction', 'key1' => NULL, 'key2' => NULL, 'key3' => NULL))
 		); */
-		
-		$router->addRoute(
-			'newsx',
-			new Zend_Controller_Router_Route('news/detail/:no/:index', array('module' => 'default', 'controller' => 'news', 'action' => 'detail', 'no' => NULL, 'index' => NULL))
-		);
-			
-	}
-}
+        // $router->addRoute(
+        //     'default',
+        //     new Zend_Controller_Router_Route('tes/testing', array('module' => 'default', 'controller' => 'salecentralController', 'action' => 'tambah', 'no' => NULL, 'index' => NULL))
+        // );
 
+        $router->addRoute(
+            'newsx',
+            new Zend_Controller_Router_Route('news/detail/:no/:index', array('module' => 'default', 'controller' => 'news', 'action' => 'detail', 'no' => NULL, 'index' => NULL))
+        );
+    }
+}

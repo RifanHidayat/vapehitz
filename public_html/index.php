@@ -1,7 +1,7 @@
 <?php
 // Define path to application directory
 defined('ZEND_LIBRARY_PATH')
-	|| define('ZEND_LIBRARY_PATH', '../library');
+    || define('ZEND_LIBRARY_PATH', '../library');
 
 // Define path to application directory
 defined('APPLICATION_PATH')
@@ -30,5 +30,4 @@ $application = new Zend_Application(
 );
 
 $application->bootstrap()
-            ->run();			
-	    
+    ->run();

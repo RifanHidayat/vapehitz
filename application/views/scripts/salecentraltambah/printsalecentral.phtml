@@ -1,0 +1,193 @@
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Untitled Document</title>
+<style type="text/css">
+<!--
+.style1 {font-family: Arial, Helvetica, sans-serif}
+.style2 {font-size: 12px}
+.style4 {font-family: Arial, Helvetica, sans-serif; font-weight: bold; font-size: 12px; }
+.style6 {font-family: Arial, Helvetica, sans-serif; font-weight: bold; }
+.style8 {font-family: Arial, Helvetica, sans-serif; font-style: italic; }
+body {
+  -webkit-print-color-adjust: exact !important;
+}
+table{
+        font-family: Arial, Helvetica, sans-serif;
+        border: 1px solid black;
+        border-collapse: collapse;
+        }
+  th {
+        font-family: Arial, Helvetica, sans-serif;
+        border: 1px solid black;
+        border-collapse: collapse;
+        }
+  th {
+        font-family: Arial, Helvetica, sans-serif;
+        border: 1px solid black;
+        border-collapse: collapse;
+        }
+
+  .rotate{
+        -ms-transform: rotate(-90deg);
+        -moz-transform: rotate(-90deg);
+        -webkit-transform: rotate(-90deg);
+        }
+   table.fixed { table-layout:fixed; }
+   table.fixed th { overflow: hidden; }
+-->
+</style>
+</head>
+
+<body onload="window.print();">
+<table width="200" border="1">
+  <tr>
+    <th><table width="1024" height="907" border="1">
+      <tr>
+        <th height="100" colspan="2" align="left" valign="top" style=" border-left:hidden; border-right:hidden; border-bottom:2px solid; border-top:hidden;"><img src="<?php echo $this->baseUrl();?>/img/logo.PNG" width="98" height="98" class="style1" /></th>
+        <th colspan="5" width="100%" style=" border-left:hidden; border-right:hidden; border-bottom:2px solid; border-top:hidden;" valign="top"><div align="center" class="style1">
+            <p align="center" style="margin-right: 250px;"><strong>FAKTUR PENJUALAN BARANG </strong></p>
+          <p align="center" style="margin-right: 250px;" class="style2"><strong>VAPEHITZ Premium Vape Lounge</strong></p>
+          <p align="center" style="margin-right: 250px;" class="style2"><strong>Jalan Palasari No. 20 Bandung Jawa Barat 40262</strong></p>
+        </div></th>
+      </tr>
+      <tr>
+        <th width="289" align="left" style="border-left:hidden; border-right:hidden;" valign="top">
+			<p class="style4">Nomor Invoice</p>
+			<p class="style4">Tanggal</p>
+			<p class="style4">Marketplace</p></th>
+        <th align="left" height="99" colspan="5" valign="top" style="border-right:hidden;">
+			<p class="style4">: <?php echo $this->data[0]['no_invoice'];?></p>      
+			<?php $tgl_invoice =  date("d/m/Y", strtotime($this->data[0]['tgl_invoice']));?>			
+			<p class="style4">: <?php echo $tgl_invoice; ?></p>          
+			<p class="style4">: <?php echo $this->data2[0]['nama_customer'];?></p></th>
+        <th align="left" width="134" valign="top" style="border-right:hidden;">
+			<p class="style4">Shipment : <?php echo $this->data[0]['shipment'];?></p>
+			<p class="style4" style="color: red;">Kurir : <?php echo $this->data[0]['nama_kurir'];?></p></th>
+      </tr>
+      <tr text-rotate="90">
+        <th height="10" style=" border-left:hidden; border-right:hidden; border-bottom:hidden; border-top:hidden;" colspan="2" valign="middle" bgcolor="#9999FF"><strong>Nama Barang</strong></th>
+        <th width="278" style="border-right:hidden; border-bottom:hidden; border-top:hidden;" valign="middle" bgcolor="#9999FF"><div align="center" class="style1"><strong>Qty</strong></div></th>
+        <th width="268" style="border-right:hidden; border-bottom:hidden; border-top:hidden;" valign="middle" bgcolor="#9999FF"><div align="center" class="style1"><strong>Free</strong></div></th>
+        <th width="170" style="border-right:hidden; border-bottom:hidden; border-top:hidden;" valign="middle" bgcolor="#9999FF"><div align="center" class="style1"><strong>Berat (gr)</strong></div></th>
+        <th width="145" style="border-right:hidden; border-bottom:hidden; border-top:hidden;" valign="middle" bgcolor="#9999FF"><div align="center" class="style1"><strong>Harga</strong></div></th>
+        <th valign="middle" style="border-right:hidden; border-bottom:hidden; border-top:hidden;" bgcolor="#9999FF"><div align="center" class="style1"><strong>Sub Total</strong></div></th>
+      </tr>
+	  <?php
+								$nama_barang  = '';
+							    $berat		  = '';
+							    $on_hand	  = '';
+							    $stok_gudang  = '';
+								 for($d=0; $d<count($this->data3); $d++){
+									
+										$kode_barang 	= $this->data3[$d]['kode_barang'];
+										$harga_jual 	= number_format($this->data3[$d]['harga_jual'],0,",",".");
+										$harga_jual2 	= $this->data3[$d]['harga_jual'];
+										$qty 			= $this->data3[$d]['qty'];
+										$free 			= $this->data3[$d]['free'];
+										$sub_total		= number_format($this->data3[$d]['sub_total'],0,",",".");
+										$sub_total_berat = number_format($this->data3[$d]['sub_total_berat'],0,",",".");
+										$jenis_barang	= $this->data3[$d]['jenis_barang'];
+										$kode_jenis_barang = $this->data3[$d]['kode_jenis_barang'];
+										
+										$barang = $this->Salecentral_Service->getdatabarangid($kode_barang);
+										if(isset($barang[0]['nama_barang'])){ $nama_barang = $barang[0]['nama_barang'];}
+										if(isset($barang[0]['merk'])){ $merk = $barang[0]['merk'];}
+										if(isset($barang[0]['berat'])){ $berat = $barang[0]['berat'];}
+										if(isset($barang[0]['on_hand'])){ $on_hand = $barang[0]['on_hand'];}
+										if(isset($barang[0]['stok_pusat'])){ $stok_gudang = $barang[0]['stok_pusat'];}
+										/* $nama_barang  = $barang[0]['nama_barang'];
+										$berat		  = $barang[0]['berat'];
+										$on_hand	  = $barang[0]['on_hand'];
+										$stok_gudang  = $barang[0]['stok_pusat']; */
+										
+										$on_hands 	  = $on_hand - ($qty + $free);
+									?>	
+      <tr>
+        <th colspan="2" style="border-right:hidden; border-left:hidden;" valign="top"><div align="center" class="style1">
+          <div align="left"><?php echo $merk;?> - <?php echo $nama_barang;?></div>
+        </div></th>
+        <th valign="top" style="border-right:hidden;"><div align="center" class="style1"><?php echo $qty;?></div></th>
+        <th valign="top" style="border-right:hidden;"><div align="center" class="style1"><?php echo $free;?></div></th>
+        <th valign="top" style="border-right:hidden;"><div align="center" class="style1"><?php echo $berat;?></div></th>
+        <th valign="top" style="border-right:hidden;"><div align="center" class="style1"><?php echo $harga_jual;?></div></th>
+        <th valign="top" style="border-right:hidden;"><div align="center" class="style1"><?php echo $sub_total;?></div></th>
+      </tr>
+	  <?php } ?>
+      <tr>
+        <th height="23" style=" border-left:hidden; border-right:hidden; border-bottom:hidden; border-top:2px solid; border-color:#999999;" colspan="2" valign="top"><table width="319" border="0">
+            <tr>
+              <th height="23" style=" border-left:hidden; border-right:hidden; border-bottom:2px solid; border-top:hidden; border-color:#999999;" width="40%" bgcolor="#999999"><span class="style6">Total Berat </span></th>
+              <th style=" border-left:hidden; border-right:hidden; border-bottom:2px solid; border-top:hidden; border-color:#999999;" width="50%"><span class="style1"><?php echo number_format($this->data[0]['total_berat'],0,",",".");?></span></th>
+              <th style=" border-left:hidden; border-right:hidden; border-bottom:2px solid; border-top:hidden; border-color:#999999;" bgcolor="#999999" width="10%"><div align="left"><strong>gr</strong></div></th>
+            </tr>
+                </table></th>
+        <th colspan="3" rowspan="9" valign="top"><span class="style1"></span><span class="style1"></span><span class="style1"></span><span class="style1"></span><span class="style1"></span><span class="style1"></span><span class="style1"></span><span class="style1"></span><span class="style1"></span><span class="style1"></span><span class="style1"></span><span class="style1"></span><span class="style1"></span><span class="style1"></span><span class="style1"></span><span class="style1"></span><span class="style1"></span><span class="style1"></span><span class="style1"></span><span class="style1"></span><span class="style1"></span><span class="style1"></span><span class="style1"></span><span class="style1"></span><span class="style1"></span><span class="style1"></span><span class="style1"></span></th>
+        <th valign="top" bgcolor="#999999" style=" border-left:hidden; border-right:hidden; border-bottom:hidden; border-top:2px solid;"><span class="style1"><strong>Total</strong></span></th>
+        <th valign="top" style=" border-left:hidden; border-right:hidden; border-bottom:2px solid; border-top:2px solid; border-color:#999999;"><div align="right" class="style1"><?php echo number_format($this->data[0]['total_biaya'],0,",",".");?></div></th>
+      </tr>
+      <tr>
+        <th colspan="2" valign="top" bgcolor="#999999" style=" border-left:hidden; border-right:hidden; border-bottom:2px solid; border-top:2px solid; border-color:#999999;"><span class="style6">Tujuan Pengiriman</span></th>
+        <th style=" border-left:hidden; border-right:hidden; border-bottom:hidden; border-top:2px solid;" valign="top" bgcolor="#999999"><span class="style1"><strong>Discount</strong></span></th>
+        <th valign="top" style=" border-left:hidden; border-right:hidden; border-bottom:2px solid; border-top:2px solid; border-color:#999999;"><div align="right" class="style1"><?php echo number_format($this->data[0]['diskon'],0,",",".");?></div></th>
+      </tr>
+      <tr>
+        <th colspan="2" valign="top" style=" border-left:hidden; border-right:hidden; border-bottom:hidden; border-top:2px solid; border-color:#999999;"><span class="style6"><?php echo $this->data2[0]['nama_customer'];?></span></th>
+        <th style=" border-left:hidden; border-right:hidden; border-bottom:2px solid; border-top:2px solid; border-color:#999999;" valign="top" bgcolor="#999999"><span class="style1"><strong>Shipping</strong></span></th>
+        <th style=" border-left:hidden; border-right:hidden; border-bottom:2px solid; border-top:2px solid; border-color:#999999;" valign="top"><div align="right" class="style1"><?php echo number_format($this->data[0]['biaya_kirim'],0,",",".");?></div></th>
+      </tr>
+      <tr>
+        <th colspan="2" rowspan="4" valign="top" style="border-left:hidden; border-right:hidden; border-bottom:hidden; border-top:2px solid; border-color:#999999;"><span class="style8">-</span><span class="style1"></span><span class="style1"></span><span class="style1"></span></th>
+        <th style="border-left:hidden; border-right:hidden; border-bottom:hidden; border-top:2px solid;" valign="top"><span class="style1"></span></th>
+        <th style="border-left:hidden; border-right:hidden; border-bottom:2px solid; border-top:2px solid; border-color:#999999;" valign="top"><div align="right" class="style1"><?php echo number_format($this->data[0]['net_total'],0,",",".");?></div></th>
+      </tr>
+      <tr>
+        <th style=" border-left:hidden; border-right:hidden; border-bottom:hidden; border-top:2px solid; border-color:#999999;" valign="top" bgcolor="#999999"><span class="style1"><strong>Penerimaan 1</strong></span></th>
+        <th valign="top" style="border-left:hidden; border-right:hidden; border-bottom:2px solid; border-top:2px solid; border-color:#999999;"><div align="right" class="style1"><?php echo number_format($this->data[0]['jml_penerimaan'],0,",",".");?></div></th>
+      </tr>
+      <tr>
+        <th valign="top" style="border-left:hidden; border-right:hidden; border-bottom:hidden; border-top:2px solid;" bgcolor="#999999"><span class="style1"><strong>Penerimaan 2</strong></span></th>
+        <th valign="top" style="border-left:hidden; border-right:hidden; border-bottom:2px solid; border-top:2px solid; border-color:#999999;"><div align="right" class="style1"><?php echo number_format($this->data[0]['jml_penerimaan2'],0,",",".");?></div></th>
+      </tr>
+      <tr>
+        <th valign="top" style="border-left:hidden; border-right:hidden; border-bottom:hidden; border-top:2px solid;" bgcolor="#999999"><span class="style1"><strong>Jumlah Bayar</strong></span></th>
+        <th style="border-left:hidden; border-right:hidden; border-bottom:2px solid; border-top:2px solid; border-color:#999999;" valign="top"><div align="right" class="style1"><?php echo number_format($this->data[0]['jml_bayar'],0,",",".");?></div></th>
+      </tr>
+      <tr>
+        <th colspan="2" valign="top" bgcolor="#999999" style=" border-left:hidden; border-right:hidden; border-bottom:hidden; border-top:2px solid; border-color:#999999;"><span class="style6">Keterangan</span></th>
+        <th valign="top" style="border-left:hidden; border-right:hidden; border-bottom:hidden; border-top:2px solid;" bgcolor="#999999"><span class="style1"><strong>Sisa</strong></span></th>
+        <th valign="top" style="border-left:hidden; border-right:hidden; border-bottom:2px solid; border-top:2px solid; border-color:#999999;"><div align="right" class="style1"><?php echo number_format($this->data[0]['sisa_bayar'],0,",",".");?></div></th>
+      </tr>
+      <tr>
+        <th colspan="2" style=" border-left:hidden; border-right:hidden; border-bottom:hidden; border-top:2px solid; border-color:#999999;" valign="top"><span class="style1"><?php echo $this->data[0]['nama_penerima'];?></span></th>
+        <th colspan="2" style="border-left:hidden; border-right:hidden; border-bottom:hidden; border-top:2px solid;" valign="top"><span class="style1"></span><span class="style1"></span></th>
+        </tr>
+      <tr>
+        <td height="195" colspan="2" valign="bottom" style=" border-left:hidden; border-right:hidden; border-bottom:hidden; border-top:hidden;"><table width="70%" align="center" style="border-left:hidden; border-right:hidden; border-bottom:4px solid; border-top:hidden;" border="1">
+          <tr>
+            <th>&nbsp;</td>
+          </tr>
+        </table>          <span class="style1"></span></th>
+        <th valign="bottom" style="border-left:hidden; border-right:hidden; border-bottom:hidden; border-top:hidden;">
+        <table width="70%" align="center" style=" border-left:hidden; border-right:hidden; border-bottom:4px solid; border-top:hidden;" border="1">
+          <tr>
+            <th>&nbsp;</th>
+          </tr>
+        </table><span class="style1"></span></th>
+        <th valign="bottom" style="border-left:hidden; border-right:hidden; border-bottom:hidden; border-top:hidden;"><table width="70%" align="center" style=" border-left:hidden; border-right:hidden; border-bottom:4px solid; border-top:hidden;" border="1">
+          <tr>
+            <th>&nbsp;</th>
+          </tr>
+        </table><span class="style1"></span></th>
+        <th style="border-left:hidden; border-right:hidden; border-bottom:hidden; border-top:hidden;" colspan="3" rowspan="2" valign="bottom"><span class="style1"></span><span class="style1"></span><span class="style1"></span>
+          <div align="center"><span class="style1"></span></div>
+          <div align="center"><span class="style1"></span></div>          <div align="center"><span class="style1"></span></div></th>
+        </tr>
+      <tr>
+        <th height="126" colspan="2" valign="top" style="border-left:hidden; border-right:hidden; border-bottom:hidden;"><div align="center" class="style6">Maker,</div></th>
+        <th valign="top" style="border-left:hidden; border-right:hidden; border-bottom:hidden;"><div align="center" class="style6">Checker,</div></th>
+        <th valign="top" style="border-left:hidden; border-right:hidden; border-bottom:hidden;"><div align="center" class="style6">Approval,</div></th>
+        </tr>
+    </table></th>
+  </tr>
+</table>
+</body>
