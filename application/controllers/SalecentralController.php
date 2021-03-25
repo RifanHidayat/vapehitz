@@ -33,22 +33,22 @@ class SalecentralController extends Zend_Controller_Action
 		$this->view->menu = $this->Salecentral_Service->getmenu();
 	}
 
-	public function tambahAction()
-	{
-		$sessionlogin = new Zend_Session_Namespace('sessionlogin');
-		$this->view->permission = $sessionlogin->permission;
+	// public function tambahAction()
+	// {
+	// 	$sessionlogin = new Zend_Session_Namespace('sessionlogin');
+	// 	$this->view->permission = $sessionlogin->permission;
 
-		$this->_helper->layout->setLayout('salecentraltambah-layout');
+	// 	$this->_helper->layout->setLayout('salecentraltambah-layout');
 
-		$this->view->Salecentral_Service = $this->Salecentral_Service;
+	// 	$this->view->Salecentral_Service = $this->Salecentral_Service;
 
-		$this->view->customer = $this->Salecentral_Service->getCustomer();
-		$this->view->warna = $this->Salecentral_Service->getWarna();
-		$now = date('dmy');
-		$kode_inv = $now;
-		$this->view->seq = $this->Salecentral_Service->getNoSeq2($kode_inv);
-		$this->view->rek = $this->Salecentral_Service->getRekening();
-	}
+	// 	$this->view->customer = $this->Salecentral_Service->getCustomer();
+	// 	$this->view->warna = $this->Salecentral_Service->getWarna();
+	// 	$now = date('dmy');
+	// 	$kode_inv = $now;
+	// 	$this->view->seq = $this->Salecentral_Service->getNoSeq2($kode_inv);
+	// 	$this->view->rek = $this->Salecentral_Service->getRekening();
+	// }
 
 	public function cekdatauserAction()
 	{

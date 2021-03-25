@@ -34,6 +34,7 @@
   <link href="<?php echo $this->baseUrl();?>/lib/advanced-datatable/css/demo_page.css" rel="stylesheet" />
   <link href="<?php echo $this->baseUrl();?>/lib/advanced-datatable/css/demo_table.css" rel="stylesheet" />
   <link rel="stylesheet" href="<?php echo $this->baseUrl();?>/lib/advanced-datatable/css/DT_bootstrap.css" />
+  <link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.7.0/css/buttons.dataTables.min.css">
   
   <link rel="stylesheet" type="text/css" href="<?php echo $this->baseUrl();?>/lib/bootstrap-fileupload/bootstrap-fileupload.css" />
   <link rel="stylesheet" type="text/css" href="<?php echo $this->baseUrl();?>/lib/bootstrap-datepicker/css/datepicker.css" />

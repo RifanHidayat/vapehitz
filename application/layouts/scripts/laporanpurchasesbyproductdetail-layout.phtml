@@ -1,0 +1,182 @@
+<div id="layoutnya">
+  <?php require('partial/header.php'); ?>
+  <?php require('partial/menu.php'); ?>
+  <?php
+  require_once 'Zend/View.php';
+  require_once 'share/oa_page.php';
+  $halaman = new oa_page();
+  $ctrlFrm = new Zend_View();
+
+  $currentPage  = $this->currentPage;
+  ?>
+  <script>
+    $(document).ready(function() {
+      $('#dataTables-emp').dataTable({
+        "bPaginate": true,
+        "bLengthChange": true,
+        "bFilter": true,
+        "bInfo": true,
+        "bAutoWidth": true
+      });
+    });
+  </script>
+  <link href="<?php echo $this->baseUrl(); ?>/css/select2.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="<?php echo $this->baseUrl(); ?>/calendar/daterangepicker-master/daterangepicker.css" />
+  <style>
+    .select2-selection__rendered {
+      font-size: 13px;
+    }
+
+    .dtrg-group {
+      background-color: #fafafa;
+      /* color: #fff; */
+    }
+  </style>
+  <!-- **********************************************************************************************************************************************************
+        MAIN CONTENT
+        *********************************************************************************************************************************************************** -->
+  <!--main content start-->
+  <?php $serialize_permission = unserialize($this->permission); ?>
+  <section id="main-content">
+    <section class="wrapper">
+      <h3><i class="fa fa-angle-right"></i> Sales By Customer Detail</h3>
+      <div class="row mb">
+        <!-- page start-->
+        <div class="content-panel">
+          <div class="adv-table">
+            <div id="listprogram" class="col-xs-12">
+              <br>
+              <div id="page-content">
+                <div class="col-lg-12">
+                  <div class="panel">
+                    <div class="alert alert-danger">
+                      !!!Discount not included!!!
+                    </div>
+                    <div class="panel-body">
+                      <form class="form-horizontal">
+                        <div class="form-group">
+                          <label for="inputEmail3" class="col-sm-2 control-label">Pilih Tanggal</label>
+                          <div class="col-sm-4">
+                            <input type="text" class="form-control readonly" id="perioddate" name="perioddate" value="" readonly />
+                          </div>
+                        </div>
+                        <div class="form-group">
+                          <div class="col-sm-offset-2 col-sm-10">
+                            <button type="submit" class="btn btn-default">Terapkan</button>
+                          </div>
+                        </div>
+                      </form>
+                      
+                    </div>
+                  </div>
+                  <!-- <pre><?= print_r($this->purchasesDetail) ?></pre> -->
+                  <table class="table table-bordered" id="sales-by-customer-detail-table" style="font-size: 1.25rem;">
+                    <thead style="background-color: #4ECDC4; color: #fff;">
+                      <tr>
+                        <td>Product</td>
+                        <td>Date</td>
+                        <td>No.</td>
+                        <td>Customer</td>
+                        <td>Description</td>
+                        <td>Qty</td>
+                        <td>Price</td>
+                        <td>Amount (Discount not included)</td>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <?php foreach ($this->purchasesDetail as $purchase) : ?>
+                        <tr>
+                          <td><?= $purchase['nama_barang'] ?></td>
+                          <td><?= $purchase['tgl_order'] ?></td>
+                          <td><?= $purchase['no_order'] ?></td>
+                          <td><?= $purchase['nama_supplier'] ?></td>
+                          <td>-</td>
+                          <td class="text-center"><?= $purchase['qty'] ?></td>
+                          <td class="text-right"><?= number_format($purchase['harga_beli'], 0, ',', '.') ?></td>
+                          <td class="text-right"><?= number_format($purchase['sub_total'], 0, ',', '.') ?></td>
+                        </tr>
+                      <?php endforeach; ?>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- page end-->
+      </div>
+      <!-- /row -->
+    </section>
+    <!-- /wrapper -->
+  </section>
+  <!--main content end-->
+  <?php require('partial/main-footer.php'); ?>
+  </section>
+  <!-- js placed at the end of the document so the pages load faster -->
+  <script src="lib/jquery/jquery.min.js"></script>
+  <script type="text/javascript" language="javascript" src="lib/advanced-datatable/js/jquery.js"></script>
+  <script src="lib/bootstrap/js/bootstrap.min.js"></script>
+  <script class="include" type="text/javascript" src="lib/jquery.dcjqaccordion.2.7.js"></script>
+  <script src="lib/jquery.scrollTo.min.js"></script>
+  <script src="lib/jquery.nicescroll.js" type="text/javascript"></script>
+  <!-- <script type="text/javascript" language="javascript" src="lib/advanced-datatable/js/jquery.dataTables.js"></script> -->
+  <script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.23/datatables.min.js"></script>
+  <script type="text/javascript" src="lib/advanced-datatable/js/DT_bootstrap.js"></script>
+  <script src="https://cdn.datatables.net/rowgroup/1.1.2/js/dataTables.rowGroup.min.js"></script>
+  <script type="text/javascript" src="<?php echo $this->baseUrl(); ?>/calendar/daterangepicker-master/moment.min.js"></script>
+  <script type="text/javascript" src="<?php echo $this->baseUrl(); ?>/calendar/daterangepicker-master/daterangepicker.js"></script>
+  <script src="<?php echo $this->baseUrl(); ?>/lib/select2.full.min.js"></script>
+  <!--common script for all pages-->
+  <script src="lib/common-scripts.js"></script>
+  <script>
+    $('#sales-by-customer-detail-table').DataTable({
+      order: false,
+      rowGroup: {
+        endRender: function(rows, group) {
+          // return group +' ('+rows.count()+')';
+          // console.log(group);
+          var totalSales = rows
+            .data()
+            .pluck(7)
+            .reduce(function(a, b) {
+              return a + b.replace(/[^\d]/g, '') * 1;
+            }, 0);
+          totalSales = $.fn.dataTable.render.number('.', ',', 0, 'Rp ').display(totalSales);
+          // return `<span class="d-block text-right" style="display: block;"> <strong>Total untuk ${group} (${rows.count()})</strong> </span>`;
+          return $('<tr/>')
+            .append('<td colspan="7"><strong>Total purchases for ' + group + '</strong></td>')
+            .append('<td class="text-right"><strong>' + totalSales + '</strong></td>');
+
+        },
+        dataSrc: 0,
+
+      }
+    });
+
+    $('#perioddate').daterangepicker({
+      autoUpdateInput: true,
+      "opens": "left",
+      locale: {
+        "format": "DD/MM/YYYY",
+        "separator": " - ",
+        "applyLabel": "Apply",
+        "cancelLabel": "Clear",
+        "firstDay": 1
+      }
+    });
+
+    $('#perioddate').on('apply.daterangepicker', function(ev, picker) {
+      console.log(picker.startDate.format('YYYY-MM-DD'));
+      console.log(picker.endDate.format('YYYY-MM-DD'));
+    })
+
+    $('#perioddate').on('cancel.daterangepicker', function(ev, picker) {
+      //do something, like clearing an input
+      $('#perioddate').val('');
+    });
+  </script>
+
+</div>
+</body>
+
+</html>
