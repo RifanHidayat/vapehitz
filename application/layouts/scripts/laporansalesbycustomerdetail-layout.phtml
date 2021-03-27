@@ -62,8 +62,16 @@
                             <button type="submit" class="btn btn-default">Terapkan</button>
                           </div>
                         </div>
+                        <div class="form-group">
+                          <label for="inputEmail3" class="col-sm-2 control-label">Export As</label>
+                          <div class="col-sm-10">
+                            <!-- <a href="/laporansalesbycustomerdetail/print" target="_blank" class="btn btn-danger">PDF</a> -->
+                            <a href="#" class="btn btn-danger btn-pdf">PDF</a>
+                            <button class="btn btn-success">Xlsx</button>
+                          </div>
+                        </div>
                       </form>
-                      
+
                     </div>
                   </div>
                   <table class="table" id="sales-by-customer-detail-table" style="font-size: 1.25rem;">
@@ -86,7 +94,7 @@
                           <td><?= $sale['no_invoice'] ?></td>
                           <td><?= $sale['keterangan'] ?></td>
                           <td><?= $sale['total_biaya'] ?></td>
-                          <?php if($sale['jenis_diskon'] == 'persen') : ?>
+                          <?php if ($sale['jenis_diskon'] == 'persen') : ?>
                             <td><?= $sale['total_biaya'] * ($sale['diskon'] / 100) ?></td>
                           <?php else : ?>
                             <td><?= $sale['diskon'] ?></td>
@@ -110,73 +118,90 @@
   <!--main content end-->
   <?php require('partial/main-footer.php'); ?>
   </section>
-  <!-- js placed at the end of the document so the pages load faster -->
-  <script src="lib/jquery/jquery.min.js"></script>
-  <script type="text/javascript" language="javascript" src="lib/advanced-datatable/js/jquery.js"></script>
-  <script src="lib/bootstrap/js/bootstrap.min.js"></script>
-  <script class="include" type="text/javascript" src="lib/jquery.dcjqaccordion.2.7.js"></script>
-  <script src="lib/jquery.scrollTo.min.js"></script>
-  <script src="lib/jquery.nicescroll.js" type="text/javascript"></script>
-  <!-- <script type="text/javascript" language="javascript" src="lib/advanced-datatable/js/jquery.dataTables.js"></script> -->
-  <script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.23/datatables.min.js"></script>
-  <script type="text/javascript" src="lib/advanced-datatable/js/DT_bootstrap.js"></script>
-  <script src="https://cdn.datatables.net/rowgroup/1.1.2/js/dataTables.rowGroup.min.js"></script>
-  <script type="text/javascript" src="<?php echo $this->baseUrl(); ?>/calendar/daterangepicker-master/moment.min.js"></script>
-  <script type="text/javascript" src="<?php echo $this->baseUrl(); ?>/calendar/daterangepicker-master/daterangepicker.js"></script>
-  <script src="<?php echo $this->baseUrl(); ?>/lib/select2.full.min.js"></script>
-  <!--common script for all pages-->
-  <script src="lib/common-scripts.js"></script>
-  <script>
-    $('#sales-by-customer-detail-table').DataTable({
-      order: [
-        [0, 'asc']
-      ],
-      rowGroup: {
-        endRender: function(rows, group) {
-          // return group +' ('+rows.count()+')';
-          // console.log(group);
-          var totalSales = rows
-            .data()
-            .pluck(6)
-            .reduce(function(a, b) {
-              return a + b.replace(/[^\d]/g, '') * 1;
-            }, 0);
-          totalSales = $.fn.dataTable.render.number('.', ',', 0, 'Rp').display(totalSales);
-          // return `<span class="d-block text-right" style="display: block;"> <strong>Total untuk ${group} (${rows.count()})</strong> </span>`;
-          return $('<tr/>')
-            .append('<td colspan="6"><strong>Total penjualan untuk ' + group + '</strong></td>')
-            .append('<td><strong>' + totalSales + '</strong></td>');
 
-        },
-        dataSrc: 0,
-
-      }
-    });
-
-    $('#perioddate').daterangepicker({
-      autoUpdateInput: true,
-      "opens": "left",
-      locale: {
-        "format": "DD/MM/YYYY",
-        "separator": " - ",
-        "applyLabel": "Apply",
-        "cancelLabel": "Clear",
-        "firstDay": 1
-      }
-    });
-
-    $('#perioddate').on('apply.daterangepicker', function(ev, picker) {
-      console.log(picker.startDate.format('YYYY-MM-DD'));
-      console.log(picker.endDate.format('YYYY-MM-DD'));
-    })
-
-    $('#perioddate').on('cancel.daterangepicker', function(ev, picker) {
-      //do something, like clearing an input
-      $('#perioddate').val('');
-    });
-  </script>
 
 </div>
+<!-- js placed at the end of the document so the pages load faster -->
+<script src="lib/jquery/jquery.min.js"></script>
+<script type="text/javascript" language="javascript" src="lib/advanced-datatable/js/jquery.js"></script>
+<script src="lib/bootstrap/js/bootstrap.min.js"></script>
+<script class="include" type="text/javascript" src="lib/jquery.dcjqaccordion.2.7.js"></script>
+<script src="lib/jquery.scrollTo.min.js"></script>
+<script src="lib/jquery.nicescroll.js" type="text/javascript"></script>
+<!-- <script type="text/javascript" language="javascript" src="lib/advanced-datatable/js/jquery.dataTables.js"></script> -->
+<script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.23/datatables.min.js"></script>
+<script type="text/javascript" src="lib/advanced-datatable/js/DT_bootstrap.js"></script>
+<script src="https://cdn.datatables.net/rowgroup/1.1.2/js/dataTables.rowGroup.min.js"></script>
+<script type="text/javascript" src="<?php echo $this->baseUrl(); ?>/calendar/daterangepicker-master/moment.min.js"></script>
+<script type="text/javascript" src="<?php echo $this->baseUrl(); ?>/calendar/daterangepicker-master/daterangepicker.js"></script>
+<script src="<?php echo $this->baseUrl(); ?>/lib/select2.full.min.js"></script>
+
+<!--common script for all pages-->
+<script src="lib/common-scripts.js"></script>
+<script>
+  $('#sales-by-customer-detail-table').DataTable({
+    order: [
+      [0, 'asc']
+    ],
+    rowGroup: {
+      endRender: function(rows, group) {
+        // return group +' ('+rows.count()+')';
+        // console.log(group);
+        var totalSales = rows
+          .data()
+          .pluck(6)
+          .reduce(function(a, b) {
+            return a + b.replace(/[^\d]/g, '') * 1;
+          }, 0);
+        totalSales = $.fn.dataTable.render.number('.', ',', 0, 'Rp').display(totalSales);
+        // return `<span class="d-block text-right" style="display: block;"> <strong>Total untuk ${group} (${rows.count()})</strong> </span>`;
+        return $('<tr/>')
+          .append('<td colspan="6"><strong>Total sales for ' + group + '</strong></td>')
+          .append('<td><strong>' + totalSales + '</strong></td>');
+
+      },
+      dataSrc: 0,
+
+    }
+  });
+
+  $('#perioddate').daterangepicker({
+    autoUpdateInput: true,
+    "opens": "left",
+    locale: {
+      "format": "DD/MM/YYYY",
+      "separator": " - ",
+      "applyLabel": "Apply",
+      "cancelLabel": "Clear",
+      "firstDay": 1
+    }
+  });
+
+  $('#perioddate').on('apply.daterangepicker', function(ev, picker) {
+    console.log(picker.startDate.format('YYYY-MM-DD'));
+    console.log(picker.endDate.format('YYYY-MM-DD'));
+  })
+
+  $('#perioddate').on('cancel.daterangepicker', function(ev, picker) {
+    //do something, like clearing an input
+    $('#perioddate').val('');
+  });
+</script>
+<!-- <script src="http://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.min.js"></script>
+<script>
+  var doc = new jsPDF();
+  $('.btn-pdf').click(function(e) {
+    e.preventDefault();
+    doc.addHTML($('#page-content')[0], function() {
+      doc.save('Test.pdf');
+    });
+    // doc.fromHTML($('#page-content').html(), 15, 15, {
+    //   'width': 170,
+    // });
+    // doc.save('sample-file.pdf');
+  }); -->
+</script>
 </body>
 
 </html>

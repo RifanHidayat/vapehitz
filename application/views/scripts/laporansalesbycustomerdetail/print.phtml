@@ -1,0 +1,50 @@
+<?php
+$mpdf = new \Mpdf\Mpdf();
+ob_start();
+?>
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Vapehitz - Print</title>
+  <style>
+    table {
+      border-collapse: collapse;
+      width: 100%;
+    }
+  </style>
+</head>
+
+<body>
+  <div align="center">
+    <h2 align="center">Data Mahasiswa (<?= count($this->salesDetail) ?>)</h2>
+    <table align="center" width="60%" border="1">
+      <thead>
+        <tr>
+          <th>NIM</th>
+          <th>Nama</th>
+          <th>Alamat</th>
+          <th>Jurusan</th>
+        </tr>
+      </thead>
+      <tbody>
+        <?php for ($i = 0; $i < count($this->salesDetail); $i++) : ?>
+          <tr>
+            <td>21312<?= $i ?></td>
+            <td>Reza <?= $i ?></td>
+            <td>Jalan <?= $i ?></td>
+            <td>Jurusan <?= $i ?></td>
+          </tr>
+        <?php endfor; ?>
+      </tbody>
+    </table>
+  </div>
+</body>
+
+</html>
+<?php
+$html = ob_get_contents();
+ob_end_clean();
+$mpdf->WriteHTML(utf8_encode($html));
+$mpdf->Output();
+?>

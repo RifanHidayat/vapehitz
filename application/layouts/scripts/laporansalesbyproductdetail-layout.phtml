@@ -92,7 +92,7 @@
                           <td><?= $sale['keterangan'] ?></td>
                           <td class="text-center"><?= $sale['qty'] ?></td>
                           <td class="text-right"><?= number_format($sale['harga_jual'], 0, ',', '.') ?></td>
-                          <td class="text-right"><?= number_format($sale['sub_total'] * $sale['qty'], 0, ',', '.') ?></td>
+                          <td class="text-right"><?= number_format($sale['sub_total'], 0, ',', '.') ?></td>
                         </tr>
                       <?php endforeach; ?>
                     </tbody>

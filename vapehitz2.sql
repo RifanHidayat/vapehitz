@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.0.4
+-- version 5.0.2
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 03, 2021 at 03:10 PM
--- Server version: 10.4.16-MariaDB
--- PHP Version: 7.4.12
+-- Generation Time: Mar 26, 2021 at 07:07 AM
+-- Server version: 10.4.14-MariaDB
+-- PHP Version: 7.4.10
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -46,15 +46,17 @@ CREATE TABLE `accessories` (
   `kode_supplier` varchar(20) NOT NULL,
   `id_kode_barang` varchar(20) NOT NULL,
   `seq_kode_barang` int(11) NOT NULL,
-  `status` varchar(20) NOT NULL
+  `status` varchar(20) NOT NULL,
+  `otorisasi_harga` tinyint(4) DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `accessories`
 --
 
-INSERT INTO `accessories` (`kode_aksesoris`, `nama_aksesoris`, `merk_aksesoris`, `jenis_aksesoris`, `ket`, `on_hand`, `stok_pusat`, `stok_retail`, `stok_studio`, `bad_stock`, `berat`, `harga_beli`, `hj_agen`, `hj_retail`, `hj_whs`, `kode_supplier`, `id_kode_barang`, `seq_kode_barang`, `status`) VALUES
-('L-CHG-00001', 'Nama Aksesoris', '', 'CHG', 'Test Keterangan', 20, 180, 99, 86, 3, 1000, 75000, 80000, 90000, 100000, 'S0001', 'L-CHG', 1, '1');
+INSERT INTO `accessories` (`kode_aksesoris`, `nama_aksesoris`, `merk_aksesoris`, `jenis_aksesoris`, `ket`, `on_hand`, `stok_pusat`, `stok_retail`, `stok_studio`, `bad_stock`, `berat`, `harga_beli`, `hj_agen`, `hj_retail`, `hj_whs`, `kode_supplier`, `id_kode_barang`, `seq_kode_barang`, `status`, `otorisasi_harga`) VALUES
+('I-PSBB-00001', 'sadasd', '', 'PSBB', 'asdasd', 0, 2000, 200, 200, 0, 200, 3000, 3000, 3000, 3000, 'S0002', 'I-PSBB', 1, '1', 0),
+('L-CHG-00001', 'Nama Aksesoris', '', 'CHG', 'Test Keterangan', 20, 180, 99, 86, 3, 1000, 75000, 80000, 90000, 100000, 'S0001', 'L-CHG', 1, '1', 1);
 
 -- --------------------------------------------------------
 
@@ -108,15 +110,17 @@ CREATE TABLE `atomizer` (
   `kode_supplier` varchar(20) NOT NULL,
   `id_kode_barang` varchar(20) NOT NULL,
   `seq_kode_barang` int(11) NOT NULL,
-  `status` varchar(20) NOT NULL
+  `status` varchar(20) NOT NULL,
+  `otorisasi_harga` tinyint(4) DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `atomizer`
 --
 
-INSERT INTO `atomizer` (`kode_atomizer`, `merk_atomizer`, `nama_atomizer`, `jenis_atomizer`, `ket`, `kode_warna`, `berat`, `on_hand`, `stok_pusat`, `stok_retail`, `stok_studio`, `bad_stock`, `harga_beli`, `hj_agen`, `hj_retail`, `hj_whs`, `kode_supplier`, `id_kode_barang`, `seq_kode_barang`, `status`) VALUES
-('I-AT/RDTA-00001', 'Merk Atomizer', 'Nama Atomizer', 'RDTA', '', '2', 1000, 0, 200, 196, 195, 5, 200000, 220000, 230000, 240000, 'S0002', 'I-AT/RDTA', 1, '1');
+INSERT INTO `atomizer` (`kode_atomizer`, `merk_atomizer`, `nama_atomizer`, `jenis_atomizer`, `ket`, `kode_warna`, `berat`, `on_hand`, `stok_pusat`, `stok_retail`, `stok_studio`, `bad_stock`, `harga_beli`, `hj_agen`, `hj_retail`, `hj_whs`, `kode_supplier`, `id_kode_barang`, `seq_kode_barang`, `status`, `otorisasi_harga`) VALUES
+('I-AT/RDA-00001', 'ajshdk', 'hkjahsk', 'RDA', '', '2', 100, 0, 200, 20, 20, 0, 1000, 1000, 1000, 1000, 'S0002', 'I-AT/RDA', 1, '1', 0),
+('I-AT/RDTA-00001', 'Merk Atomizer', 'Nama Atomizer', 'RDTA', '', '2', 1000, 0, 200, 196, 195, 5, 200000, 220000, 230000, 240000, 'S0002', 'I-AT/RDTA', 1, '1', 1);
 
 -- --------------------------------------------------------
 
@@ -211,16 +215,19 @@ CREATE TABLE `device` (
   `kode_supplier` varchar(20) NOT NULL,
   `id_kode_barang` varchar(20) NOT NULL,
   `seq_kode_barang` int(11) NOT NULL,
-  `status` varchar(20) NOT NULL
+  `status` varchar(20) NOT NULL,
+  `otorisasi_harga` tinyint(4) DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `device`
 --
 
-INSERT INTO `device` (`kode_device`, `merk_device`, `nama_device`, `jenis_device`, `kode_warna`, `ket`, `on_hand`, `stok_pusat`, `stok_retail`, `stok_studio`, `bad_stock`, `berat`, `harga_beli`, `hj_agen`, `hj_retail`, `hj_whs`, `kode_supplier`, `id_kode_barang`, `seq_kode_barang`, `status`) VALUES
-('L-DMK-00001', '-', 'Battlestar Baby By Smoant ', 'DMK', 4, '-', 0, 0, 0, 1001, 0, 250, 206227, 220000, 290000, 240000, 'S0001', 'L-DMK', 1, '1'),
-('L-MDO-00001', 'Test Merk', 'Test Device', 'MDO', 2, 'Leterangan', 4, 108, 98, 92, 0, 100, 150000, 170000, 180000, 200000, 'S0001', 'L-MDO', 1, '1');
+INSERT INTO `device` (`kode_device`, `merk_device`, `nama_device`, `jenis_device`, `kode_warna`, `ket`, `on_hand`, `stok_pusat`, `stok_retail`, `stok_studio`, `bad_stock`, `berat`, `harga_beli`, `hj_agen`, `hj_retail`, `hj_whs`, `kode_supplier`, `id_kode_barang`, `seq_kode_barang`, `status`, `otorisasi_harga`) VALUES
+('I-DMK-00001', 'mod', 'mod', 'DMK', 3, 'sd', 0, 30, 0, 0, 0, 100, 2000, 2000, 2000, 2000, 'S0002', 'I-DMK', 1, '1', 0),
+('L-DMK-00001', '-', 'Battlestar Baby By Smoant ', 'DMK', 4, '-', 0, 0, 0, 1001, 0, 250, 206227, 220000, 290000, 240000, 'S0001', 'L-DMK', 1, '1', 1),
+('L-DMK-00002', 'merk', 'nama', 'DMK', 3, 'sad', 0, 30, 0, 0, 0, 200, 20000, 21000, 23000, 22000, 'S0001', 'L-DMK', 2, '1', 1),
+('L-MDO-00001', 'Test Merk', 'Test Device', 'MDO', 2, 'Leterangan', 4, 108, 98, 92, 0, 100, 150000, 170000, 180000, 200000, 'S0001', 'L-MDO', 1, '1', 1);
 
 -- --------------------------------------------------------
 
@@ -323,7 +330,8 @@ INSERT INTO `hutang` (`id_hutang`, `no_order`, `tgl_pembayaran`, `jumlah_pembaya
 (56, 'PO/VH/02032021/00013', '2021-03-15 00:00:00', 2000, 113000, 'Cash', '0', '', '0000-00-00 00:00:00'),
 (57, 'PO/VH/02032021/00014', '2021-03-09 00:00:00', 10000, 113000, 'Transfer', '7', '', '0000-00-00 00:00:00'),
 (58, 'PO/VH/02032021/00015', '2021-03-01 00:00:00', 10999, 137002, 'Cash', '11', '', '0000-00-00 00:00:00'),
-(59, 'PO/VH/03032021/00018', '2021-03-23 00:00:00', 10000, 230000, 'Transfer', '7', '', '0000-00-00 00:00:00');
+(59, 'PO/VH/03032021/00018', '2021-03-23 00:00:00', 10000, 230000, 'Transfer', '7', '', '0000-00-00 00:00:00'),
+(60, 'PO/VH/260321/00018', '2021-03-26 00:00:00', 150000, 141000, 'Transfer', '9', '', '0000-00-00 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -452,16 +460,18 @@ CREATE TABLE `liquid` (
   `kode_supplier` varchar(20) NOT NULL,
   `id_kode_barang` varchar(20) NOT NULL,
   `seq_kode_barang` int(11) NOT NULL,
-  `status` varchar(20) NOT NULL
+  `status` varchar(20) NOT NULL,
+  `otorisasi_harga` tinyint(4) DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `liquid`
 --
 
-INSERT INTO `liquid` (`kode_barang`, `merk_barang`, `nama_barang`, `ket`, `kode_rasa`, `nic`, `volume`, `on_hand`, `stok_pusat`, `stok_retail`, `stok_studio`, `bad_stock`, `berat`, `harga_beli`, `hj_agen`, `hj_retail`, `hj_whs`, `kode_supplier`, `id_kode_barang`, `seq_kode_barang`, `status`) VALUES
-('L-L100-00001', 'Merk Liquid', 'Nama Liquid', 'test keterangan', '3', 100, 100, 23, 141, 82, 84, 63, 1000, 150000, 200000, 225000, 250000, 'S0001', 'L-L100', 1, '1'),
-('L-L100-00002', '-', 'Alacarte - Cream Biscuit By Jnc', '', '1', 3, 100, 2, 989, 1060, -2, 5, 588, 115000, 125000, 190000, 150000, 'S0001', 'L-L100', 2, '1');
+INSERT INTO `liquid` (`kode_barang`, `merk_barang`, `nama_barang`, `ket`, `kode_rasa`, `nic`, `volume`, `on_hand`, `stok_pusat`, `stok_retail`, `stok_studio`, `bad_stock`, `berat`, `harga_beli`, `hj_agen`, `hj_retail`, `hj_whs`, `kode_supplier`, `id_kode_barang`, `seq_kode_barang`, `status`, `otorisasi_harga`) VALUES
+('L-L100-00001', 'Merk Liquid', 'Nama Liquid', 'test keterangan', '3', 100, 100, 23, 135, 82, 84, 63, 1000, 150000, 200000, 225000, 250000, 'S0001', 'L-L100', 1, '1', 1),
+('L-L100-00002', '-', 'Alacarte - Cream Biscuit By Jnc', '', '1', 3, 100, 2, 989, 1060, -2, 5, 588, 115000, 125000, 190000, 150000, 'S0001', 'L-L100', 2, '1', 1),
+('L-L26-00001', 'Rapopo', 'We Angel', '', '3', 20, 26, 0, 40, 0, 0, 0, 20, 3000, 3000, 3000, 3000, 'S0001', 'L-L26', 1, '1', 0);
 
 -- --------------------------------------------------------
 
@@ -569,9 +579,9 @@ CREATE TABLE `ordercentral` (
 INSERT INTO `ordercentral` (`no_order`, `tgl_order`, `total`, `biaya_kirim`, `diskon`, `net_total`, `jml_bayar_dp`, `sisa_bayar`, `metode_bayar`, `metode_bayar2`, `no_rekening`, `kode_supplier`, `tgl_entry`, `seq`, `user_id`) VALUES
 ('PO/VH/01032021/00003', '2021-03-09 00:00:00', 150000, 20000000, '100000', 20050000, 443445, 19486555, '', 'Transfer', 'BNI - 61656565 (Bima)', 'S0001', '0000-00-00 00:00:00', '00003', ''),
 ('PO/VH/01032021/00004', '2021-03-15 00:00:00', 150000, 50000, '20000', 180000, 102000, 78000, '', 'Transfer', '7', 'S0001', '0000-00-00 00:00:00', '00004', ''),
-('PO/VH/01032021/00005', '2021-03-26 00:00:00', 150000, 200000, '10000', 340000, 340000, 0, '', 'Transfer', '7', 'S0001', '0000-00-00 00:00:00', '00017', ''),
+('PO/VH/01032021/00005', '2021-03-26 00:00:00', 150000, 200000, '10000', 340000, 340000, -150000, '', 'Transfer', '7', 'S0001', '0000-00-00 00:00:00', '00017', ''),
 ('PO/VH/01032021/00006', '2021-03-20 00:00:00', 150000, 100000, '10000', 240000, 50000, 40000, '', 'Transfer', '9', 'S0001', '0000-00-00 00:00:00', '00016', ''),
-('PO/VH/01032021/00007', '2021-03-30 00:00:00', 300000, 3000, '10000', 293000, 29999, 263001, '', 'Transfer', '7', 'S0001', '0000-00-00 00:00:00', '00007', ''),
+('PO/VH/01032021/00007', '2021-03-30 00:00:00', 300000, 3000, '10000', 293000, 29999, -36999, '', 'Transfer', '7', 'S0001', '0000-00-00 00:00:00', '00007', ''),
 ('PO/VH/01032021/00008', '2021-03-13 00:00:00', 150000, 200000, '200000', 150000, 20000, 130000, '', 'Transfer', '7', 'S0001', '0000-00-00 00:00:00', '00008', ''),
 ('PO/VH/02032021/00009', '2021-03-02 00:00:00', 150000, 10000, '2000', 158000, 1000, 157000, '', 'Transfer', '9', 'S0001', '0000-00-00 00:00:00', '00009', ''),
 ('PO/VH/02032021/00010', '2021-03-11 00:00:00', 115000, 111, '20000', 95111, 1000, 94111, '', 'Transfer', '9', 'S0001', '0000-00-00 00:00:00', '00010', ''),
@@ -580,7 +590,8 @@ INSERT INTO `ordercentral` (`no_order`, `tgl_order`, `total`, `biaya_kirim`, `di
 ('PO/VH/02032021/00013', '2021-03-15 00:00:00', 115000, 11, '11', 115000, 2000, 113000, '', 'Cash', '0', 'S0001', '0000-00-00 00:00:00', '00013', ''),
 ('PO/VH/02032021/00014', '2021-03-09 00:00:00', 115000, 10000, '2000', 123000, 10000, 113000, '', 'Transfer', '7', 'S0001', '0000-00-00 00:00:00', '00014', ''),
 ('PO/VH/02032021/00015', '2021-03-01 00:00:00', 150000, 1000, '2999', 148001, 10999, 137002, '', 'Cash', '11', 'S0001', '0000-00-00 00:00:00', '00015', ''),
-('PO/VH/08022021/00001', '2021-02-02 00:00:00', 1500000, 0, '0', 1500000, 1200000, 300000, '', 'Cash', '0', 'S0002', '0000-00-00 00:00:00', '00001', '');
+('PO/VH/08022021/00001', '2021-02-02 00:00:00', 1500000, 0, '0', 1500000, 1200000, 300000, '', 'Cash', '0', 'S0002', '0000-00-00 00:00:00', '00001', ''),
+('PO/VH/260321/00018', '2021-03-26 00:00:00', 150000, 1000, '10000', 141000, 150000, 141000, '', 'Transfer', '9', 'S0001', '0000-00-00 00:00:00', '00018', '');
 
 -- --------------------------------------------------------
 
@@ -629,7 +640,8 @@ INSERT INTO `piutang` (`id_piutang`, `no_invoice`, `tgl_pembayaran`, `jumlah_pem
 (26, 'SO/VH/010321 08:07:33/00012', '2021-03-02 00:00:00', 11, 79568, 'Transfer', '7', '20000', '0000-00-00 00:00:00'),
 (27, 'SO/VH/010321 08:07:33/00012', '2021-03-02 00:00:00', 20000, 59568, 'Transfer', '7', '20000', '0000-00-00 00:00:00'),
 (28, 'SO/VH/010321 08:07:33/00012', '2021-03-02 00:00:00', 100000, -40432, 'Transfer', '7', '10000', '0000-00-00 00:00:00'),
-(29, 'SO/VH/030321 13:04:45/00001', '0000-00-00 00:00:00', 120000, 124000, '-', '-', '', '0000-00-00 00:00:00');
+(29, 'SO/VH/030321 13:04:45/00001', '0000-00-00 00:00:00', 120000, 124000, '-', '-', '', '0000-00-00 00:00:00'),
+(30, 'SO/VH/070321 07:34:55/00001', '2021-03-07 00:00:00', 50000, 175000, '-', '-', '', '0000-00-00 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -1023,6 +1035,8 @@ INSERT INTO `retur_pembelian` (`no_retur`, `no_order`, `tgl_retur`, `total_qty_r
 ('RB/VH/02-21/0008', 'PO/VH/13012021/00007', '2021-02-05 00:00:00', 1, 150000, '0008', '', 0),
 ('RB/VH/03-21/0009', 'PO/VH/01032021/00006', '2021-03-11 00:00:00', 1, 150000, '0009', '', 7),
 ('RB/VH/03-21/0010', 'PO/VH/01032021/00003', '2021-03-23 00:00:00', 1, 150000, '0010', '', 0),
+('RB/VH/03-21/0011', 'PO/VH/01032021/00007', '2021-03-07 00:00:00', 2, 300000, '0011', 'ma', 11),
+('RB/VH/03-21/0012', 'PO/VH/01032021/00005', '2021-03-07 00:00:00', 1, 150000, '0012', 'ma', 11),
 ('RB/VH/12-20/0001', 'PO/VH/08122020/00002', '2020-12-17 00:00:00', 5, 375000, '0001', '', 0);
 
 -- --------------------------------------------------------
@@ -1082,24 +1096,24 @@ CREATE TABLE `salecentral` (
   `kode_inv` varchar(20) NOT NULL,
   `seq` varchar(20) NOT NULL,
   `kode_sales` varchar(20) NOT NULL,
-  `status` varchar(20) NOT NULL
+  `status` varchar(20) NOT NULL,
+  `termin_hutang` int(11) DEFAULT 0,
+  `jenis_diskon` varchar(30) NOT NULL,
+  `sub_total` bigint(20) NOT NULL,
+  `biaya_lain` bigint(20) NOT NULL,
+  `ket_biaya_lain` varchar(255) NOT NULL,
+  `deposit` bigint(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `salecentral`
 --
 
-INSERT INTO `salecentral` (`no_invoice`, `tgl_invoice`, `kode_customer`, `shipment`, `nama_kurir`, `total_berat`, `total_biaya`, `diskon`, `biaya_kirim`, `net_total`, `metode_penerimaan`, `jml_penerimaan`, `metode_penerimaan2`, `jml_penerimaan2`, `jml_bayar`, `sisa_bayar`, `nama_penerima`, `alamat_penerima`, `keterangan`, `tgl_entry`, `kode_inv`, `seq`, `kode_sales`, `status`) VALUES
-('SO/VH/010321 03:21:22/00001', '0000-00-00 00:00:00', 'C0001', 'COD', '', 2000, 450000, '10000', 50000, 490000, 'BRI - 1301321323234 (Dery)', 200000, 'BNI - 61656565 (Bima)', 1000000, 1200000, 490000, 'Eza', 'Manjahlega', '-', '0000-00-00 00:00:00', '010321', '00008', '', 'Not-Approve'),
-('SO/VH/010321 05:23:49/00010', '0000-00-00 00:00:00', 'C0001', 'COD', '', 1000, 225000, '10000', 1000000, 1215000, 'BRI - 1301321323234 (Dery)', 200000, '0', 29999, 229999, 985001, 'RIfan', '-', '-', '0000-00-00 00:00:00', '010321', '00011', '', 'Not-Approve'),
-('SO/VH/010321 08:07:33/00012', '0000-00-00 00:00:00', 'C0001', 'COD', '', 588, 190000, '10000', 200000, 380000, 'BRI - 1301321323234 (Dery)', 100000, 'BRI - 1301321323234 (Dery)', 100000, 420432, -230432, '-', '-', '-', '0000-00-00 00:00:00', '010321', '00013', '', 'Approve'),
-('SO/VH/020321 04:55:03/00001', '2021-03-04 00:00:00', 'C0001', 'COD', '', 1000, 225000, '1000', 100000, 324000, '7', 100000, '10', 200000, 300000, 24000, 'rifan', '-', '-', '0000-00-00 00:00:00', '020321', '00001', '', ''),
-('SO/VH/020321 04:58:30/00002', '2021-03-09 00:00:00', 'C0001', 'COD', '', 588, 190000, '20000', 10000, 180000, '7', 1000, '7', 10000, 11000, 169000, '-', '-', '-', '0000-00-00 00:00:00', '020321', '00002', '', ''),
-('SO/VH/030321 13:04:45/00001', '0000-00-00 00:00:00', 'C0001', 'COD', '', 1000, 225000, '10000', 29000, 244000, '7', 20000, '<br ></option>\n<b>Notice</b>:  Undefined variable:', 100000, 120000, 124000, 'Hidayat', '-', '-', '0000-00-00 00:00:00', '030321', '00014', '', 'Approve'),
-('SO/VH/080221 02:05:00/00001', '0000-00-00 00:00:00', 'C0001', 'Gojek', '', 1000, 225000, '10000', 30000, 245000, 'BRI - 1301321323234 (Dery)', 0, 'BJB - 454566566 (Mukti)', 0, 0, 0, 'Rudi', 'Bandung', 'Belum lunas', '0000-00-00 00:00:00', '080221', '00002', '', 'Approve'),
-('SO/VH/080221 05:50:55/00003', '0000-00-00 00:00:00', 'C0001', 'COD', '', 1000, 225000, '10000', 10000, 225000, 'BRI - 1301321323234 (Dery)', 125000, 'BCA - 787941515 (Drajat)', 100000, 225000, 0, 'reza', 'sadasd', 'reza', '0000-00-00 00:00:00', '010321', '00009', '', 'Not-Approve'),
-('SO/VH/080221 05:51:35/00004', '0000-00-00 00:00:00', 'C0001', 'Gojek', '', 1000, 225000, '20000', 20000, 225000, 'cash', 1000000, '0', 0, 1000000, -1225000, 'asdas', 'asdas', 'adsd', '0000-00-00 00:00:00', '080221', '00007', '', 'Approve'),
-('SO/VH/080221 05:52:17/00005', '0000-00-00 00:00:00', 'C0001', 'Gojek', '', 1000, 225000, '0', 0, 225000, 'BRI - 1301321323234 (Dery)', 100000, '0', 0, 225000, 0, 'sdas', 'dasdas', 'dasd', '0000-00-00 00:00:00', '080221', '00006', '', 'Approve');
+INSERT INTO `salecentral` (`no_invoice`, `tgl_invoice`, `kode_customer`, `shipment`, `nama_kurir`, `total_berat`, `total_biaya`, `diskon`, `biaya_kirim`, `net_total`, `metode_penerimaan`, `jml_penerimaan`, `metode_penerimaan2`, `jml_penerimaan2`, `jml_bayar`, `sisa_bayar`, `nama_penerima`, `alamat_penerima`, `keterangan`, `tgl_entry`, `kode_inv`, `seq`, `kode_sales`, `status`, `termin_hutang`, `jenis_diskon`, `sub_total`, `biaya_lain`, `ket_biaya_lain`, `deposit`) VALUES
+('SO/VH/060321 09:47:06/00002', '0000-00-00 00:00:00', 'C0001', 'Gojek', '', 1000, 225000, '20000', 20000, 225000, '0', 10000, '', 200000, 210000, 15000, 'asdasd', 'asdas', 'dasdasd', '0000-00-00 00:00:00', '060321', '00004', '', '', 30, '', 0, 0, '', 0),
+('SO/VH/070321 07:34:55/00001', '2021-03-07 00:00:00', 'C0001', 'Gojek', '', 3000, 225000, '2000', 20000, 225000, '7', 20000, '11', 30000, 50000, 175000, 'fgfd', 'fggf', 'fgfg', '0000-00-00 00:00:00', '070321', '00005', '', 'Approve', 30, '', 0, 0, '', 0),
+('SO/VH/080321 02:49:43/00001', '2021-03-08 00:00:00', 'C0001', 'COD', '', 1000, 225000, '3000', 3000, 223000, '9', 30000, '11', 30000, 60000, 163000, 'asdasd', 'asdasd', 'asdasd', '0000-00-00 00:00:00', '080321', '00001', '', '', 0, 'nominal', 222000, 3, 'admin', 5),
+('SO/VH/080321 04:09:09/00002', '2021-03-08 00:00:00', 'C0001', 'COD', '', 1608, 418000, '10', 2000, 378200, '10', 2000, '11', 1000, 3000, 375200, 'penerima', 'alamat penerima', 'ketket', '0000-00-00 00:00:00', '080321', '00002', '', '', 15, 'persen', 376200, 2000, 'admin', 2000);
 
 -- --------------------------------------------------------
 
@@ -1543,7 +1557,8 @@ INSERT INTO `sub_ordercentral` (`kode_suborder`, `no_order`, `kode_barang`, `har
 (40, 'PO/VH/02032021/00014', 'L-L100-00002', 115000, 1, 115000, 'liquid', 'kode_barang'),
 (41, 'PO/VH/02032021/00015', 'L-L100-00001', 150000, 1, 150000, 'liquid', 'kode_barang'),
 (42, 'PO/VH/01032021/00006', 'L-L100-00001', 150000, 1, 150000, 'liquid', 'kode_barang'),
-(43, 'PO/VH/01032021/00005', 'L-L100-00001', 150000, 1, 150000, 'liquid', 'kode_barang');
+(43, 'PO/VH/01032021/00005', 'L-L100-00001', 150000, 1, 150000, 'liquid', 'kode_barang'),
+(51, 'PO/VH/260321/00018', 'L-L100-00001', 150000, 1, 150000, 'liquid', 'kode_barang');
 
 -- --------------------------------------------------------
 
@@ -1579,7 +1594,9 @@ INSERT INTO `sub_returpembelian` (`no_subretur`, `no_retur`, `kode_barang`, `qty
 (7, 'RB/VH/01-21/0007', 'L-MDO-00001', 3, 150000, 450000, 2, 300000, 'tidak sesuai', 'device', 'kode_device'),
 (8, 'RB/VH/02-21/0008', 'L-L100-00001', 19, 150000, 2850000, 1, 150000, 'cacat/rusak', 'liquid', 'kode_barang'),
 (9, 'RB/VH/03-21/0009', 'L-L100-00001', 0, 150000, 0, 1, 150000, '', 'liquid', 'kode_barang'),
-(10, 'RB/VH/03-21/0010', 'L-L100-00001', 0, 150000, 0, 1, 150000, 'cacat/rusak', 'liquid', 'kode_barang');
+(10, 'RB/VH/03-21/0010', 'L-L100-00001', 0, 150000, 0, 1, 150000, 'cacat/rusak', 'liquid', 'kode_barang'),
+(11, 'RB/VH/03-21/0011', 'L-L100-00001', 0, 150000, 0, 2, 300000, 'cacat/rusak', 'liquid', 'kode_barang'),
+(12, 'RB/VH/03-21/0012', 'L-L100-00001', 0, 150000, 0, 1, 150000, 'cacat/rusak', 'liquid', 'kode_barang');
 
 -- --------------------------------------------------------
 
@@ -1663,7 +1680,14 @@ INSERT INTO `sub_salecentral` (`kode_subsale`, `no_invoice`, `kode_barang`, `har
 (30, 'SO/VH/010321 08:07:33/00012', 'L-L100-00002', 190000, 1, 0, 190000, 588, 'liquid', 'kode_barang'),
 (31, 'SO/VH/020321 04:55:03/00001', 'L-L100-00001', 225000, 1, 0, 225000, 1000, 'liquid', 'kode_barang'),
 (32, 'SO/VH/020321 04:58:30/00002', 'L-L100-00002', 190000, 1, 0, 190000, 588, 'liquid', 'kode_barang'),
-(40, 'SO/VH/030321 13:04:45/00001', 'L-L100-00001', 225000, 1, 0, 225000, 1000, 'liquid', 'kode_barang');
+(40, 'SO/VH/030321 13:04:45/00001', 'L-L100-00001', 225000, 1, 0, 225000, 1000, 'liquid', 'kode_barang'),
+(41, 'SO/VH/060321 09:43:26/00001', 'L-L100-00001', 225000, 1, 0, 225000, 1000, 'liquid', 'kode_barang'),
+(44, 'SO/VH/060321 09:47:06/00002', 'L-L100-00001', 225000, 1, 0, 225000, 1000, 'liquid', 'kode_barang'),
+(46, 'SO/VH/070321 07:34:55/00001', 'L-L100-00001', 225000, 1, 2, 2, 3000, 'liquid', 'kode_barang'),
+(47, 'SO/VH/080321 02:49:43/00001', 'L-L100-00001', 225000, 1, 0, 2, 1000, 'liquid', 'kode_barang'),
+(49, 'SO/VH/080321 04:09:09/00002', 'L-L100-00001', 225000, 1, 0, 225000, 1000, 'liquid', 'kode_barang'),
+(50, 'SO/VH/080321 04:09:09/00002', 'L-L100-00002', 190000, 1, 0, 190000, 588, 'liquid', 'kode_barang'),
+(51, 'SO/VH/080321 04:09:09/00002', 'L-L26-00001', 3000, 1, 0, 3000, 20, 'liquid', 'kode_barang');
 
 -- --------------------------------------------------------
 
@@ -1760,7 +1784,14 @@ INSERT INTO `transaksi` (`id`, `tgl_transaksi`, `nominal`, `deskripsi`, `catatan
 (79, '2021-03-06', 225000, 'Retur Sales Retail \nRR/VH/03-21/0004', '', 'Cash In', 'retursaleretail', 'RR/VH/03-21/0004', 0, 11),
 (80, '0000-00-00', 20000, 'Transaksi Penjualan \nSO/VH/030321 13:04:45/00001', '', 'Cash In', 'salecentral', 'SO/VH/030321 13:04:45/00001', 0, 7),
 (81, '0000-00-00', 100000, 'Transaksi Penjualan \nSO/VH/030321 13:04:45/00001', '', 'Cash In', 'salecentral', 'SO/VH/030321 13:04:45/00001', 0, 0),
-(82, '2021-03-06', 200000, '', '-', 'Cash In', '', '', 6, 7);
+(82, '2021-03-06', 200000, '', '-', 'Cash In', '', '', 6, 7),
+(85, '0000-00-00', 10000, 'Transaksi Penjualan \nSO/VH/060321 09:47:06/00002', '', 'Cash In', 'salescentral', 'SO/VH/060321 09:47:06/00002', 0, 0),
+(86, '0000-00-00', 200000, 'Transaksi Penjualan \nSO/VH/060321 09:47:06/00002', '', 'Cash In', 'salescentral', 'SO/VH/060321 09:47:06/00002', 0, 0),
+(87, '2021-03-07', 20000, 'Transaksi Penjualan \nSO/VH/070321 07:34:55/00001', '', 'Cash In', 'salecentral', 'SO/VH/070321 07:34:55/00001', 0, 7),
+(88, '2021-03-07', 30000, 'Transaksi Penjualan \nSO/VH/070321 07:34:55/00001', '', 'Cash In', 'salecentral', 'SO/VH/070321 07:34:55/00001', 0, 11),
+(89, '2021-03-07', 300000, 'Transaksi Retur Supplier \nRB/VH/03-21/0011', '', 'Cash In', 'retur_pembelian', 'RB/VH/03-21/0011', 0, 11),
+(90, '2021-03-07', 150000, 'Transaksi Retur Supplier \nRB/VH/03-21/0012', '', 'Cash In', 'retur_pembelian', 'RB/VH/03-21/0012', 0, 11),
+(101, '2021-03-26', 150000, 'Transaksi Pembelian \nPO/VH/260321/00018', '', 'Cash Out', 'ordercentral', 'PO/VH/260321/00018', 0, 9);
 
 -- --------------------------------------------------------
 
@@ -2204,7 +2235,7 @@ ALTER TABLE `groups`
 -- AUTO_INCREMENT for table `hutang`
 --
 ALTER TABLE `hutang`
-  MODIFY `id_hutang` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=60;
+  MODIFY `id_hutang` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=61;
 
 --
 -- AUTO_INCREMENT for table `jenisexpense`
@@ -2216,7 +2247,7 @@ ALTER TABLE `jenisexpense`
 -- AUTO_INCREMENT for table `piutang`
 --
 ALTER TABLE `piutang`
-  MODIFY `id_piutang` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
+  MODIFY `id_piutang` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
 
 --
 -- AUTO_INCREMENT for table `rekening`
@@ -2306,13 +2337,13 @@ ALTER TABLE `sub_badstockgudang`
 -- AUTO_INCREMENT for table `sub_ordercentral`
 --
 ALTER TABLE `sub_ordercentral`
-  MODIFY `kode_suborder` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=51;
+  MODIFY `kode_suborder` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=52;
 
 --
 -- AUTO_INCREMENT for table `sub_returpembelian`
 --
 ALTER TABLE `sub_returpembelian`
-  MODIFY `no_subretur` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `no_subretur` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `sub_returpenjualan`
@@ -2324,7 +2355,7 @@ ALTER TABLE `sub_returpenjualan`
 -- AUTO_INCREMENT for table `sub_salecentral`
 --
 ALTER TABLE `sub_salecentral`
-  MODIFY `kode_subsale` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
+  MODIFY `kode_subsale` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=54;
 
 --
 -- AUTO_INCREMENT for table `sub_sop_gudang`
@@ -2336,7 +2367,7 @@ ALTER TABLE `sub_sop_gudang`
 -- AUTO_INCREMENT for table `transaksi`
 --
 ALTER TABLE `transaksi`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=83;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=104;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
