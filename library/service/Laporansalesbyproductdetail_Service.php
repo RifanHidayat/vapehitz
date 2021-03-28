@@ -31,6 +31,11 @@ class Laporansalesbyproductdetail_Service
       $query4 = "SELECT sub_salecentral.kode_barang, device.nama_device AS nama_barang, sub_salecentral.harga_jual, sub_salecentral.qty, salecentral.tgl_invoice, sub_salecentral.sub_total, customer.nama_customer, sub_salecentral.no_invoice, salecentral.keterangan FROM sub_salecentral INNER JOIN device ON sub_salecentral.kode_barang = device.kode_device INNER JOIN salecentral ON sub_salecentral.no_invoice = salecentral.no_invoice INNER JOIN customer ON salecentral.kode_customer = customer.kode_customer";
       $result4 = $db->fetchAll($query4);
       return array_merge($result, $result2, $result3, $result4);
+      // usort($finalResult, function($a, $b) {
+      //   return $a['nama_barang'] <=> $b['nama_barang'];
+      // });
+
+      // return $finalResult;
 
       // $query = "SELECT customer.nama_customer, tgl_invoice, no_invoice, sub_total, diskon, salecentral.keterangan, jenis_diskon, total_biaya FROM salecentral INNER JOIN customer ON salecentral.kode_customer = customer.kode_customer";
       // $result = $db->fetchAll($query);

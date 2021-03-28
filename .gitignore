@@ -1,0 +1,5 @@
+/vendor
+/public_html/vapehitz-dev-access.log
+/public_html/vapehitz-dev-error.log
+/wbs/vapehitz-dev-access.log
+/wbs/vapehitz-dev-error.log

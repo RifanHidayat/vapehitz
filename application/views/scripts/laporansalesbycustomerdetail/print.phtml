@@ -1,5 +1,10 @@
 <?php
-$mpdf = new \Mpdf\Mpdf();
+$mpdf = new \Mpdf\Mpdf([
+  'margin_left' => 2,
+  'margin_top' => 2,
+  'margin_right' => 2,
+  'margin_bottom' => 2,
+]);
 ob_start();
 ?>
 <!DOCTYPE html>
@@ -11,31 +16,120 @@ ob_start();
     table {
       border-collapse: collapse;
       width: 100%;
+      font-size: 10px;
+    }
+
+    td {
+      border: 1px solid #000;
+      padding: 2px;
     }
   </style>
 </head>
 
 <body>
   <div align="center">
-    <h2 align="center">Data Mahasiswa (<?= count($this->salesDetail) ?>)</h2>
-    <table align="center" width="60%" border="1">
-      <thead>
+    <h2 align="center">Sales By Customer Detail (<?= count($this->salesDetail) ?>)</h2>
+    <table>
+      <thead style="background-color: #4ECDC4; color: #fff;">
         <tr>
-          <th>NIM</th>
-          <th>Nama</th>
-          <th>Alamat</th>
-          <th>Jurusan</th>
+          <td>Customer</td>
+          <td>No.</td>
+          <td>Product</td>
+          <td>Date</td>
+          <td>Description</td>
+          <td>Qty</td>
+          <td>Price</td>
+          <td>Amount (Discount not included)</td>
         </tr>
       </thead>
       <tbody>
-        <?php for ($i = 0; $i < count($this->salesDetail); $i++) : ?>
+        <?php $index = 0; ?>
+        <?php $totalForCustomer = 0; ?>
+
+        <?php foreach ($this->salesDetail as $sale) : ?>
           <tr>
-            <td>21312<?= $i ?></td>
-            <td>Reza <?= $i ?></td>
-            <td>Jalan <?= $i ?></td>
-            <td>Jurusan <?= $i ?></td>
+            <?php if($index > 0) : ?>
+              <?php if($sale['nama_customer'] !== $this->salesDetail[$index - 1]['nama_customer']) : ?>
+              <td><?= $sale['nama_customer'] ?></td>
+              <?php else : ?>
+              <td></td>
+              <?php endif; ?>
+            <?php else: ?>
+            <td><?= $sale['nama_customer'] ?></td>
+            <?php endif; ?>
+            <?php if($index > 0) : ?>
+              <?php if($sale['no_invoice'] !== $this->salesDetail[$index - 1]['no_invoice']) : ?>
+              <td><?= $sale['no_invoice'] ?></td>
+              <?php else : ?>
+              <td></td>
+              <?php endif; ?>
+            <?php else: ?>
+            <td><?= $sale['no_invoice'] ?></td>
+            <?php endif; ?>
+            <td><?= $sale['nama_barang'] ?></td>
+            <td><?= date_format(date_create($sale['tgl_invoice']), "d-m-Y") ?></td>
+            <td><?= $sale['keterangan'] ?></td>
+            <td style="text-align: center;"><?= $sale['qty'] ?></td>
+            <td style="text-align: right;"><?= number_format($sale['harga_jual'], 0, ',', '.') ?></td>
+            <td style="text-align: right;"><?= number_format($sale['sub_total'], 0, ',', '.') ?></td>
           </tr>
-        <?php endfor; ?>
+        
+          <?php if($index < count($this->salesDetail) - 1) : ?>
+            <?php if($sale['no_invoice'] !== $this->salesDetail[$index + 1]['no_invoice']) : ?>
+            <tr>
+              <td></td>
+              <td><strong>Discount</strong></td>
+              <?php 
+                if($sale['jenis_diskon'] == 'persen') {
+                  $sale['diskon'] = $sale['total_biaya'] * ($sale['diskon'] / 100); 
+                }
+              ?>
+              <td colspan="6" style="text-align: right;"><strong><?= number_format($sale['diskon'], 0, ',', '.') ?></strong></td>
+            </tr>
+            <tr>
+              <td></td>
+              <td><strong>Total Invoice</strong></td>
+              <td colspan="6" style="text-align: right;"><strong><?= number_format($sale['salecentral_sub_total'], 0, ',', '.') ?></strong></td>
+            </tr>
+            <?php $totalForCustomer += $sale['salecentral_sub_total'] ?>
+            <?php endif; ?>
+          <?php else : ?>
+            <tr>
+              <td></td>
+              <td><strong>Discount</strong></td>
+              <?php 
+                if($sale['jenis_diskon'] == 'persen') {
+                  $sale['diskon'] = $sale['total_biaya'] * ($sale['diskon'] / 100); 
+                }
+              ?>
+              <td colspan="6" style="text-align: right;"><strong><?= number_format($sale['diskon'], 0, ',', '.') ?></strong></td>
+            </tr>
+            <tr>
+              <td></td>
+              <td><strong>Total Invoice</strong></td>
+              <td colspan="6" style="text-align: right;"><strong><?= number_format($sale['salecentral_sub_total'], 0, ',', '.') ?></strong></td>
+            </tr>
+            <?php $totalForCustomer += $sale['salecentral_sub_total'] ?>
+          <?php endif; ?>
+
+          <?php if($index < count($this->salesDetail) - 1) : ?>
+            <?php if($sale['nama_customer'] !== $this->salesDetail[$index + 1]['nama_customer']) : ?>
+              <tr>
+                <td><strong>Total for <?= $sale['nama_customer'] ?></strong></td>
+                <td colspan="7" style="text-align: right;"><strong><?= number_format($totalForCustomer, 0, ',', '.') ?></strong></td>
+              </tr>
+              <?php $totalForCustomer = 0; ?>
+            <?php endif; ?>
+          <?php else : ?>
+            <tr>
+              <td><strong>Total for <?= $sale['nama_customer'] ?></strong></td>
+              <td colspan="7" style="text-align: right;"><strong><?= number_format($totalForCustomer, 0, ',', '.') ?></strong></td>
+            </tr>
+            <?php $totalForCustomer = 0; ?>
+          <?php endif; ?>
+
+          <?php $index++; ?>
+        <?php endforeach; ?>
       </tbody>
     </table>
   </div>
