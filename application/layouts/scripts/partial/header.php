@@ -19,8 +19,9 @@
   <link href="<?php echo $this->baseUrl(); ?>/lib/font-awesome/css/font-awesome.css" rel="stylesheet" />
   <link rel="stylesheet" type="text/css" href="<?php echo $this->baseUrl(); ?>/css/zabuto_calendar.css">
   <link rel="stylesheet" type="text/css" href="<?php echo $this->baseUrl(); ?>/lib/gritter/css/jquery.gritter.css" />
-  <script src="<?php echo $this->baseUrl(); ?>/lib/jquery.js" charset="utf-8"></script>
-  <script src="<?php echo $this->baseUrl(); ?>/lib/jquery.min.js"></script>
+  <!-- <script src="<?php echo $this->baseUrl(); ?>/lib/jquery.js" charset="utf-8"></script>
+  <script src="<?php echo $this->baseUrl(); ?>/lib/jquery.min.js"></script> -->
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
   <script src="<?php echo $this->baseUrl(); ?>/lib/jquery.form.js"></script>
   <!-- Custom styles for this template -->
 
@@ -43,7 +44,7 @@
   <link rel="stylesheet" type="text/css" href="<?php echo $this->baseUrl(); ?>/lib/bootstrap-datetimepicker/datertimepicker.css" />
 
   <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.7/css/select2.min.css" rel="stylesheet" />
-  <script src="https://code.jquery.com/jquery-3.4.1.js" integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU=" crossorigin="anonymous"></script>
+  <!-- <script src="https://code.jquery.com/jquery-3.4.1.js" integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU=" crossorigin="anonymous"></script> -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.7/js/select2.min.js"></script>
 
 

@@ -4,6 +4,10 @@
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <link rel="stylesheet" type="text/css" href="<?php echo $this->baseUrl(); ?>/css/sweetalert.css">
 <style>
+    body {
+        font-family: Arial, Helvetica, sans-serif;
+    }
+
     #backgroundPopup {
 
         display: none;
@@ -18,10 +22,7 @@
         background: rgba(0, 0, 0, 0.85);
         border: 1px solid #cecece;
         z-index: 1040;
-
-
     }
-
 
     .box-popup1 {
         position: fixed;
@@ -30,7 +31,6 @@
         width: 40px;
         height: 30px;
     }
-
 
     #popupContact {
 
@@ -49,9 +49,6 @@
         padding: 15px;
         margin: 1%;
     }
-
-
-
 
     #popupContact h1 {
         text-align: left;
@@ -81,61 +78,23 @@
         display: block;
         background: url(../images/cross.png)
     }
-</style>
 
-<style>
-    body {
-        font-family: Arial, Helvetica, sans-serif;
+    @media screen and (min-width: 768px) {
+        .modal-center:before {
+            display: inline-block;
+            vertical-align: middle;
+            content: " ";
+            height: 100%;
+        }
     }
 
-    /* The Modal (background) */
-    .modal {
-        display: none;
-        /* Hidden by default */
-        position: fixed;
-        /* Stay in place */
-        z-index: 1;
-        /* Sit on top */
-        padding-top: 100px;
-        /* Location of the box */
-        left: 0;
-        top: 0;
-        width: 100%;
-        /* Full width */
-        height: 100%;
-        /* Full height */
-        overflow: auto;
-        /* Enable scroll if needed */
-        background-color: rgb(0, 0, 0);
-        /* Fallback color */
-        background-color: rgba(0, 0, 0, 0.4);
-        /* Black w/ opacity */
-    }
-
-    /* Modal Content */
-    .modal-content {
-        background-color: #fefefe;
-        margin: auto;
-        padding: 20px;
-        border: 1px solid #888;
-        width: 22%;
-    }
-
-    /* The Close Button */
-    .close {
-        color: #aaaaaa;
-        float: right;
-        font-size: 28px;
-        font-weight: bold;
-    }
-
-    .close:hover,
-    .close:focus {
-        color: #000;
-        text-decoration: none;
-        cursor: pointer;
+    .modal-center .modal-dialog {
+        display: inline-block;
+        text-align: left;
+        vertical-align: middle;
     }
 </style>
+
 
 <!-- **********************************************************************************************************************************************************
         MAIN CONTENT
@@ -145,6 +104,10 @@
 <section id="main-content">
     <section class="wrapper" style="min-height:522px">
         <h3><i class="fa fa-angle-right"></i> Transaksi Penjualan Barang</h3>
+        <button @click="onClickButton" class="btn btn-primary">Send Data</button>
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#tesModal">Large modal</button>
+        <button type="button" class="btn btn-warning button-test">Change Modal Content</button>
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Otorisasi</button>
         <div class="row mb">
             <!-- page start-->
             <div class="content-panel">
@@ -152,57 +115,64 @@
                     <div id="listprogram" align="center" class="col-xs-12">
                         <br>
                         <div id="page-content">
+
                             <!-- The Modal -->
-                            <div id="myModal" class="modal">
-
-                                <!-- Modal content -->
-                                <div class="modal-content">
-                                    <span class="close">&times;</span>
-                                    <p><b><i>*Otoritas dibutuhkan (untuk harga jual lebih rendah)!</i></b></p>
-                                    <table width="100%">
-                                        <tr>
-                                            <td width="10%">
-                                                <font style="font-size:12px;font-weight:bold;">User ID</font>
-                                            </td>
-                                            <td width="1%">:</td>
-                                            <td>
-                                                <table>
-                                                    <td>
-                                                        <input name="user_id" id="user_id" type="text" maxlength="20" size="20" class="form-control input-sm" value="">
-                                                        <input type="hidden" id="baris" name="baris" value="">
+                            <div id="myModal" class="modal modal-center">
+                                <div class="modal-dialog">
+                                    <!-- Modal content -->
+                                    <div class="modal-content">
+                                        <!-- <span class="close">&times;</span> -->
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                            <p class="modal-title"><strong><em>*Otoritas dibutuhkan (untuk harga jual lebih rendah)!</em></strong></p>
+                                        </div>
+                                        <div class="modal-body">
+                                            <table width="100%">
+                                                <tr>
+                                                    <td width="10%">
+                                                        <font style="font-size:12px;font-weight:bold;">User ID</font>
                                                     </td>
-                                                    <td> &nbsp; <label id="user_id-error" for="user_id" class="error"></td>
-                                                </table>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>&nbsp;</td>
-                                        </tr>
-                                        <tr>
-                                            <td width="10%">
-                                                <font style="font-size:12px;font-weight:bold;">Password</font>
-                                            </td>
-                                            <td width="1%">:</td>
-                                            <td>
-                                                <table>
-                                                    <td> <input name="password" id="password" type="password" maxlength="30" size="30" class="form-control input-sm" value=""> </td>
-                                                    <td> &nbsp; <label id="password-error" for="password" class="error"></td>
-                                                </table>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>&nbsp;</td>
-                                        </tr>
-                                        <tr>
-                                            <td colspan="3">
-                                                <label id="gagal-error" for="password" class="error">
-                                            </td>
-                                        </tr>
-                                    </table><br>
-                                    <button type="button" class="btn btn-theme03" onCLick="checkData()"><span class="fa fa-save"></span> &nbsp;Simpan Perubahan</button>
+                                                    <td width="1%">:</td>
+                                                    <td>
+                                                        <table>
+                                                            <td>
+                                                                <input name="user_id" id="user_id" type="text" maxlength="20" size="20" class="form-control input-sm" value="">
+                                                                <input type="hidden" id="baris" name="baris" value="">
+                                                            </td>
+                                                            <td> &nbsp; <label id="user_id-error" for="user_id" class="error"></td>
+                                                        </table>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>&nbsp;</td>
+                                                </tr>
+                                                <tr>
+                                                    <td width="10%">
+                                                        <font style="font-size:12px;font-weight:bold;">Password</font>
+                                                    </td>
+                                                    <td width="1%">:</td>
+                                                    <td>
+                                                        <table>
+                                                            <td> <input name="password" id="password" type="password" maxlength="30" size="30" class="form-control input-sm" value=""> </td>
+                                                            <td> &nbsp; <label id="password-error" for="password" class="error"></td>
+                                                        </table>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>&nbsp;</td>
+                                                </tr>
+                                                <tr>
+                                                    <td colspan="3">
+                                                        <label id="gagal-error" for="password" class="error">
+                                                    </td>
+                                                </tr>
+                                            </table><br>
+                                            <button type="button" class="btn btn-theme03" onCLick="checkData()"><span class="fa fa-save"></span> &nbsp;Simpan Perubahan</button>
+                                        </div>
+                                    </div>
                                 </div>
-
                             </div>
+
                             <form id="frm_postdata" name="frm_postdata" enctype="multipart/form-data" method="POST" autocomplete="off">
                                 <input type="hidden" name="currentPage" id="currentPage" size="6" maxlength="6" value="<?php echo $this->numPage; ?>" class="inputbox2 narrowkey1"></input>
                                 <?php
@@ -408,7 +378,30 @@
                                                 </tr>
                                             </table>
                                             <hr>
-                                            <div align='left'>
+                                            <table class="table table-striped table-bordered">
+                                                <thead style="background-color: #4ECDC4; color: #fff">
+                                                    <tr>
+                                                        <th>Jenis Barang</th>
+                                                        <th>Kode Barang</th>
+                                                        <th>Nama Barang</th>
+                                                        <th>Berat (gr)</th>
+                                                        <th>Booking</th>
+                                                        <th>Stok</th>
+                                                        <th>Harga Jual</th>
+                                                        <th>Qty</th>
+                                                        <th>Free</th>
+                                                        <th>Subtotal</th>
+                                                        <th></th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr v-for="(finalGood, index) in finalSelectedGoods" is="selected-good" :key="index" :good="finalGood" :index="index" :ondelete="deleteFinalGood" :calculate="calculateFinalGoods"></tr>
+                                                    <tr v-if="finalSelectedGoods.length < 1">
+                                                        <td colspan="11" style="text-align: center;">Belum ada barang dipilih</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                            <!-- <div align='left'>
                                                 <input type="button" class="right btn btn-success  btn-xs" style="font-weight:bold;" value="Tambah Barang" onclick="dataliquid()">
                                                 <input type='hidden' name='counterx' id='counterx' value="0">
                                             </div>
@@ -446,7 +439,7 @@
                                                         <font style="font-size:12px;font-weight:bold;">Action</font>
                                                     </td>
                                                 </tr>
-                                            </table>
+                                            </table> -->
                                             <table width="100%" id="myTable2">
                                                 <tr>
                                                     <td>&nbsp;</td>
@@ -692,6 +685,7 @@
 
                         </div>
                     </div>
+
                     <div class="col-lg-12">
                         <div class="form-group form-group-bottom" align="right">
                             <input type="hidden" id="proses" name="proses" value="<?php echo $this->proses ?>">
@@ -700,7 +694,8 @@
                             <a href="salecentral">
                                 <button type="button" class="btn btn-theme02">
                                     <span class="fa fa-backward"></span> &nbsp;Kembali
-                                </button></a>
+                                </button>
+                            </a>
                             <button type="button" class="btn btn-theme03" onCLick="PostData()">
                                 <span class="fa fa-save"></span> &nbsp;Simpan
                             </button>
@@ -717,13 +712,153 @@
         <!-- /row -->
     </section>
     <!-- /wrapper -->
+    <!-- Modal -->
+    <div class="modal" id="tesModal">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title" id="myModalLabel">Pilih barang</h4>
+                </div>
+                <div class="modal-body">
+                    <div style="padding-top: 1em; ">
+                        <div class="row" style="margin-bottom: 2em;">
+                            <div class="col-md-6">
+                                <select v-model="shownContent" class="form-control">
+                                    <option value="liquid">Liquids</option>
+                                    <option value="device">Devices</option>
+                                    <option value="accessories">Accesories</option>
+                                    <option value="atomizer">Atomizer</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div style="display: none; overflow-x: auto;" :style="(shownContent == 'liquid') ? { display: 'block' } : ''">
+                            <table class="table table-striped table-responsive use-datatable">
+                                <thead>
+                                    <tr>
+                                        <th></th>
+                                        <th>Kode Liquid</th>
+                                        <th>Nama Liquid</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php foreach ($this->liquids as $liquid) : ?>
+                                        <tr>
+                                            <td style="text-align: center;"><input type="checkbox" :value='{...JSON.parse(`<?= json_encode($liquid) ?>`), qty: 1, free: 0, subTotal: JSON.parse(`<?= json_encode($liquid) ?>`).hj_retail}' v-model="tempSelectedGoods"></td>
+                                            <td><?= $liquid['kode_barang'] ?></td>
+                                            <td><?= $liquid['nama_barang'] ?></td>
+                                        </tr>
+                                    <?php endforeach; ?>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div style="display: none; overflow-x: auto;" :style="(shownContent == 'device') ? { display: 'block' } : ''">
+                            <table class="table table-striped table-responsive use-datatable">
+                                <thead>
+                                    <tr>
+                                        <th></th>
+                                        <th>Kode Device</th>
+                                        <th>Nama Device</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php foreach ($this->devices as $device) : ?>
+                                        <tr>
+                                            <td style="text-align: center;"><input type="checkbox" :value='{...JSON.parse(`<?= json_encode($device) ?>`), qty: 1, free: 0, subTotal: JSON.parse(`<?= json_encode($device) ?>`).hj_retail}' v-model="tempSelectedGoods"></td>
+                                            <td><?= $device['kode_device'] ?></td>
+                                            <td><?= $device['nama_device'] ?></td>
+                                        </tr>
+                                    <?php endforeach; ?>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div style="display: none; overflow-x: auto;" :style="(shownContent == 'atomizer') ? { display: 'block' } : ''">
+                            <table class="table table-striped table-responsive use-datatable">
+                                <thead>
+                                    <tr>
+                                        <th></th>
+                                        <th>Kode Atomizer</th>
+                                        <th>Nama Atomizer</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php foreach ($this->atomizers as $atomizer) : ?>
+                                        <tr>
+                                            <td style="text-align: center;"><input type="checkbox" :value='{...JSON.parse(`<?= json_encode($atomizer) ?>`), qty: 1, free: 0, subTotal: JSON.parse(`<?= json_encode($atomizer) ?>`).hj_retail}' v-model="tempSelectedGoods"></td>
+                                            <td><?= $atomizer['kode_atomizer'] ?></td>
+                                            <td><?= $atomizer['nama_atomizer'] ?></td>
+                                        </tr>
+                                    <?php endforeach; ?>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div style="display: none; overflow-x: auto;" :style="(shownContent == 'accessories') ? { display: 'block' } : ''">
+                            <table class="table table-striped table-responsive use-datatable">
+                                <thead>
+                                    <tr>
+                                        <th></th>
+                                        <th>Kode Aksesoris</th>
+                                        <th>Nama Aksesoris</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php foreach ($this->accessories as $accessories) : ?>
+                                        <tr>
+                                            <td style="text-align: center;"><input type="checkbox" :value='{...JSON.parse(`<?= json_encode($accessories) ?>`), qty: 1, free: 0, subTotal: JSON.parse(`<?= json_encode($accessories) ?>`).hj_retail}' v-model="tempSelectedGoods"></td>
+                                            <td><?= $accessories['kode_aksesoris'] ?></td>
+                                            <td><?= $accessories['nama_aksesoris'] ?></td>
+                                        </tr>
+                                    <?php endforeach; ?>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div style="margin: 1.25em 0;">
+                        <table class="table table-striped table-bordered" v-if="tempSelectedGoods.length">
+                            <thead>
+                                <tr>
+                                    <th>Jenis Barang</th>
+                                    <th>Kode Barang</th>
+                                    <th>Nama Barang</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr v-for="(good, index) in tempSelectedGoods">
+                                    <td v-if="good.kode_barang">Liquid</td>
+                                    <td v-else-if="good.kode_device">Device</td>
+                                    <td v-else-if="good.kode_aksesoris">Aksesoris</td>
+                                    <td v-else-if="good.kode_atomizer">Atomizer</td>
+                                    <td>{{ good.kode_barang || good.kode_device || good.kode_aksesoris || good.kode_atomizer }}</td>
+                                    <td>{{ good.nama_barang || good.nama_device || good.nama_aksesoris || good.nama_atomizer }}</td>
+                                    <td style="text-align: center;"><a href="#" style="color: red;" @click.prevent="unselectGood(index)"><i class="fa fa-times"></i></a></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <p style="text-align: center;" v-if="tempSelectedGoods.length < 1"><strong><em>Belum ada barang dipilih</em></strong></p>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" @click="setFinalGoods" class="btn btn-primary">Tambah</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </section>
 <!--main content end-->
 <?php require('partial/main-footer.php'); ?>
+
 </section>
+
+
+
+
 <!-- js placed at the end of the document so the pages load faster -->
-<script src="lib/jquery/jquery.min.js"></script>
-<script type="text/javascript" language="javascript" src="lib/advanced-datatable/js/jquery.js"></script>
+<!-- <script src="lib/jquery/jquery.min.js"></script> -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script> -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/jquery@1.9.1/jquery.min.js"></script> -->
+<!-- <script type="text/javascript" language="javascript" src="lib/advanced-datatable/js/jquery.js"></script> -->
 <script src="lib/bootstrap/js/bootstrap.min.js"></script>
 <script class="include" type="text/javascript" src="lib/jquery.dcjqaccordion.2.7.js"></script>
 <script src="lib/jquery.scrollTo.min.js"></script>
@@ -740,6 +875,96 @@
 <script src="<?php echo $this->baseUrl(); ?>/lib/sweetalert.min.js"></script>
 <!-- <script src="<?php echo $this->baseUrl(); ?>/lib/jquery.scrollTo.min.js"></script>
 <script src="<?php echo $this->baseUrl(); ?>/lib/jquery.nicescroll.js" type="text/javascript"></script> -->
+<script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script>
+    $(function() {
+        // $('#table-test').DataTable({
+        //     "destroy": true
+        // });
+
+        let table = $('.use-datatable').dataTable({
+            "sorting": false,
+            "destroy": true
+        });
+
+        // console.log(table);
+    })
+
+    Vue.component('selected-good', {
+        props: ['good', 'index', 'ondelete', 'calculate'],
+        template: `
+        <tr>
+            <td v-if="good.kode_barang">Liquid</td>
+            <td v-else-if="good.kode_device">Device</td>
+            <td v-else-if="good.kode_aksesoris">Aksesoris</td>
+            <td v-else-if="good.kode_atomizer">Atomizer</td>
+            <td>{{ good.kode_barang || good.kode_device || good.kode_aksesoris || good.kode_atomizer }}</td>
+            <td>{{ good.nama_barang || good.nama_device || good.nama_aksesoris || good.nama_atomizer }}</td>
+            <td>{{ good.berat }}</td>
+            <td>{{ good.on_hand }}</td>
+            <td>{{ good.stok_pusat }}</td>
+            <td><input type="text" @input="calculate(good)" v-model="good.hj_retail" class="form-control input-sm" style="text-align: right" /></td>
+            <td><input type="text" @input="calculate(good)" v-model="good.qty" class="form-control input-sm" /></td>
+            <td><input type="text" @input="calculate(good)" v-model="good.free" class="form-control input-sm" /></td>
+            <td><input type="text" v-model="good.subTotal" class="form-control input-sm" style="text-align: right" readonly /></td>
+            <td style="text-align: center;"><a href="#" style="color: red;" @click.prevent="ondelete(index)"><i class="fa fa-times"></i></a></td>
+        </tr>
+        `
+    })
+
+    let app = new Vue({
+        el: '#main-content',
+        data: {
+            name: 'Reza',
+            shownContent: 'liquid',
+            tempSelectedGoods: [],
+            finalSelectedGoods: [],
+        },
+
+        methods: {
+            onClickButton: function() {
+                swal({
+                    title: 'Order Sukses !',
+                    text: 'Auto Close...',
+                    icon: 'success',
+                    timer: 4000,
+                    showConfirmButton: false,
+                })
+            },
+            selectGood: function(e, good) {
+                console.log(e);
+                this.tempSelectedGoods.push(Object.assign(good, {
+                    qty: 1,
+                    free: 0,
+                    subTotal: parseInt(good.hj_retail) * 1
+                }));
+            },
+            unselectGood: function(index) {
+                this.tempSelectedGoods.splice(index, 1);
+            },
+            setFinalGoods: function() {
+                this.finalSelectedGoods = [...this.finalSelectedGoods, ...this.tempSelectedGoods];
+                $('#tesModal').modal('hide');
+            },
+            deleteFinalGood: function(index) {
+                this.finalSelectedGoods.splice(index, 1);
+            },
+            calculateFinalGoods: function(item) {
+                item.subTotal = Number(item.qty) * Number(item.hj_retail);
+                // let stok = item.stok_pusat;
+                // item.stok_pusat = Number(item.stok_pusat) - Number(item.qty) - Number(item.free);
+            }
+        }
+    })
+</script>
+<script>
+    $(function() {
+        $('#tesModal').on('hidden.bs.modal', function(e) {
+            app.$data.tempSelectedGoods = [];
+        })
+    })
+</script>
 <script>
     $("#kurir").hide();
     $("#kurir2").hide();
@@ -1714,20 +1939,25 @@
 		  }
 		}
 	</script-->
+
 <script>
     $(".product").select2();
 </script>
 <script>
     $(document).ready(function() {
-        $(function() {
-            $('#tgl_invoice').datepicker({
-                dateFormat: 'dd/mm/yy',
-                changeMonth: true,
-                changeYear: true
-            });
+
+        $('#tgl_invoice').datepicker({
+            dateFormat: 'dd/mm/yy',
+            changeMonth: true,
+            changeYear: true
         });
+
+
+
     });
 </script>
+
+
 </body>
 
 </html>

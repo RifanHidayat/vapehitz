@@ -48,6 +48,10 @@ class SalecentraltambahController extends Zend_Controller_Action
         $kode_inv = $now;
         $this->view->seq = $this->Salecentral_Service->getNoSeq2($kode_inv);
         $this->view->rek = $this->Salecentral_Service->getRekening();
+        $this->view->liquids = $this->Salecentral_Service->getlistliquid();
+        $this->view->devices = $this->Salecentral_Service->getlistdevice();
+        $this->view->accessories = $this->Salecentral_Service->getlistaccessories();
+        $this->view->atomizers = $this->Salecentral_Service->getlistatomizer();
     }
 
     public function cekdatauserAction()
