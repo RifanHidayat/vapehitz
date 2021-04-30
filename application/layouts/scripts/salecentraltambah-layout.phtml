@@ -93,6 +93,10 @@
         text-align: left;
         vertical-align: middle;
     }
+
+    .text-right {
+        text-align: right;
+    }
 </style>
 
 
@@ -105,7 +109,7 @@
     <section class="wrapper" style="min-height:522px">
         <h3><i class="fa fa-angle-right"></i> Transaksi Penjualan Barang</h3>
         <button @click="onClickButton" class="btn btn-primary">Send Data</button>
-        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#tesModal">Large modal</button>
+
         <button type="button" class="btn btn-warning button-test">Change Modal Content</button>
         <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Otorisasi</button>
         <div class="row mb">
@@ -173,7 +177,8 @@
                                 </div>
                             </div>
 
-                            <form id="frm_postdata" name="frm_postdata" enctype="multipart/form-data" method="POST" autocomplete="off">
+                            <!-- <form @submit.prevent="submitForm" id="frm_postdata" name="frm_postdata" enctype="multipart/form-data" method="POST" autocomplete="off"> -->
+                            <form @submit.prevent="submitForm" autocomplete="off">
                                 <input type="hidden" name="currentPage" id="currentPage" size="6" maxlength="6" value="<?php echo $this->numPage; ?>" class="inputbox2 narrowkey1"></input>
                                 <?php
                                 $seq = $this->seq;
@@ -196,7 +201,7 @@
                                                     <td width="1%">:</td>
                                                     <td>
                                                         <table>
-                                                            <td> <input name="no_invoice" id="no_invoice" type="text" maxlength="50" size="30" class="form-control input-sm" value="SO/VH/<?php echo date("dmy H:i:s"); ?>/<?php echo $seq; ?>" readonly> </td>
+                                                            <td> <input type="text" v-model="invoiceNumber" name="no_invoice" id="no_invoice" maxlength="50" size="30" class="form-control input-sm" value="" readonly> </td>
                                                             <td> &nbsp; <label id="no_invoice-error" for="no_invoice" class="error"></td>
                                                         </table>
                                                     </td>
@@ -212,7 +217,7 @@
                                                     <td>
                                                         <table>
                                                             <td>
-                                                                <input name="tgl_invoice" id="tgl_invoice" type="text" maxlength="50" size="20" class="form-control" value="">
+                                                                <input v-model="invoiceDate" name="tgl_invoice" id="tgl_invoice" type="text" maxlength="50" size="20" class="form-control" value="" readonly>
                                                                 <span class="input-group-btn add-on">
                                                                     <button class="btn btn-theme" type="button"><i class="fa fa-calendar"></i></button>
                                                                 </span>
@@ -232,7 +237,7 @@
                                                     <td>
                                                         <table>
                                                             <td>
-                                                                <select id="shipment" name="shipment" class="form-control select_group product" width="15%" onclick="statuskurir(this)">
+                                                                <select v-model="shipment" id="shipment" name="shipment" class="form-control select_group product" width="15%" onclick="statuskurir(this)">
                                                                     <option value="">--Pilih Shipment--</option>
                                                                     <option value="COD">COD</option>
                                                                     <option value="Gojek">Gojek</option>
@@ -246,19 +251,19 @@
                                                 <tr>
                                                     <td>&nbsp;</td>
                                                 </tr>
-                                                <tr id='kurir'>
+                                                <tr id='kurir' v-if="shipment == 'Kurir'">
                                                     <td width="10%">
                                                         <font style="font-size:12px;font-weight:bold;">Nama Kurir</font>
                                                     </td>
                                                     <td width="1%">:</td>
                                                     <td>
                                                         <table>
-                                                            <td> <input name="nama_kurir" id="nama_kurir" type="text" maxlength="30" size="30" class="form-control input-sm" value=""> </td>
+                                                            <td> <input name="nama_kurir" id="nama_kurir" type="text" v-model="courier" maxlength="30" size="30" class="form-control input-sm" value=""> </td>
                                                             <td> &nbsp; <label id="nama_kurir-error" for="nama_kurir" class="error"></td>
                                                         </table>
                                                     </td>
                                                 </tr>
-                                                <tr id='kurir2'>
+                                                <tr id='kurir2' v-if="shipment == 'Kurir'">
                                                     <td>&nbsp;</td>
                                                 </tr>
                                                 <tr>
@@ -269,7 +274,7 @@
                                                     <td>
                                                         <table>
                                                             <td>
-                                                                <select id="kode_customer" name="kode_customer" class="form-control select_group product" width="20%" onchange="getSelectValue();">
+                                                                <!-- <select v-model="customer.name" id="kode_customer" name="kode_customer" class="form-control select_group product" width="20%" onchange="getSelectValue();">
                                                                     <option value="">--Pilih Customer--</option>
                                                                     <?php
                                                                     for ($x = 0; $x < count($this->customer); $x++) {
@@ -281,6 +286,20 @@
                                                                         $email = $this->customer[$x]['email'];
                                                                     ?>
                                                                         <option value="<?php echo $kode_customer; ?>,<?php echo $alamat_customer; ?>,<?php echo $no_tlp; ?>,<?php echo $no_hp; ?>,<?php echo $email; ?>"><?php echo $nama_customer; ?></option>
+                                                                    <?php } ?>
+                                                                </select> -->
+                                                                <select v-model="customer.name" id="kode_customer" name="kode_customer" class="form-control select_group product" width="20%" onchange="getSelectValue();">
+                                                                    <option value="">--Pilih Customer--</option>
+                                                                    <?php
+                                                                    for ($x = 0; $x < count($this->customer); $x++) {
+                                                                        $kode_customer = $this->customer[$x]['kode_customer'];
+                                                                        $nama_customer = $this->customer[$x]['nama_customer'];
+                                                                        $alamat_customer = $this->customer[$x]['alamat_customer'];
+                                                                        $no_tlp = $this->customer[$x]['no_tlp'];
+                                                                        $no_hp = $this->customer[$x]['no_hp'];
+                                                                        $email = $this->customer[$x]['email'];
+                                                                    ?>
+                                                                        <option value="<?php echo $kode_customer; ?>"><?php echo $nama_customer; ?></option>
                                                                     <?php } ?>
                                                                 </select>
                                                             </td>
@@ -301,7 +320,7 @@
                                                     <td width="1%">:</td>
                                                     <td>
                                                         <table>
-                                                            <td> <input name="alamat_customer" id="alamat_customer" type="text" maxlength="100" size="100" class="form-control input-sm" value="" readonly> </td>
+                                                            <td> <input v-model="customer.address" name="alamat_customer" id="alamat_customer" type="text" maxlength="100" size="100" class="form-control input-sm" value="" readonly> </td>
                                                             <td> </td>
                                                         </table>
                                                     </td>
@@ -316,7 +335,7 @@
                                                     <td width="1%">:</td>
                                                     <td>
                                                         <table>
-                                                            <td> <input name="no_tlp" id="no_tlp" type="text" maxlength="20" size="15" class="form-control input-sm" value="" readonly> </td>
+                                                            <td> <input v-model="customer.phone" name="no_tlp" id="no_tlp" type="text" maxlength="20" size="15" class="form-control input-sm" value="" readonly> </td>
                                                             <td> </td>
                                                         </table>
                                                     </td>
@@ -331,7 +350,7 @@
                                                     <td width="1%">:</td>
                                                     <td>
                                                         <table>
-                                                            <td> <input name="no_hp" id="no_hp" type="text" maxlength="20" size="15" class="form-control input-sm" value="" readonly> </td>
+                                                            <td> <input v-model="customer.whatsapp" name="no_hp" id="no_hp" type="text" maxlength="20" size="15" class="form-control input-sm" value="" readonly> </td>
                                                             <td> </td>
                                                         </table>
                                                     </td>
@@ -346,7 +365,7 @@
                                                     <td width="1%">:</td>
                                                     <td>
                                                         <table>
-                                                            <td> <input name="email" id="email" type="text" maxlength="40" size="40" class="form-control input-sm" value="" readonly> </td>
+                                                            <td> <input v-model="customer.email" name="email" id="email" type="text" maxlength="40" size="40" class="form-control input-sm" value="" readonly> </td>
                                                             <td> </td>
                                                         </table>
                                                     </td>
@@ -362,8 +381,8 @@
                                                     <td>
                                                         <table>
                                                             <td>
-                                                                <select id="termin_hutang" name="termin_hutang" class="form-control select_group product" width="15%">
-                                                                    <option value="">0 Hari</option>
+                                                                <select v-model="customer.debtDuration" id="termin_hutang" name="termin_hutang" class="form-control select_group product" width="15%">
+                                                                    <option value="0">0 Hari</option>
                                                                     <option value="7">7 Hari</option>
                                                                     <option value="15">15 Hari</option>
                                                                     <option value="30">30 Hari</option>
@@ -378,6 +397,9 @@
                                                 </tr>
                                             </table>
                                             <hr>
+                                            <div style="text-align: right; margin-bottom: 25px;">
+                                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#tesModal">Pilih barang</button>
+                                            </div>
                                             <table class="table table-striped table-bordered">
                                                 <thead style="background-color: #4ECDC4; color: #fff">
                                                     <tr>
@@ -447,11 +469,12 @@
                                                 <tr>
                                                     <td colspan='5' width="68%">&nbsp; <label id="total_berat-error" for="total_berat" class="error"></td>
                                                     <td width="13%">
-                                                        </>
-                                                        <font style="font-size:12px;font-weight:bold;">Total Berat</font>
+
+                                                        <span style="font-size:12px;font-weight:bold;">Total Berat</span>
                                                     </td>
                                                     <td width="19%">
-                                                        </> <input type='text' class="form-control input-sm" name='total_berat' id='total_berat' value='0' readonly> </td>
+                                                        <input type='text' class="form-control input-sm text-right" name='total_berat' id='total_berat' v-model="totalWeight" readonly>
+                                                    </td>
                                                 </tr>
                                                 <tr>
                                                     <td>&nbsp;</td>
@@ -459,11 +482,12 @@
                                                 <tr>
                                                     <td colspan='5' width="68%">&nbsp; <label id="total_biaya-error" for="total_biaya" class="error"></td>
                                                     <td width="13%">
-                                                        </>
-                                                        <font style="font-size:12px;font-weight:bold;">Total Biaya</font>
+
+                                                        <span style="font-size:12px;font-weight:bold;">Total Biaya</span>
                                                     </td>
                                                     <td width="19%">
-                                                        </> <input type='text' class="form-control input-sm" name='total_biaya' id='total_biaya' value='0' readonly> </td>
+                                                        <input type='text' class="form-control input-sm text-right" name='total_biaya' id='total_biaya' v-model="totalSubtotal" readonly>
+                                                    </td>
                                                 </tr>
                                                 <!-- <tr><td>&nbsp;</td></tr> -->
 
@@ -473,11 +497,12 @@
                                                 <tr>
                                                     <td colspan='5'></td>
                                                     <td>
-                                                        <font style="font-size:12px;font-weight:bold;">Diskon</font>
+                                                        <span style="font-size:12px;font-weight:bold;">Diskon</span>
                                                     </td>
                                                     <td>
-                                                        <input type='text' class="form-control input-sm" name='diskon' id='diskon' value='0' onkeyup='datadiskon()' style="width: 55%; display: inline">
-                                                        <select class="form-control input-sm" id="jenis_diskon" name="jenis_diskon" style="width: 43%; display: inline">
+                                                        <!-- <input type='text' class="form-control input-sm" name='diskon' id='diskon' value='0' onkeyup='datadiskon()' style="width: 55%; display: inline"> -->
+                                                        <input type='text' v-model="discount" class="form-control input-sm" name='diskon' id='diskon' style="width: 55%; display: inline">
+                                                        <select class="form-control input-sm" v-model="discountType" id="jenis_diskon" name="jenis_diskon" style="width: 43%; display: inline">
                                                             <option value="nominal">Nominal</option>
                                                             <option value="persen">Persen (%)</option>
                                                         </select>
@@ -491,7 +516,7 @@
                                                     <td>
                                                         <font style="font-size:12px;font-weight:bold;">Sub Total</font>
                                                     </td>
-                                                    <td> <input type='text' class="form-control input-sm" name='sub_total' id='sub_total' value='0' readonly> </td>
+                                                    <td> <input type='text' v-model="mainSubtotal" class="form-control input-sm text-right" name='sub_total' id='sub_total' readonly> </td>
                                                 </tr>
                                                 <tr>
                                                     <td>&nbsp;</td>
@@ -501,7 +526,10 @@
                                                     <td>
                                                         <font style="font-size:12px;font-weight:bold;">Biaya Kirim</font>
                                                     </td>
-                                                    <td> <input type='text' class="form-control input-sm" name='biaya_kirim' id='biaya_kirim' value='0' onkeyup='biaya()'> </td>
+                                                    <td>
+                                                        <!-- <input type='text' class="form-control input-sm" name='biaya_kirim' id='biaya_kirim' value='0' onkeyup='biaya()'> -->
+                                                        <input type='text' v-model="shipping" class="form-control input-sm text-right" name='biaya_kirim' id='biaya_kirim'>
+                                                    </td>
                                                 </tr>
                                                 <tr>
                                                     <td>&nbsp;</td>
@@ -512,7 +540,8 @@
                                                         <font style="font-size:12px;font-weight:bold;">Biaya Lainnya</font>
                                                     </td>
                                                     <td>
-                                                        <input type='text' class="form-control input-sm" name='biaya_lain' id='biaya_lain' value='0' onkeyup='biayaLain()'>
+                                                        <!-- <input type='text' v-model="paymentOther" class="form-control input-sm text-right" name='biaya_lain' id='biaya_lain' value='0' onkeyup='biayaLain()'> -->
+                                                        <input type='text' v-model="paymentOther" class="form-control input-sm text-right" name='biaya_lain' id='biaya_lain'>
                                                     </td>
                                                 </tr>
                                                 <tr>
@@ -524,7 +553,7 @@
                                                         <font style="font-size:12px;font-weight:bold;"></font>
                                                     </td>
                                                     <td>
-                                                        <input type='text' class="form-control input-sm" name='ket_biaya_lain' id='ket_biaya_lain' placeholder="Ket. Biaya Lainnya">
+                                                        <input type='text' v-model="paymentOtherDescription" class="form-control input-sm" name='ket_biaya_lain' id='ket_biaya_lain' placeholder="Ket. Biaya Lainnya">
                                                     </td>
                                                 </tr>
                                                 <tr>
@@ -535,7 +564,10 @@
                                                     <td>
                                                         <font style="font-size:12px;font-weight:bold;">Deposit Customer</font>
                                                     </td>
-                                                    <td> <input type='text' class="form-control input-sm" name='deposit' id='deposit' value='0' onkeyup='onDepositChange()'> </td>
+                                                    <td>
+                                                        <!-- <input type='text' class="form-control input-sm" name='deposit' id='deposit' value='0' onkeyup='onDepositChange()'> -->
+                                                        <input type='text' v-model="deposit" class="form-control input-sm text-right" name='deposit' id='deposit'>
+                                                    </td>
                                                 </tr>
                                                 <tr>
                                                     <td>&nbsp;</td>
@@ -545,7 +577,7 @@
                                                     <td>
                                                         <font style="font-size:12px;font-weight:bold;">Net Total</font>
                                                     </td>
-                                                    <td> <input type='text' class="form-control input-sm" name='net_total' id='net_total' value='0' readonly> </td>
+                                                    <td> <input type='text' v-model="netTotal" class="form-control input-sm text-right" name='net_total' id='net_total' readonly> </td>
                                                 </tr>
                                                 <tr>
                                                     <td>&nbsp;</td>
@@ -557,7 +589,7 @@
                                                     </td>
                                                     <td>
 
-                                                        <select id="metode_penerimaan" name="metode_penerimaan" class="form-control input-sm" width="15%">
+                                                        <select v-model="receiptSource1" id="metode_penerimaan" name="metode_penerimaan" class="form-control input-sm" width="15%">
                                                             <option value="0">--Pilih Sumber Dana--</option>
                                                             <?php
                                                             for ($x = 0; $x < count($this->rek); $x++) {
@@ -584,7 +616,10 @@
                                                     <td>
                                                         <font style="font-size:12px;font-weight:bold;">Rp</font>
                                                     </td>
-                                                    <td> <input type='text' class="form-control input-sm" name='jml_penerimaan' id='jml_penerimaan' value='0' onkeyup='jumlahdp()'> </td>
+                                                    <td>
+                                                        <!-- <input type='text' class="form-control input-sm" name='jml_penerimaan' id='jml_penerimaan' value='0' onkeyup='jumlahdp()'> -->
+                                                        <input type='text' v-model="receiptSourceTotal1" class="form-control input-sm text-right" name='jml_penerimaan' id='jml_penerimaan'>
+                                                    </td>
                                                 </tr>
                                                 <tr>
                                                     <td colspan='7' align="right"><label id="jml_penerimaan-error" for="jml_penerimaan" class="error"></td>
@@ -596,7 +631,7 @@
                                                     </td>
                                                     <td>
 
-                                                        <select id="metode_penerimaan2" name="metode_penerimaan2" class="form-control input-sm" width="15%">
+                                                        <select v-model="receiptSource2" id="metode_penerimaan2" name="metode_penerimaan2" class="form-control input-sm" width="15%">
                                                             <option value="0">--Pilih Sumber Dana--</option>
                                                             <?php
                                                             for ($x = 0; $x < count($this->rek); $x++) {
@@ -623,7 +658,10 @@
                                                     <td>
                                                         <font style="font-size:12px;font-weight:bold;">Rp</font>
                                                     </td>
-                                                    <td> <input type='text' class="form-control input-sm" name='jml_penerimaan2' id='jml_penerimaan2' value='0' onkeyup='jumlahdp()'> </td>
+                                                    <td>
+                                                        <!-- <input type='text' class="form-control input-sm" name='jml_penerimaan2' id='jml_penerimaan2' value='0' onkeyup='jumlahdp()'> -->
+                                                        <input type='text' v-model="receiptSourceTotal2" class="form-control input-sm text-right" name='jml_penerimaan2' id='jml_penerimaan2'>
+                                                    </td>
                                                 </tr>
                                                 <tr>
                                                     <td colspan='7' align="right"><label id="jml_penerimaan2-error" for="jml_penerimaan2" class="error"></td>
@@ -633,7 +671,7 @@
                                                     <td>
                                                         <font style="font-size:12px;font-weight:bold;">Jumlah Pembayaran</font>
                                                     </td>
-                                                    <td> <input type='text' class="form-control input-sm" name='jml_bayar' id='jml_bayar' value='0' readonly> </td>
+                                                    <td> <input type='text' v-model="totalPayment" class="form-control input-sm text-right" name='jml_bayar' id='jml_bayar' readonly> </td>
                                                 </tr>
                                                 <tr>
                                                     <td>&nbsp;</td>
@@ -643,7 +681,7 @@
                                                     <td>
                                                         <font style="font-size:12px;font-weight:bold;">Sisa Pembayaran</font>
                                                     </td>
-                                                    <td> <input type='text' class="form-control input-sm" name='sisa_bayar' id='sisa_bayar' value='0' readonly> </td>
+                                                    <td> <input type='text' v-model="changePayment" class="form-control input-sm text-right" name='sisa_bayar' id='sisa_bayar' value='0' readonly> </td>
                                                 </tr>
                                                 <tr>
                                                     <td>&nbsp;</td>
@@ -653,7 +691,7 @@
                                                     <td>
                                                         <font style="font-size:12px;font-weight:bold;">Nama Penerima</font>
                                                     </td>
-                                                    <td> <input type='text' class="form-control input-sm" name='nama_penerima' id='nama_penerima' value=''> </td>
+                                                    <td> <input type='text' v-model="recipientName" class="form-control input-sm" name='nama_penerima' id='nama_penerima'> </td>
                                                 </tr>
                                                 <tr>
                                                     <td colspan='7' align="right"><label id="nama_penerima-error" for="nama_penerima" class="error"></td>
@@ -663,7 +701,7 @@
                                                     <td>
                                                         <font style="font-size:12px;font-weight:bold;">Alamat Penerima</font>
                                                     </td>
-                                                    <td> <textarea class="form-control input-sm" name='alamat_penerima' id='alamat_penerima'></textarea></td>
+                                                    <td> <textarea v-model="recipientAddress" class="form-control input-sm" name='alamat_penerima' id='alamat_penerima'></textarea></td>
                                                 </tr>
                                                 <tr>
                                                     <td colspan='7' align="right"><label id="alamat_penerima-error" for="alamat_penerima" class="error"></td>
@@ -673,41 +711,59 @@
                                                     <td>
                                                         <font style="font-size:12px;font-weight:bold;">Keterangan</font>
                                                     </td>
-                                                    <td> <input type='text' class="form-control input-sm" name='keterangan' id='keterangan' value=''> </td>
+                                                    <td> <input v-model="information" type='text' class="form-control input-sm" name='keterangan' id='keterangan' value=''> </td>
                                                 </tr>
                                                 <tr>
                                                     <td colspan='7' align="right"><label id="keterangan-error" for="keterangan" class="error"></td>
                                                 </tr>
                                             </table>
                                         </div>
+
                                     </fieldset>
+                                    <div class="text-right" style="padding: 2em 1em; margin-top: 20px">
+                                        <a href="salecentral">
+                                            <button type="button" class="btn btn-theme02">
+                                                <span class="fa fa-backward"></span> &nbsp;Kembali
+                                            </button>
+                                        </a>
+                                        <button type="submit" class="btn btn-theme03" :disabled="finalSelectedGoods.length < 1 || loading">
+                                            <span class="fa fa-save"></span> &nbsp;Simpan
+                                        </button>
+                                    </div>
+                                    <div v-if="loading" class="progress progress-striped active" style="margin-top: 30px; margin-bottom: 0; border-radius: 0;">
+                                        <div class="progress-bar" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%">
+                                            <span class="sr-only">45% Complete</span>
+                                        </div>
+                                    </div>
                                 </div>
 
-                        </div>
-                    </div>
 
-                    <div class="col-lg-12">
-                        <div class="form-group form-group-bottom" align="right">
-                            <input type="hidden" id="proses" name="proses" value="<?php echo $this->proses ?>">
-                            <br><br>
 
-                            <a href="salecentral">
-                                <button type="button" class="btn btn-theme02">
-                                    <span class="fa fa-backward"></span> &nbsp;Kembali
-                                </button>
-                            </a>
-                            <button type="button" class="btn btn-theme03" onCLick="PostData()">
+                                <!-- <input type="hidden" id="proses" name="proses" value="<?php echo $this->proses ?>"> -->
+                                <!-- <div class="col-lg-12">
+                                    <div class="form-group form-group-bottom" align="right">
+                                        <br><br>
+
+                                        <a href="salecentral">
+                                            <button type="button" class="btn btn-theme02">
+                                                <span class="fa fa-backward"></span> &nbsp;Kembali
+                                            </button>
+                                        </a>
+                                        <button type="submit" class="btn btn-theme03">
+                                            <span class="fa fa-save"></span> &nbsp;Simpan
+                                        </button>
+
+                                    </div>
+                                </div> -->
+                                <!-- <button type="button" class="btn btn-theme03" onCLick="PostData()">
                                 <span class="fa fa-save"></span> &nbsp;Simpan
-                            </button>
-
+                            </button> -->
+                            </form>
                         </div>
                     </div>
-                    </form>
                 </div>
             </div>
-        </div>
-        </div>
-        <!-- page end-->
+            <!-- page end-->
         </div>
         <!-- /row -->
     </section>
@@ -744,7 +800,7 @@
                                 <tbody>
                                     <?php foreach ($this->liquids as $liquid) : ?>
                                         <tr>
-                                            <td style="text-align: center;"><input type="checkbox" :value='{...JSON.parse(`<?= json_encode($liquid) ?>`), qty: 1, free: 0, subTotal: JSON.parse(`<?= json_encode($liquid) ?>`).hj_retail}' v-model="tempSelectedGoods"></td>
+                                            <td style="text-align: center;"><input type="checkbox" :value='{...JSON.parse(`<?= json_encode($liquid) ?>`), qty: 1, free: 0, subTotal: JSON.parse(`<?= json_encode($liquid) ?>`).hj_retail, kode: "kode_barang", nama_tabel: "liquid"}' v-model="tempSelectedGoods"></td>
                                             <td><?= $liquid['kode_barang'] ?></td>
                                             <td><?= $liquid['nama_barang'] ?></td>
                                         </tr>
@@ -764,7 +820,7 @@
                                 <tbody>
                                     <?php foreach ($this->devices as $device) : ?>
                                         <tr>
-                                            <td style="text-align: center;"><input type="checkbox" :value='{...JSON.parse(`<?= json_encode($device) ?>`), qty: 1, free: 0, subTotal: JSON.parse(`<?= json_encode($device) ?>`).hj_retail}' v-model="tempSelectedGoods"></td>
+                                            <td style="text-align: center;"><input type="checkbox" :value='{...JSON.parse(`<?= json_encode($device) ?>`), qty: 1, free: 0, subTotal: JSON.parse(`<?= json_encode($device) ?>`).hj_retail, kode_barang: JSON.parse(`<?= json_encode($device) ?>`).kode_device, kode: "kode_device", nama_tabel: "device"}' v-model="tempSelectedGoods"></td>
                                             <td><?= $device['kode_device'] ?></td>
                                             <td><?= $device['nama_device'] ?></td>
                                         </tr>
@@ -784,7 +840,7 @@
                                 <tbody>
                                     <?php foreach ($this->atomizers as $atomizer) : ?>
                                         <tr>
-                                            <td style="text-align: center;"><input type="checkbox" :value='{...JSON.parse(`<?= json_encode($atomizer) ?>`), qty: 1, free: 0, subTotal: JSON.parse(`<?= json_encode($atomizer) ?>`).hj_retail}' v-model="tempSelectedGoods"></td>
+                                            <td style="text-align: center;"><input type="checkbox" :value='{...JSON.parse(`<?= json_encode($atomizer) ?>`), qty: 1, free: 0, subTotal: JSON.parse(`<?= json_encode($atomizer) ?>`).hj_retail, kode_barang: JSON.parse(`<?= json_encode($atomizer) ?>`).kode_atomizer, kode: "kode_atomizer", nama_tabel: "atomizer"}' v-model="tempSelectedGoods"></td>
                                             <td><?= $atomizer['kode_atomizer'] ?></td>
                                             <td><?= $atomizer['nama_atomizer'] ?></td>
                                         </tr>
@@ -804,7 +860,7 @@
                                 <tbody>
                                     <?php foreach ($this->accessories as $accessories) : ?>
                                         <tr>
-                                            <td style="text-align: center;"><input type="checkbox" :value='{...JSON.parse(`<?= json_encode($accessories) ?>`), qty: 1, free: 0, subTotal: JSON.parse(`<?= json_encode($accessories) ?>`).hj_retail}' v-model="tempSelectedGoods"></td>
+                                            <td style="text-align: center;"><input type="checkbox" :value='{...JSON.parse(`<?= json_encode($accessories) ?>`), qty: 1, free: 0, subTotal: JSON.parse(`<?= json_encode($accessories) ?>`).hj_retail, kode_barang: JSON.parse(`<?= json_encode($accessories) ?>`).kode_aksesoris, kode: "kode_aksesoris", nama_tabel: "accessories"}' v-model="tempSelectedGoods"></td>
                                             <td><?= $accessories['kode_aksesoris'] ?></td>
                                             <td><?= $accessories['nama_aksesoris'] ?></td>
                                         </tr>
@@ -825,11 +881,8 @@
                             </thead>
                             <tbody>
                                 <tr v-for="(good, index) in tempSelectedGoods">
-                                    <td v-if="good.kode_barang">Liquid</td>
-                                    <td v-else-if="good.kode_device">Device</td>
-                                    <td v-else-if="good.kode_aksesoris">Aksesoris</td>
-                                    <td v-else-if="good.kode_atomizer">Atomizer</td>
-                                    <td>{{ good.kode_barang || good.kode_device || good.kode_aksesoris || good.kode_atomizer }}</td>
+                                    <td style="text-transform: capitalize;">{{ good.nama_tabel }}</td>
+                                    <td>{{ good.kode_barang }}</td>
                                     <td>{{ good.nama_barang || good.nama_device || good.nama_aksesoris || good.nama_atomizer }}</td>
                                     <td style="text-align: center;"><a href="#" style="color: red;" @click.prevent="unselectGood(index)"><i class="fa fa-times"></i></a></td>
                                 </tr>
@@ -842,6 +895,7 @@
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                     <button type="button" @click="setFinalGoods" class="btn btn-primary">Tambah</button>
                 </div>
+
             </div>
         </div>
     </div>
@@ -895,11 +949,8 @@
         props: ['good', 'index', 'ondelete', 'calculate'],
         template: `
         <tr>
-            <td v-if="good.kode_barang">Liquid</td>
-            <td v-else-if="good.kode_device">Device</td>
-            <td v-else-if="good.kode_aksesoris">Aksesoris</td>
-            <td v-else-if="good.kode_atomizer">Atomizer</td>
-            <td>{{ good.kode_barang || good.kode_device || good.kode_aksesoris || good.kode_atomizer }}</td>
+            <td style="text-transform: capitalize">{{ good.nama_tabel }}</td>
+            <td>{{ good.kode_barang }}</td>
             <td>{{ good.nama_barang || good.nama_device || good.nama_aksesoris || good.nama_atomizer }}</td>
             <td>{{ good.berat }}</td>
             <td>{{ good.on_hand }}</td>
@@ -916,13 +967,104 @@
     let app = new Vue({
         el: '#main-content',
         data: {
-            name: 'Reza',
+            // liquids: JSON.parse(`<?= json_encode($liquid) ?>`),
+            // atomizers: JSON.parse(`<?= json_encode($atomizer) ?>`),
+            // accesories: JSON.parse(`<?= json_encode($accessories) ?>`),
+            // devices: JSON.parse(`<?= json_encode($device) ?>`),
+            invoiceNumber: 'SO/VH/<?php echo date("dmy H:i:s"); ?>/<?php echo $seq; ?>',
+            invoiceDate: '',
+            shipment: '',
+            courier: '',
+            customers: JSON.parse('<?= json_encode($this->customer) ?>'),
+            customer: {
+                name: '',
+                address: '',
+                phone: '',
+                whatsapp: '',
+                email: '',
+                debtDuration: '0',
+            },
             shownContent: 'liquid',
             tempSelectedGoods: [],
             finalSelectedGoods: [],
+            discount: 0,
+            discountType: 'nominal',
+            shipping: 0,
+            paymentOther: 0,
+            paymentOtherDescription: '',
+            deposit: 0,
+            receiptSource1: '',
+            receiptSourceTotal1: 0,
+            receiptSource2: '',
+            receiptSourceTotal2: 0,
+            recipientName: '',
+            recipientAddress: '',
+            information: '',
+            seq: '<?= $seq ?>',
+            loading: false,
         },
 
         methods: {
+            submitForm: function() {
+                // console.log('submitted');
+                const vm = this;
+                vm.loading = true;
+                axios.post('<?= $this->baseUrl(); ?>/salecentraltambah/tesresponse', {
+                        no_invoice: this.invoiceNumber,
+                        tgl_invoice: this.invoiceDate,
+                        kode_customer: this.customer.name,
+                        shipment: this.shipment,
+                        nama_kurir: this.courier,
+                        total_berat: this.totalWeight,
+                        total_biaya: this.totalSubtotal,
+                        diskon: this.discount,
+                        biaya_kirim: this.shipping,
+                        net_total: this.netTotal,
+                        metode_penerimaan: this.receiptSource1,
+                        jml_penerimaan: this.receiptSourceTotal1,
+                        metode_penerimaan2: this.receiptSource2,
+                        jml_penerimaan2: this.receiptSourceTotal2,
+                        jml_bayar: this.totalPayment,
+                        sisa_bayar: this.changePayment,
+                        nama_penerima: this.recipientName,
+                        alamat_penerima: this.recipientAddress,
+                        keterangan: this.information,
+                        //seq: '',
+                        termin_hutang: this.customer.debtDuration,
+                        //kode_inv: '',
+                        sub_total: this.mainSubtotal,
+                        biaya_lain: this.paymentOther,
+                        ket_biaya_lain: this.paymentOtherDescription,
+                        deposit: this.deposit,
+                        jenis_diskon: this.discountType,
+                        keranjang: this.finalSelectedGoods,
+                        seq: this.seq,
+                        // sub_total_berat: this.totalWeight,
+                    })
+                    .then(function(response) {
+                        vm.loading = false;
+                        console.log(response);
+                        swal({
+                            title: 'Order Sukses !',
+                            text: 'Auto Close...',
+                            icon: 'success',
+                            timer: 4000,
+                            showConfirmButton: false,
+                        })
+                    })
+                    .catch(function(error) {
+                        vm.loading = false;
+                        console.log(error);
+                        swal({
+                            title: 'Order Sukses !',
+                            text: 'Auto Close...',
+                            icon: 'error',
+                            timer: 4000,
+                            showConfirmButton: false,
+                        })
+                    });
+                // url: '<?php echo $this->baseUrl(); ?>/salecentral/kirimdata',
+            },
             onClickButton: function() {
                 swal({
                     title: 'Order Sukses !',
@@ -937,8 +1079,40 @@
                 this.tempSelectedGoods.push(Object.assign(good, {
                     qty: 1,
                     free: 0,
-                    subTotal: parseInt(good.hj_retail) * 1
+                    subTotal: parseInt(good.hj_retail) * 1,
+                    kode: this.determineTable(good).kode,
+                    nama_tabel: this.determineTable(good).nama_tabel,
                 }));
+            },
+            determineTable: function(good) {
+                if (good.kode_barang && typeof(good.kode_barang) !== 'undefined') {
+                    return {
+                        kode: 'kode_barang',
+                        nama_tabel: 'liquid',
+                    };
+                }
+
+                if (good.kode_device && typeof(good.kode_device) !== 'undefined') {
+                    return {
+                        kode: 'kode_device',
+                        nama_tabel: 'device',
+                    };
+                }
+
+                if (good.kode_aksesoris && typeof(good.kode_aksesoris) !== 'undefined') {
+                    return {
+                        kode: 'kode_aksesoris',
+                        nama_tabel: 'accessories',
+                    };
+                }
+
+                if (good.kode_atomizer && typeof(good.kode_atomizer) !== 'undefined') {
+                    return {
+                        kode: 'kode_atomizer',
+                        nama_tabel: 'atomizer',
+                    };
+                }
+                // good.kode_barang || good.kode_device || good.kode_aksesoris || good.kode_atomizer
             },
             unselectGood: function(index) {
                 this.tempSelectedGoods.splice(index, 1);
@@ -954,6 +1128,44 @@
                 item.subTotal = Number(item.qty) * Number(item.hj_retail);
                 // let stok = item.stok_pusat;
                 // item.stok_pusat = Number(item.stok_pusat) - Number(item.qty) - Number(item.free);
+            },
+            onSelectCustomer: function() {
+                let selectedCustomer = this.customers.filter(cust => cust.kode_customer == this.customer.name)[0]
+
+                if (selectedCustomer !== null) {
+                    this.customer.address == selectedCustomer.alamat_customer;
+                    this.customer.phone == selectedCustomer.no_tlp;
+                    this.customer.whatsapp == selectedCustomer.no_hp;
+                    this.customer.email == selectedCustomer.email;
+                }
+            }
+        },
+        computed: {
+            totalWeight: function() {
+                return this.finalSelectedGoods.map(good => Number(good.berat) * Number(good.qty)).reduce((acc, cur) => {
+                    return acc + cur;
+                }, 0);
+            },
+            totalSubtotal: function() {
+                return this.finalSelectedGoods.map(good => Number(good.subTotal)).reduce((acc, cur) => {
+                    return acc + cur;
+                }, 0);
+            },
+            mainSubtotal: function() {
+                if (this.discountType == 'persen') {
+                    return this.totalSubtotal - (this.totalSubtotal * (Number(this.discount) / 100));
+                }
+
+                return this.totalSubtotal - this.discount;
+            },
+            netTotal: function() {
+                return this.mainSubtotal + Number(this.shipping) + Number(this.paymentOther) - Number(this.deposit);
+            },
+            totalPayment: function() {
+                return Number(this.receiptSourceTotal1) + Number(this.receiptSourceTotal2);
+            },
+            changePayment: function() {
+                return this.netTotal - this.totalPayment;
             }
         }
     })
@@ -963,6 +1175,33 @@
         $('#tesModal').on('hidden.bs.modal', function(e) {
             app.$data.tempSelectedGoods = [];
         })
+
+        $('#shipment').on('select2:select', function(e) {
+            app.$data.shipment = e.params.data.id;
+        })
+
+        $('#kode_customer').on('select2:select', function(e) {
+            app.$data.customer.name = e.params.data.id;
+            let selectedCustomer = app.$data.customers.filter(cust => cust.kode_customer == app.$data.customer.name)[0]
+
+            if (selectedCustomer !== null) {
+                app.$data.customer.address = selectedCustomer.alamat_customer;
+                app.$data.customer.phone = selectedCustomer.no_tlp;
+                app.$data.customer.whatsapp = selectedCustomer.no_hp;
+                app.$data.customer.email = selectedCustomer.email;
+            }
+        })
+
+        $('#termin_hutang').on('select2:select', function(e) {
+            app.$data.customer.customer.debtDuration = e.params.data.id;
+
+        })
+
+        $("#tgl_invoice").datepicker({
+            onSelect: function(dateText) {
+                app.$data.invoiceDate = dateText;
+            }
+        });
     })
 </script>
 <script>
