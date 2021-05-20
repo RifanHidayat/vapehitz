@@ -18,9 +18,11 @@ set_include_path(implode(PATH_SEPARATOR, array(
 )));
 
 /** Zend_Application */
+
 require_once 'Zend/Loader/Autoloader.php';
 require_once 'Zend/Application.php';
 require_once 'Zend/Db.php';
+// require_once realpath(APPLICATION_PATH . '/../vendor/autoload.php');
 //require_once 'test.php'; /*ANTI HACK*/
 
 // Create application, bootstrap, and run
