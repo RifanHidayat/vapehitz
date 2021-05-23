@@ -48,6 +48,10 @@ class SalecentraltambahController extends Zend_Controller_Action
         $kode_inv = $now;
         $this->view->seq = $this->Salecentral_Service->getNoSeq2($kode_inv);
         $this->view->rek = $this->Salecentral_Service->getRekening();
+        $this->view->liquids = $this->Salecentral_Service->getlistliquid();
+        $this->view->devices = $this->Salecentral_Service->getlistdevice();
+        $this->view->accessories = $this->Salecentral_Service->getlistaccessories();
+        $this->view->atomizers = $this->Salecentral_Service->getlistatomizer();
     }
 
     public function cekdatauserAction()
@@ -119,6 +123,182 @@ class SalecentraltambahController extends Zend_Controller_Action
 
         $this->view->data = $this->Salecentral_Service->getlistliquid();
         $this->view->rek = $this->Salecentral_Service->getRekening();
+    }
+
+    public function tesresponseAction()
+    {
+        $this->_helper->viewRenderer->setNoRender(true);
+
+        // $data = array(
+        //     'no_invoice' => $no_invoice,
+        //     'tgl_invoice' => $tgl_invoice,
+        //     'kode_customer' => $kode_customer,
+        //     'shipment' => $shipment,
+        //     'nama_kurir' => $nama_kurir,
+        //     'total_berat' => $total_berat,
+        //     'total_biaya' => $total_biaya,
+        //     'diskon' => $diskon,
+        //     'biaya_kirim' => $biaya_kirim,
+        //     'net_total' => $net_total,
+        //     'metode_penerimaan' => $metode_penerimaan,
+        //     'jml_penerimaan' => $jml_penerimaan,
+        //     'metode_penerimaan2' => $metode_penerimaan2,
+        //     'jml_penerimaan2' => $jml_penerimaan2,
+        //     'jml_bayar' => $jml_bayar,
+        //     'sisa_bayar' => $sisa_bayar,
+        //     'nama_penerima' => $nama_penerima,
+        //     'alamat_penerima' => $alamat_penerima,
+        //     'keterangan' => $keterangan,
+        //     'seq' => $seq,
+        //     'termin_hutang' => $termin_hutang,
+        //     'kode_inv' => $kode_inv,
+        //     'kode_barang' => $kode_barang,
+        //     'hj_retail' => $hj_retail,
+        //     'qty' => $qty,
+        //     'free' => $free,
+        //     'sub_total_barang' => $sub_total_barang,
+        //     'sub_total' => $sub_total,
+        //     'biaya_lain' => $biaya_lain,
+        //     'ket_biaya_lain' => $ket_biaya_lain,
+        //     'deposit' => $deposit,
+        //     'jenis_diskon' => $jenis_diskon,
+        //     'sub_total_berat' => $sub_total_berat,
+        //     'nama_tabel' => $nama_tabel,
+        //     'on_hand' => $on_hand,
+        //     'hj_retail_baru' => $hj_retail_baru,
+        //     'kode' => $kode
+        // );
+
+        // echo json_encode(['status' => 'ok']);
+        // $this->getResponse()->setHttpResponseCode(500);
+        // $this->getResponse()->setBody('List of Resources');
+
+        // $this->getResponse()->sendResponse();
+
+        // $this->getResponse()->setBody('List of Resources');
+
+        // echo $this->getResponse()->sendResponse();
+        $body = json_decode($this->getRequest()->getRawBody());
+
+        // 'kode_barang' => $kode_barang,
+        // 'hj_retail' => $hj_retail,
+        // 'qty' => $qty,
+        // 'free' => $free,
+        // 'sub_total_barang' => $sub_total_barang,
+        // 'sub_total_berat' => $sub_total_berat,
+        // 'nama_tabel' => $nama_tabel, // Jenis brang
+        // 'on_hand' => $on_hand,
+        // 'hj_retail_baru' => $hj_retail_baru,
+        // 'kode' => $kode
+
+        $kode_barang = [];
+        $hj_retail = [];
+        $qty = [];
+        $free = [];
+        $sub_total_barang = [];
+        $sub_total_berat = [];
+        $nama_tabel = [];
+        $on_hand = [];
+        $hj_retail_baru = [];
+        $kode = [];
+
+        if (count($body->keranjang) > 0) {
+            foreach ($body->keranjang as $keranjang) {
+                array_push($kode_barang, $keranjang->kode_barang);
+                array_push($hj_retail, $keranjang->hj_retail);
+                array_push($qty, $keranjang->qty);
+                array_push($free, $keranjang->free);
+                array_push($sub_total_barang, $keranjang->subTotal);
+                array_push($sub_total_berat, $keranjang->berat);
+                array_push($nama_tabel, $keranjang->nama_tabel);
+                array_push($on_hand, $keranjang->on_hand);
+                array_push($hj_retail_baru, $keranjang->hj_retail);
+                array_push($kode, $keranjang->kode);
+            }
+        }
+
+        $data = array(
+            'no_invoice' => $body->no_invoice,
+            'tgl_invoice' => $body->tgl_invoice,
+            'kode_customer' => $body->kode_customer,
+            'shipment' => $body->shipment,
+            'nama_kurir' => $body->nama_kurir,
+            'total_berat' => $body->total_berat,
+            'total_biaya' => $body->total_biaya,
+            'diskon' => $body->diskon,
+            'biaya_kirim' => $body->biaya_kirim,
+            'net_total' => $body->net_total,
+            'metode_penerimaan' => $body->metode_penerimaan,
+            'jml_penerimaan' => $body->jml_penerimaan,
+            'metode_penerimaan2' => $body->metode_penerimaan2,
+            'jml_penerimaan2' => $body->jml_penerimaan2,
+            'jml_bayar' => $body->jml_bayar,
+            'sisa_bayar' => $body->sisa_bayar,
+            'nama_penerima' => $body->nama_penerima,
+            'alamat_penerima' => $body->alamat_penerima,
+            'keterangan' => $body->keterangan,
+            'seq' => $body->seq,
+            'termin_hutang' => $body->termin_hutang,
+            'kode_inv' => date('dmy'),
+            'sub_total' => $body->sub_total,
+            'biaya_lain' => $body->biaya_lain,
+            'ket_biaya_lain' => $body->ket_biaya_lain,
+            'deposit' => $body->deposit,
+            'jenis_diskon' => $body->jenis_diskon,
+            // PER ITEM
+            'kode_barang' => $kode_barang,
+            'hj_retail' => $hj_retail,
+            'qty' => $qty,
+            'free' => $free,
+            'sub_total_barang' => $sub_total_barang,
+            'sub_total_berat' => $sub_total_berat,
+            'nama_tabel' => $nama_tabel, // Jenis brang
+            'on_hand' => $on_hand,
+            'hj_retail_baru' => $hj_retail_baru,
+            'kode' => $kode
+        );
+        //var_dump($data);
+
+        // $this->getResponse()->setHttpResponseCode(200);
+        // $this->_helper->json->sendJson(([
+        //     'request' => $nama_tabel,
+        //     'status' => 'OK',
+        //     'message' => 'Berhasil disimpan',
+        //     'status' => 200,
+        //     'error' => false
+        // ]));
+
+        try {
+            $this->view->result = $this->Salecentral_Service->insertdatanew($data);
+
+            if ($this->view->result == 'sukses') {
+                $this->getResponse()->setHttpResponseCode(200);
+                $this->_helper->json->sendJson(([
+                    'status' => 'OK',
+                    'message' => 'Berhasil disimpan',
+                    'status' => 200,
+                    'error' => false
+                ]));
+            } else {
+                $this->getResponse()->setHttpResponseCode(500);
+                $this->_helper->json->sendJson([
+                    'status' => 'OK',
+                    'message' => 'Gagal disimpan',
+                    'status' => 200,
+                    'error' => false
+                ]);
+            }
+            //code...
+        } catch (\Exception $e) {
+            //throw $th;
+            $this->getResponse()->setHttpResponseCode(500);
+            $this->_helper->json->sendJson(json_encode($e));
+        }
+        // echo json_encode(['status' => 'ok']);
+        // echo 'tes';
+        // $this->getResponse()->setHttpResponseCode(200);
+
+
     }
 
     public function kirimdataAction()

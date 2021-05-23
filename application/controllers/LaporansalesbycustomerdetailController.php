@@ -49,16 +49,10 @@ class LaporansalesbycustomerdetailController extends Zend_Controller_Action
 
   public function excelAction()
   {
+    // $this->_helper->viewRenderer->setNoRender(true);
     $sessionlogin = new Zend_Session_Namespace('sessionlogin');
     $this->view->permission = $sessionlogin->permission;
     $this->_helper->layout->setLayout('target-column');
-
-    $spreadsheet = new Spreadsheet();
-    $sheet = $spreadsheet->getActiveSheet();
-    $sheet->setCellValue('A1', 'Hello World !');
-
-    $writer = new Xlsx($spreadsheet);;
-    $writer->save('hello-world.xlsx');
-    echo 'edsd';
+    // echo 'eds';
   }
 }

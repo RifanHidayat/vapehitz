@@ -1,0 +1,1229 @@
+<?php require('../application/layouts/scripts/partial/header.php'); ?>
+<?php require('../application/layouts/scripts/partial/menu.php'); ?>
+<!-- <link href="<?php echo $this->baseUrl(); ?>/css/select2.min.css" rel="stylesheet"> -->
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<link rel="stylesheet" type="text/css" href="<?php echo $this->baseUrl(); ?>/css/sweetalert.css">
+<style>
+  body {
+    font-family: Arial, Helvetica, sans-serif;
+  }
+
+  #backgroundPopup {
+
+    display: none;
+    position: fixed;
+    _position: absolute;
+    /* hack for internet explorer 6*/
+    height: 100%;
+    width: 100%;
+    top: 0;
+    left: 0;
+    /*background: rgba(0, 0, 0, 0) url("../img/popup-bg.png");*/
+    background: rgba(0, 0, 0, 0.85);
+    border: 1px solid #cecece;
+    z-index: 1040;
+  }
+
+  .box-popup1 {
+    position: fixed;
+    top: 30px;
+    left: 30px;
+    width: 40px;
+    height: 30px;
+  }
+
+  #popupContact {
+
+    display: none;
+    position: fixed;
+    _position: absolute;
+    /* hack for internet explorer 6*/
+    height: 100%;
+    width: 90%;
+    background: #acacac;
+    z-index: 999999;
+    font-size: 13px;
+    overflow: auto;
+    top: 2px;
+    bottom: 10px;
+    padding: 15px;
+    margin: 1%;
+  }
+
+  #popupContact h1 {
+    text-align: left;
+    color: #6FA5FD;
+    font-size: 22px;
+    font-weight: bold;
+    border-bottom: 1px dotted #D3D3D3;
+    padding-bottom: 2px;
+    margin-bottom: 20px;
+  }
+
+  #popupContact textarea {
+    width: 90%;
+    height: 100px;
+  }
+
+  #popupContactClose {
+    font-size: 14px;
+    line-height: 14px;
+    right: 6px;
+    top: 4px;
+    position: absolute;
+    color: #6fa5fd;
+    font-weight: bold;
+    width: 16px;
+    cursor: pointer;
+    display: block;
+    background: url(../images/cross.png)
+  }
+
+  @media screen and (min-width: 768px) {
+    .modal-center:before {
+      display: inline-block;
+      vertical-align: middle;
+      content: " ";
+      height: 100%;
+    }
+  }
+
+  .modal-center .modal-dialog {
+    display: inline-block;
+    text-align: left;
+    vertical-align: middle;
+  }
+
+  .text-right {
+    text-align: right;
+  }
+</style>
+
+
+<!-- **********************************************************************************************************************************************************
+        MAIN CONTENT
+        *********************************************************************************************************************************************************** -->
+<!--main content start-->
+<?php $serialize_permission = unserialize($this->permission); ?>
+<section id="main-content">
+  <section class="wrapper" style="min-height:522px">
+    <h3><i class="fa fa-angle-right"></i> Transaksi Penjualan Barang</h3>
+    <button @click="onClickButton" class="btn btn-primary">Send Data</button>
+
+    <button type="button" class="btn btn-warning button-test">Change Modal Content</button>
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Otorisasi</button>
+    <div class="row mb">
+      <!-- page start-->
+      <div class="content-panel">
+        <div class="adv-table">
+          <div id="listprogram" align="center" class="col-xs-12">
+            <br>
+            <div id="page-content">
+
+              <!-- The Modal -->
+              <div id="myModal" class="modal modal-center">
+                <div class="modal-dialog">
+                  <!-- Modal content -->
+                  <div class="modal-content">
+                    <!-- <span class="close">&times;</span> -->
+                    <div class="modal-header">
+                      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                      <p class="modal-title"><strong><em>*Otoritas dibutuhkan (untuk harga jual lebih rendah)!</em></strong></p>
+                    </div>
+                    <div class="modal-body">
+                      <table width="100%">
+                        <tr>
+                          <td width="10%">
+                            <font style="font-size:12px;font-weight:bold;">User ID</font>
+                          </td>
+                          <td width="1%">:</td>
+                          <td>
+                            <table>
+                              <td>
+                                <input name="user_id" id="user_id" type="text" maxlength="20" size="20" class="form-control input-sm" value="">
+                                <input type="hidden" id="baris" name="baris" value="">
+                              </td>
+                              <td> &nbsp; <label id="user_id-error" for="user_id" class="error"></td>
+                            </table>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>&nbsp;</td>
+                        </tr>
+                        <tr>
+                          <td width="10%">
+                            <font style="font-size:12px;font-weight:bold;">Password</font>
+                          </td>
+                          <td width="1%">:</td>
+                          <td>
+                            <table>
+                              <td> <input name="password" id="password" type="password" maxlength="30" size="30" class="form-control input-sm" value=""> </td>
+                              <td> &nbsp; <label id="password-error" for="password" class="error"></td>
+                            </table>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>&nbsp;</td>
+                        </tr>
+                        <tr>
+                          <td colspan="3">
+                            <label id="gagal-error" for="password" class="error">
+                          </td>
+                        </tr>
+                      </table><br>
+                      <button type="button" class="btn btn-theme03" onCLick="checkData()"><span class="fa fa-save"></span> &nbsp;Simpan Perubahan</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- <form @submit.prevent="submitForm" id="frm_postdata" name="frm_postdata" enctype="multipart/form-data" method="POST" autocomplete="off"> -->
+              <form @submit.prevent="submitForm" autocomplete="off">
+                <input type="hidden" name="currentPage" id="currentPage" size="6" maxlength="6" value="<?php echo $this->numPage; ?>" class="inputbox2 narrowkey1"></input>
+                <?php
+                $seq = $this->seq;
+                //var_dump($seq);
+                $seq += 1;
+                $seq = str_pad($seq, 5, '0', STR_PAD_LEFT);
+                ?>
+                <input type="hidden" id='seq' name='seq' value='<?php echo $seq; ?>'>
+                <div id="popupview"></div>
+                <div class="panel">
+                  <fieldset class="panel-dt">
+                    <h4><i class="fa fa-angle-right"></i> Tambah Penjualan Barang</h4>
+                    <br>
+                    <div class="col-sm-12">
+                      <table width="100%">
+                        <tr>
+                          <td width="10%">
+                            <font style="font-size:12px;font-weight:bold;">Nomor Invoice</font>
+                          </td>
+                          <td width="1%">:</td>
+                          <td>
+                            <table>
+                              <td> <input type="text" v-model="invoiceNumber" name="no_invoice" id="no_invoice" maxlength="50" size="30" class="form-control input-sm" value="" readonly> </td>
+                              <td> &nbsp; <label id="no_invoice-error" for="no_invoice" class="error"></td>
+                            </table>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>&nbsp;</td>
+                        </tr>
+                        <tr>
+                          <td width="10%">
+                            <font style="font-size:12px;font-weight:bold;">Tanggal Invoice</font>
+                          </td>
+                          <td width="1%">:</td>
+                          <td>
+                            <table>
+                              <td>
+                                <input v-model="invoiceDate" name="tgl_invoice" id="tgl_invoice" type="text" maxlength="50" size="20" class="form-control" value="" readonly>
+                                <span class="input-group-btn add-on">
+                                  <button class="btn btn-theme" type="button"><i class="fa fa-calendar"></i></button>
+                                </span>
+                              </td>
+                              <td> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <label id="tgl_invoice-error" for="tgl_invoice" class="error"></td>
+                            </table>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>&nbsp;</td>
+                        </tr>
+                        <tr>
+                          <td width="10%">
+                            <font style="font-size:12px;font-weight:bold;">Shipment</font>
+                          </td>
+                          <td width="1%">:</td>
+                          <td>
+                            <table>
+                              <td>
+                                <select v-model="shipment" id="shipment" name="shipment" class="form-control select_group product" width="15%" onclick="statuskurir(this)">
+                                  <option value="">--Pilih Shipment--</option>
+                                  <option value="COD">COD</option>
+                                  <option value="Gojek">Gojek</option>
+                                  <option value="Kurir">Kurir</option>
+                                </select>
+                              </td>
+                              <td> &nbsp; <label id="shipment-error" for="shipment" class="error"></td>
+                            </table>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>&nbsp;</td>
+                        </tr>
+                        <tr id='kurir' v-if="shipment == 'Kurir'">
+                          <td width="10%">
+                            <font style="font-size:12px;font-weight:bold;">Nama Kurir</font>
+                          </td>
+                          <td width="1%">:</td>
+                          <td>
+                            <table>
+                              <td> <input name="nama_kurir" id="nama_kurir" type="text" v-model="courier" maxlength="30" size="30" class="form-control input-sm" value=""> </td>
+                              <td> &nbsp; <label id="nama_kurir-error" for="nama_kurir" class="error"></td>
+                            </table>
+                          </td>
+                        </tr>
+                        <tr id='kurir2' v-if="shipment == 'Kurir'">
+                          <td>&nbsp;</td>
+                        </tr>
+                        <tr>
+                          <td width="10%">
+                            <font style="font-size:12px;font-weight:bold;">Nama Pelanggan</font>
+                          </td>
+                          <td width="1%">:</td>
+                          <td>
+                            <table>
+                              <td>
+                                <!-- <select v-model="customer.name" id="kode_customer" name="kode_customer" class="form-control select_group product" width="20%" onchange="getSelectValue();">
+                                                                    <option value="">--Pilih Customer--</option>
+                                                                    <?php
+                                                                    for ($x = 0; $x < count($this->customer); $x++) {
+                                                                      $kode_customer = $this->customer[$x]['kode_customer'];
+                                                                      $nama_customer = $this->customer[$x]['nama_customer'];
+                                                                      $alamat_customer = $this->customer[$x]['alamat_customer'];
+                                                                      $no_tlp = $this->customer[$x]['no_tlp'];
+                                                                      $no_hp = $this->customer[$x]['no_hp'];
+                                                                      $email = $this->customer[$x]['email'];
+                                                                    ?>
+                                                                        <option value="<?php echo $kode_customer; ?>,<?php echo $alamat_customer; ?>,<?php echo $no_tlp; ?>,<?php echo $no_hp; ?>,<?php echo $email; ?>"><?php echo $nama_customer; ?></option>
+                                                                    <?php } ?>
+                                                                </select> -->
+                                <select v-model="customer.name" id="kode_customer" name="kode_customer" class="form-control select_group product" width="20%" onchange="getSelectValue();">
+                                  <option value="">--Pilih Customer--</option>
+                                  <?php
+                                  for ($x = 0; $x < count($this->customer); $x++) {
+                                    $kode_customer = $this->customer[$x]['kode_customer'];
+                                    $nama_customer = $this->customer[$x]['nama_customer'];
+                                    $alamat_customer = $this->customer[$x]['alamat_customer'];
+                                    $no_tlp = $this->customer[$x]['no_tlp'];
+                                    $no_hp = $this->customer[$x]['no_hp'];
+                                    $email = $this->customer[$x]['email'];
+                                  ?>
+                                    <option value="<?php echo $kode_customer; ?>"><?php echo $nama_customer; ?></option>
+                                  <?php } ?>
+                                </select>
+                              </td>
+                              <td> &nbsp;
+                                <label id="kode_customer-error" for="kode_customer" class="error">
+                                  <input name="kode_customer2" id="kode_customer2" type="hidden" value="" readonly>
+                              </td>
+                            </table>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>&nbsp;</td>
+                        </tr>
+                        <tr>
+                          <td width="10%">
+                            <font style="font-size:12px;font-weight:bold;">Alamat Pelanggan</font>
+                          </td>
+                          <td width="1%">:</td>
+                          <td>
+                            <table>
+                              <td> <input v-model="customer.address" name="alamat_customer" id="alamat_customer" type="text" maxlength="100" size="100" class="form-control input-sm" value="" readonly> </td>
+                              <td> </td>
+                            </table>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>&nbsp;</td>
+                        </tr>
+                        <tr>
+                          <td width="10%">
+                            <font style="font-size:12px;font-weight:bold;">Nomor Telepon</font>
+                          </td>
+                          <td width="1%">:</td>
+                          <td>
+                            <table>
+                              <td> <input v-model="customer.phone" name="no_tlp" id="no_tlp" type="text" maxlength="20" size="15" class="form-control input-sm" value="" readonly> </td>
+                              <td> </td>
+                            </table>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>&nbsp;</td>
+                        </tr>
+                        <tr>
+                          <td width="10%">
+                            <font style="font-size:12px;font-weight:bold;">Nomor Handphone / WA</font>
+                          </td>
+                          <td width="1%">:</td>
+                          <td>
+                            <table>
+                              <td> <input v-model="customer.whatsapp" name="no_hp" id="no_hp" type="text" maxlength="20" size="15" class="form-control input-sm" value="" readonly> </td>
+                              <td> </td>
+                            </table>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>&nbsp;</td>
+                        </tr>
+                        <tr>
+                          <td width="10%">
+                            <font style="font-size:12px;font-weight:bold;">Email</font>
+                          </td>
+                          <td width="1%">:</td>
+                          <td>
+                            <table>
+                              <td> <input v-model="customer.email" name="email" id="email" type="text" maxlength="40" size="40" class="form-control input-sm" value="" readonly> </td>
+                              <td> </td>
+                            </table>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>&nbsp;</td>
+                        </tr>
+                        <tr>
+                          <td width="10%">
+                            <font style="font-size:12px;font-weight:bold;">Termin Hutang</font>
+                          </td>
+                          <td width="1%">:</td>
+                          <td>
+                            <table>
+                              <td>
+                                <select v-model="customer.debtDuration" id="termin_hutang" name="termin_hutang" class="form-control select_group product" width="15%">
+                                  <option value="0">0 Hari</option>
+                                  <option value="7">7 Hari</option>
+                                  <option value="15">15 Hari</option>
+                                  <option value="30">30 Hari</option>
+                                </select>
+                              </td>
+                              <td> &nbsp; <label id="shipment-error" for="shipment" class="error"></td>
+                            </table>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>&nbsp;</td>
+                        </tr>
+                      </table>
+                      <hr>
+                      <div style="text-align: right; margin-bottom: 25px;">
+                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#tesModal">Pilih barang</button>
+                      </div>
+                      <table class="table table-striped table-bordered">
+                        <thead style="background-color: #4ECDC4; color: #fff">
+                          <tr>
+                            <th>Jenis Barang</th>
+                            <th>Kode Barang</th>
+                            <th>Nama Barang</th>
+                            <th>Berat (gr)</th>
+                            <th>Booking</th>
+                            <th>Stok</th>
+                            <th>Harga Jual</th>
+                            <th>Qty</th>
+                            <th>Free</th>
+                            <th>Subtotal</th>
+                            <th></th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr v-for="(finalGood, index) in finalSelectedGoods" is="selected-good" :key="index" :good="finalGood" :index="index" :ondelete="deleteFinalGood" :calculate="calculateFinalGoods"></tr>
+                          <tr v-if="finalSelectedGoods.length < 1">
+                            <td colspan="11" style="text-align: center;">Belum ada barang dipilih</td>
+                          </tr>
+                        </tbody>
+                      </table>
+                      <!-- <div align='left'>
+                                                <input type="button" class="right btn btn-success  btn-xs" style="font-weight:bold;" value="Tambah Barang" onclick="dataliquid()">
+                                                <input type='hidden' name='counterx' id='counterx' value="0">
+                                            </div>
+                                            <br>
+                                            <table width="100%" id="myTable" style="font-size:12px;" class="table-bordered">
+                                                <tr bgcolor="#4ECDC4">
+                                                    <td style="text-align:center;" width="15%">
+                                                        <font style="font-size:12px;font-weight:bold;">Kode Barang</font>
+                                                    </td>
+                                                    <td style="text-align:center;" width="34%">
+                                                        <font style="font-size:12px;font-weight:bold;">Nama Barang</font>
+                                                    </td>
+                                                    <td style="text-align:center;" width="6%">
+                                                        <font style="font-size:12px;font-weight:bold;">Berat (gr)</font>
+                                                    </td>
+                                                    <td style="text-align:center;" width="5%">
+                                                        <font style="font-size:12px;font-weight:bold;">Booking</font>
+                                                    </td>
+                                                    <td style="text-align:center;" width="5%">
+                                                        <font style="font-size:12px;font-weight:bold;">Stok</font>
+                                                    </td>
+                                                    <td style="text-align:center;" width="10%">
+                                                        <font style="font-size:12px;font-weight:bold;">Harga Jual</font>
+                                                    </td>
+                                                    <td style="text-align:center;" width="5%">
+                                                        <font style="font-size:12px;font-weight:bold;">QTY</font>
+                                                    </td>
+                                                    <td style="text-align:center;" width="5%">
+                                                        <font style="font-size:12px;font-weight:bold;">free</font>
+                                                    </td>
+                                                    <td style="text-align:center;" width="10%">
+                                                        <font style="font-size:12px;font-weight:bold;">Sub Total</font>
+                                                    </td>
+                                                    <td style="text-align:center;" width="5%">
+                                                        <font style="font-size:12px;font-weight:bold;">Action</font>
+                                                    </td>
+                                                </tr>
+                                            </table> -->
+                      <table width="100%" id="myTable2">
+                        <tr>
+                          <td>&nbsp;</td>
+                        </tr>
+                        <tr>
+                          <td colspan='5' width="68%">&nbsp; <label id="total_berat-error" for="total_berat" class="error"></td>
+                          <td width="13%">
+
+                            <span style="font-size:12px;font-weight:bold;">Total Berat</span>
+                          </td>
+                          <td width="19%">
+                            <input type='text' class="form-control input-sm text-right" name='total_berat' id='total_berat' v-model="totalWeight" readonly>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>&nbsp;</td>
+                        </tr>
+                        <tr>
+                          <td colspan='5' width="68%">&nbsp; <label id="total_biaya-error" for="total_biaya" class="error"></td>
+                          <td width="13%">
+
+                            <span style="font-size:12px;font-weight:bold;">Total Biaya</span>
+                          </td>
+                          <td width="19%">
+                            <input type='text' class="form-control input-sm text-right" name='total_biaya' id='total_biaya' v-model="totalSubtotal" readonly>
+                          </td>
+                        </tr>
+                        <!-- <tr><td>&nbsp;</td></tr> -->
+
+                        <tr>
+                          <td colspan='7' align="right"><label id="biaya_kirim-error" for="biaya_kirim" class="error"></td>
+                        </tr>
+                        <tr>
+                          <td colspan='5'></td>
+                          <td>
+                            <span style="font-size:12px;font-weight:bold;">Diskon</span>
+                          </td>
+                          <td>
+                            <!-- <input type='text' class="form-control input-sm" name='diskon' id='diskon' value='0' onkeyup='datadiskon()' style="width: 55%; display: inline"> -->
+                            <input type='text' v-model="discount" class="form-control input-sm" name='diskon' id='diskon' style="width: 55%; display: inline">
+                            <select class="form-control input-sm" v-model="discountType" id="jenis_diskon" name="jenis_diskon" style="width: 43%; display: inline">
+                              <option value="nominal">Nominal</option>
+                              <option value="persen">Persen (%)</option>
+                            </select>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td colspan='7' align="right"><label id="diskon-error" for="diskon" class="error"></td>
+                        </tr>
+                        <tr>
+                          <td colspan='5'></td>
+                          <td>
+                            <font style="font-size:12px;font-weight:bold;">Sub Total</font>
+                          </td>
+                          <td> <input type='text' v-model="mainSubtotal" class="form-control input-sm text-right" name='sub_total' id='sub_total' readonly> </td>
+                        </tr>
+                        <tr>
+                          <td>&nbsp;</td>
+                        </tr>
+                        <tr>
+                          <td colspan='5' align="right">&nbsp;</td>
+                          <td>
+                            <font style="font-size:12px;font-weight:bold;">Biaya Kirim</font>
+                          </td>
+                          <td>
+                            <!-- <input type='text' class="form-control input-sm" name='biaya_kirim' id='biaya_kirim' value='0' onkeyup='biaya()'> -->
+                            <input type='text' v-model="shipping" class="form-control input-sm text-right" name='biaya_kirim' id='biaya_kirim'>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>&nbsp;</td>
+                        </tr>
+                        <tr>
+                          <td colspan='5' align="right">&nbsp;</td>
+                          <td>
+                            <font style="font-size:12px;font-weight:bold;">Biaya Lainnya</font>
+                          </td>
+                          <td>
+                            <!-- <input type='text' v-model="paymentOther" class="form-control input-sm text-right" name='biaya_lain' id='biaya_lain' value='0' onkeyup='biayaLain()'> -->
+                            <input type='text' v-model="paymentOther" class="form-control input-sm text-right" name='biaya_lain' id='biaya_lain'>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>&nbsp;</td>
+                        </tr>
+                        <tr>
+                          <td colspan='5' align="right">&nbsp;</td>
+                          <td>
+                            <font style="font-size:12px;font-weight:bold;"></font>
+                          </td>
+                          <td>
+                            <input type='text' v-model="paymentOtherDescription" class="form-control input-sm" name='ket_biaya_lain' id='ket_biaya_lain' placeholder="Ket. Biaya Lainnya">
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>&nbsp;</td>
+                        </tr>
+                        <tr>
+                          <td colspan='5' align="right">&nbsp;</td>
+                          <td>
+                            <font style="font-size:12px;font-weight:bold;">Deposit Customer</font>
+                          </td>
+                          <td>
+                            <!-- <input type='text' class="form-control input-sm" name='deposit' id='deposit' value='0' onkeyup='onDepositChange()'> -->
+                            <input type='text' v-model="deposit" class="form-control input-sm text-right" name='deposit' id='deposit'>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>&nbsp;</td>
+                        </tr>
+                        <tr>
+                          <td colspan='5'></td>
+                          <td>
+                            <font style="font-size:12px;font-weight:bold;">Net Total</font>
+                          </td>
+                          <td> <input type='text' v-model="netTotal" class="form-control input-sm text-right" name='net_total' id='net_total' readonly> </td>
+                        </tr>
+                        <tr>
+                          <td>&nbsp;</td>
+                        </tr>
+                        <tr>
+                          <td colspan='5'></td>
+                          <td width="10%">
+                            <font style="font-size:12px;font-weight:bold;">Sumber Penerimaan 1</font>
+                          </td>
+                          <td>
+
+                            <select v-model="receiptSource1" id="metode_penerimaan" name="metode_penerimaan" class="form-control input-sm" width="15%">
+                              <option value="0">--Pilih Sumber Dana--</option>
+                              <?php
+                              for ($x = 0; $x < count($this->rek); $x++) {
+                                if ($this->rek[$x]['no_akun'] == 0) {
+                                  $cek_rek = $this->rek[$x]['nama_akun'];
+                                } else {
+                                  $cek_rek = $this->rek[$x]['nama_akun'] . ' - ' . $this->rek[$x]['no_akun'] . ' (' . $this->rek[$x]['nama_cabang_pembuka'] . ')';
+                                }
+
+
+                                $id = $this->rek[$x]['id'];
+                              ?>
+                                <option value="<?php echo $id; ?>"><?php echo $cek_rek; ?></option>
+                              <?php } ?>
+                            </select>
+
+                          </td>
+                        </tr>
+                        <tr>
+                          <td colspan='7' align="right"><label id="metode_penerimaan-error" for="metode_penerimaan" class="error"></td>
+                        </tr>
+                        <tr>
+                          <td colspan='5'></td>
+                          <td>
+                            <font style="font-size:12px;font-weight:bold;">Rp</font>
+                          </td>
+                          <td>
+                            <!-- <input type='text' class="form-control input-sm" name='jml_penerimaan' id='jml_penerimaan' value='0' onkeyup='jumlahdp()'> -->
+                            <input type='text' v-model="receiptSourceTotal1" class="form-control input-sm text-right" name='jml_penerimaan' id='jml_penerimaan'>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td colspan='7' align="right"><label id="jml_penerimaan-error" for="jml_penerimaan" class="error"></td>
+                        </tr>
+                        <tr>
+                          <td colspan='5'></td>
+                          <td width="10%">
+                            <font style="font-size:12px;font-weight:bold;">Sumber Penerimaan 2</font>
+                          </td>
+                          <td>
+
+                            <select v-model="receiptSource2" id="metode_penerimaan2" name="metode_penerimaan2" class="form-control input-sm" width="15%">
+                              <option value="0">--Pilih Sumber Dana--</option>
+                              <?php
+                              for ($x = 0; $x < count($this->rek); $x++) {
+                                if ($this->rek[$x]['no_akun'] == 0) {
+                                  $cek_rek = $this->rek[$x]['nama_akun'];
+                                } else {
+                                  $cek_rek = $this->rek[$x]['nama_akun'] . ' - ' . $this->rek[$x]['no_akun'] . ' (' . $this->rek[$x]['nama_cabang_pembuka'] . ')';
+                                }
+
+
+                              ?>
+
+                                <option value="<?php echo $id; ?>"><?php echo $cek_rek; ?></option>
+                              <?php } ?>
+                            </select>
+
+                          </td>
+                        </tr>
+                        <tr>
+                          <td colspan='7' align="right"><label id="metode_penerimaan2-error" for="metode_penerimaan2" class="error"></td>
+                        </tr>
+                        <tr>
+                          <td colspan='5'></td>
+                          <td>
+                            <font style="font-size:12px;font-weight:bold;">Rp</font>
+                          </td>
+                          <td>
+                            <!-- <input type='text' class="form-control input-sm" name='jml_penerimaan2' id='jml_penerimaan2' value='0' onkeyup='jumlahdp()'> -->
+                            <input type='text' v-model="receiptSourceTotal2" class="form-control input-sm text-right" name='jml_penerimaan2' id='jml_penerimaan2'>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td colspan='7' align="right"><label id="jml_penerimaan2-error" for="jml_penerimaan2" class="error"></td>
+                        </tr>
+                        <tr>
+                          <td colspan='5'></td>
+                          <td>
+                            <font style="font-size:12px;font-weight:bold;">Jumlah Pembayaran</font>
+                          </td>
+                          <td> <input type='text' v-model="totalPayment" class="form-control input-sm text-right" name='jml_bayar' id='jml_bayar' readonly> </td>
+                        </tr>
+                        <tr>
+                          <td>&nbsp;</td>
+                        </tr>
+                        <tr>
+                          <td colspan='5'></td>
+                          <td>
+                            <font style="font-size:12px;font-weight:bold;">Sisa Pembayaran</font>
+                          </td>
+                          <td> <input type='text' v-model="changePayment" class="form-control input-sm text-right" name='sisa_bayar' id='sisa_bayar' value='0' readonly> </td>
+                        </tr>
+                        <tr>
+                          <td>&nbsp;</td>
+                        </tr>
+                        <tr>
+                          <td colspan='5'></td>
+                          <td>
+                            <font style="font-size:12px;font-weight:bold;">Nama Penerima</font>
+                          </td>
+                          <td> <input type='text' v-model="recipientName" class="form-control input-sm" name='nama_penerima' id='nama_penerima'> </td>
+                        </tr>
+                        <tr>
+                          <td colspan='7' align="right"><label id="nama_penerima-error" for="nama_penerima" class="error"></td>
+                        </tr>
+                        <tr>
+                          <td colspan='5'></td>
+                          <td>
+                            <font style="font-size:12px;font-weight:bold;">Alamat Penerima</font>
+                          </td>
+                          <td> <textarea v-model="recipientAddress" class="form-control input-sm" name='alamat_penerima' id='alamat_penerima'></textarea></td>
+                        </tr>
+                        <tr>
+                          <td colspan='7' align="right"><label id="alamat_penerima-error" for="alamat_penerima" class="error"></td>
+                        </tr>
+                        <tr>
+                          <td colspan='5'></td>
+                          <td>
+                            <font style="font-size:12px;font-weight:bold;">Keterangan</font>
+                          </td>
+                          <td> <input v-model="information" type='text' class="form-control input-sm" name='keterangan' id='keterangan' value=''> </td>
+                        </tr>
+                        <tr>
+                          <td colspan='7' align="right"><label id="keterangan-error" for="keterangan" class="error"></td>
+                        </tr>
+                      </table>
+                    </div>
+
+                  </fieldset>
+                  <div class="text-right" style="padding: 2em 1em; margin-top: 20px">
+                    <a href="salecentral">
+                      <button type="button" class="btn btn-theme02">
+                        <span class="fa fa-backward"></span> &nbsp;Kembali
+                      </button>
+                    </a>
+                    <button type="submit" class="btn btn-theme03" :disabled="finalSelectedGoods.length < 1 || loading">
+                      <span class="fa fa-save"></span> &nbsp;Simpan
+                    </button>
+                  </div>
+                  <!-- <pre><?= print_r($this->subsale) ?></pre> -->
+                  <div v-if="loading" class="progress progress-striped active" style="margin-top: 30px; margin-bottom: 0; border-radius: 0;">
+                    <div class="progress-bar" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%">
+                      <span class="sr-only">45% Complete</span>
+                    </div>
+                  </div>
+                </div>
+
+
+
+                <!-- <input type="hidden" id="proses" name="proses" value="<?php echo $this->proses ?>"> -->
+                <!-- <div class="col-lg-12">
+                                    <div class="form-group form-group-bottom" align="right">
+                                        <br><br>
+
+                                        <a href="salecentral">
+                                            <button type="button" class="btn btn-theme02">
+                                                <span class="fa fa-backward"></span> &nbsp;Kembali
+                                            </button>
+                                        </a>
+                                        <button type="submit" class="btn btn-theme03">
+                                            <span class="fa fa-save"></span> &nbsp;Simpan
+                                        </button>
+
+                                    </div>
+                                </div> -->
+                <!-- <button type="button" class="btn btn-theme03" onCLick="PostData()">
+                                <span class="fa fa-save"></span> &nbsp;Simpan
+                            </button> -->
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- page end-->
+    </div>
+    <!-- /row -->
+  </section>
+  <!-- /wrapper -->
+  <!-- Modal -->
+  <div class="modal" id="tesModal">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+          <h4 class="modal-title" id="myModalLabel">Pilih barang</h4>
+        </div>
+        <div class="modal-body">
+          <div style="padding-top: 1em; ">
+            <div class="row" style="margin-bottom: 2em;">
+              <div class="col-md-6">
+                <select v-model="shownContent" class="form-control">
+                  <option value="liquid">Liquids</option>
+                  <option value="device">Devices</option>
+                  <option value="accessories">Accesories</option>
+                  <option value="atomizer">Atomizer</option>
+                </select>
+              </div>
+            </div>
+            <div style="display: none; overflow-x: auto;" :style="(shownContent == 'liquid') ? { display: 'block' } : ''">
+              <table class="table table-striped table-responsive use-datatable">
+                <thead>
+                  <tr>
+                    <th></th>
+                    <th>Kode Liquid</th>
+                    <th>Nama Liquid</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <?php foreach ($this->liquids as $liquid) : ?>
+                    <tr>
+                      <td style="text-align: center;"><input type="checkbox" :value='{...JSON.parse(`<?= json_encode($liquid) ?>`), qty: 1, free: 0, subTotal: JSON.parse(`<?= json_encode($liquid) ?>`).hj_retail, kode: "kode_barang", nama_tabel: "liquid"}' v-model="tempSelectedGoods"></td>
+                      <td><?= $liquid['kode_barang'] ?></td>
+                      <td><?= $liquid['nama_barang'] ?></td>
+                    </tr>
+                  <?php endforeach; ?>
+                </tbody>
+              </table>
+            </div>
+            <div style="display: none; overflow-x: auto;" :style="(shownContent == 'device') ? { display: 'block' } : ''">
+              <table class="table table-striped table-responsive use-datatable">
+                <thead>
+                  <tr>
+                    <th></th>
+                    <th>Kode Device</th>
+                    <th>Nama Device</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <?php foreach ($this->devices as $device) : ?>
+                    <tr>
+                      <td style="text-align: center;"><input type="checkbox" :value='{...JSON.parse(`<?= json_encode($device) ?>`), qty: 1, free: 0, subTotal: JSON.parse(`<?= json_encode($device) ?>`).hj_retail, kode_barang: JSON.parse(`<?= json_encode($device) ?>`).kode_device, kode: "kode_device", nama_tabel: "device"}' v-model="tempSelectedGoods"></td>
+                      <td><?= $device['kode_device'] ?></td>
+                      <td><?= $device['nama_device'] ?></td>
+                    </tr>
+                  <?php endforeach; ?>
+                </tbody>
+              </table>
+            </div>
+            <div style="display: none; overflow-x: auto;" :style="(shownContent == 'atomizer') ? { display: 'block' } : ''">
+              <table class="table table-striped table-responsive use-datatable">
+                <thead>
+                  <tr>
+                    <th></th>
+                    <th>Kode Atomizer</th>
+                    <th>Nama Atomizer</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <?php foreach ($this->atomizers as $atomizer) : ?>
+                    <tr>
+                      <td style="text-align: center;"><input type="checkbox" :value='{...JSON.parse(`<?= json_encode($atomizer) ?>`), qty: 1, free: 0, subTotal: JSON.parse(`<?= json_encode($atomizer) ?>`).hj_retail, kode_barang: JSON.parse(`<?= json_encode($atomizer) ?>`).kode_atomizer, kode: "kode_atomizer", nama_tabel: "atomizer"}' v-model="tempSelectedGoods"></td>
+                      <td><?= $atomizer['kode_atomizer'] ?></td>
+                      <td><?= $atomizer['nama_atomizer'] ?></td>
+                    </tr>
+                  <?php endforeach; ?>
+                </tbody>
+              </table>
+            </div>
+            <div style="display: none; overflow-x: auto;" :style="(shownContent == 'accessories') ? { display: 'block' } : ''">
+              <table class="table table-striped table-responsive use-datatable">
+                <thead>
+                  <tr>
+                    <th></th>
+                    <th>Kode Aksesoris</th>
+                    <th>Nama Aksesoris</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <?php foreach ($this->accessories as $accessories) : ?>
+                    <tr>
+                      <td style="text-align: center;"><input type="checkbox" :value='{...JSON.parse(`<?= json_encode($accessories) ?>`), qty: 1, free: 0, subTotal: JSON.parse(`<?= json_encode($accessories) ?>`).hj_retail, kode_barang: JSON.parse(`<?= json_encode($accessories) ?>`).kode_aksesoris, kode: "kode_aksesoris", nama_tabel: "accessories"}' v-model="tempSelectedGoods"></td>
+                      <td><?= $accessories['kode_aksesoris'] ?></td>
+                      <td><?= $accessories['nama_aksesoris'] ?></td>
+                    </tr>
+                  <?php endforeach; ?>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div style="margin: 1.25em 0;">
+            <table class="table table-striped table-bordered" v-if="tempSelectedGoods.length">
+              <thead>
+                <tr>
+                  <th>Jenis Barang</th>
+                  <th>Kode Barang</th>
+                  <th>Nama Barang</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr v-for="(good, index) in tempSelectedGoods">
+                  <td style="text-transform: capitalize;">{{ good.nama_tabel }}</td>
+                  <td>{{ good.kode_barang }}</td>
+                  <td>{{ good.nama_barang || good.nama_device || good.nama_aksesoris || good.nama_atomizer }}</td>
+                  <td style="text-align: center;"><a href="#" style="color: red;" @click.prevent="unselectGood(index)"><i class="fa fa-times"></i></a></td>
+                </tr>
+              </tbody>
+            </table>
+            <p style="text-align: center;" v-if="tempSelectedGoods.length < 1"><strong><em>Belum ada barang dipilih</em></strong></p>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          <button type="button" @click="setFinalGoods" class="btn btn-primary">Tambah</button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+<!--main content end-->
+<?php require('../application/layouts/scripts/partial/main-footer.php'); ?>
+
+</section>
+
+
+
+
+<!-- js placed at the end of the document so the pages load faster -->
+<!-- <script src="lib/jquery/jquery.min.js"></script> -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script> -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/jquery@1.9.1/jquery.min.js"></script> -->
+<!-- <script type="text/javascript" language="javascript" src="lib/advanced-datatable/js/jquery.js"></script> -->
+<script src="<?php echo $this->baseUrl(); ?>/lib/bootstrap/js/bootstrap.min.js"></script>
+<script class="include" type="text/javascript" src="<?php echo $this->baseUrl(); ?>/lib/jquery.dcjqaccordion.2.7.js"></script>
+<script src="<?php echo $this->baseUrl(); ?>/lib/jquery.scrollTo.min.js"></script>
+<script src="<?php echo $this->baseUrl(); ?>/lib/jquery.nicescroll.js" type="text/javascript"></script>
+<script type="text/javascript" language="javascript" src="<?php echo $this->baseUrl(); ?>/lib/advanced-datatable/js/jquery.dataTables.js"></script>
+<script type="text/javascript" src="<?php echo $this->baseUrl(); ?>/lib/advanced-datatable/js/DT_bootstrap.js"></script>
+<script src="<?php echo $this->baseUrl(); ?>/lib/select2.full.min.js"></script>
+<script src="<?php echo $this->baseUrl(); ?>/lib/jquery-ui-1.9.2.custom.min.js"></script>
+<!--common script for all pages-->
+<script src="<?php echo $this->baseUrl(); ?>/lib/common-scripts.js"></script>
+<!--script for this page-->
+<script src="<?php echo $this->baseUrl(); ?>/lib/jquery.form.js"></script>
+
+<script src="<?php echo $this->baseUrl(); ?>/lib/sweetalert.min.js"></script>
+<!-- <script src="<?php echo $this->baseUrl(); ?>/lib/jquery.scrollTo.min.js"></script>
+<script src="<?php echo $this->baseUrl(); ?>/lib/jquery.nicescroll.js" type="text/javascript"></script> -->
+<script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script>
+  $(function() {
+    // $('#table-test').DataTable({
+    //     "destroy": true
+    // });
+
+    let table = $('.use-datatable').dataTable({
+      "sorting": false,
+      "destroy": true
+    });
+
+    // console.log(table);
+  })
+
+  Vue.component('selected-good', {
+    props: ['good', 'index', 'ondelete', 'calculate'],
+    template: `
+        <tr>
+            <td style="text-transform: capitalize">{{ good.nama_tabel }}</td>
+            <td>{{ good.kode_barang }}</td>
+            <td>{{ good.nama_barang || good.nama_device || good.nama_aksesoris || good.nama_atomizer }}</td>
+            <td>{{ good.berat }}</td>
+            <td>{{ good.on_hand }}</td>
+            <td>{{ good.stok_pusat }}</td>
+            <td><input type="text" @input="calculate(good)" v-model="good.hj_retail" class="form-control input-sm" style="text-align: right" /></td>
+            <td><input type="text" @input="calculate(good)" v-model="good.qty" class="form-control input-sm" /></td>
+            <td><input type="text" @input="calculate(good)" v-model="good.free" class="form-control input-sm" /></td>
+            <td><input type="text" v-model="good.subTotal" class="form-control input-sm" style="text-align: right" readonly /></td>
+            <td style="text-align: center;"><a href="#" style="color: red;" @click.prevent="ondelete(index)"><i class="fa fa-times"></i></a></td>
+        </tr>
+        `
+  })
+
+  let app = new Vue({
+    el: '#main-content',
+    data: {
+      // liquids: JSON.parse(`<?= json_encode($liquid) ?>`),
+      // atomizers: JSON.parse(`<?= json_encode($atomizer) ?>`),
+      // accesories: JSON.parse(`<?= json_encode($accessories) ?>`),
+      // devices: JSON.parse(`<?= json_encode($device) ?>`),
+      invoiceNumber: '<?= $this->sale[0]['no_invoice']; ?>',
+      invoiceDate: '<?= date("d/m/Y", strtotime($this->sale[0]['tgl_invoice'])) ?>',
+      shipment: '<?= $this->sale[0]['shipment']; ?>',
+      courier: '<?= $this->sale[0]['nama_kurir']; ?>',
+      customers: JSON.parse('<?= json_encode($this->customer) ?>'),
+      customer: {
+        name: '<?= $this->sale[0]['kode_customer']; ?>',
+        address: '<?= $this->customersale[0]['alamat_customer']; ?>',
+        phone: '<?= $this->customersale[0]['no_tlp']; ?>',
+        whatsapp: '<?= $this->customersale[0]['no_hp']; ?>',
+        email: '<?= $this->customersale[0]['email']; ?>',
+        debtDuration: '<?= $this->sale[0]['termin_hutang']; ?>',
+      },
+      shownContent: 'liquid',
+      tempSelectedGoods: [],
+      finalSelectedGoods: JSON.parse('<?= json_encode($this->subsale) ?>'),
+      discount: '<?= $this->sale[0]['diskon']; ?>',
+      discountType: '<?= $this->sale[0]['jenis_diskon']; ?>',
+      shipping: '<?= $this->sale[0]['biaya_kirim']; ?>',
+      paymentOther: '<?= $this->sale[0]['biaya_lain']; ?>',
+      paymentOtherDescription: '<?= $this->sale[0]['ket_biaya_lain']; ?>',
+      deposit: '<?= $this->sale[0]['deposit']; ?>',
+      receiptSource1: '<?= $this->sale[0]['metode_penerimaan']; ?>',
+      receiptSourceTotal1: '<?= $this->sale[0]['jml_penerimaan']; ?>',
+      receiptSource2: '<?= $this->sale[0]['metode_penerimaan2']; ?>',
+      receiptSourceTotal2: '<?= $this->sale[0]['jml_penerimaan2']; ?>',
+      recipientName: '<?= $this->sale[0]['nama_penerima']; ?>',
+      recipientAddress: '<?= $this->sale[0]['alamat_penerima']; ?>',
+      information: '<?= $this->sale[0]['keterangan']; ?>',
+      seq: '<?= $seq ?>',
+      loading: false,
+    },
+
+    methods: {
+      submitForm: function() {
+        // console.log('submitted');
+        const vm = this;
+        vm.loading = true;
+        axios.post('<?= $this->baseUrl(); ?>/salecentral/tesresponse', {
+            no_invoice: this.invoiceNumber,
+            tgl_invoice: this.invoiceDate,
+            kode_customer: this.customer.name,
+            shipment: this.shipment,
+            nama_kurir: this.courier,
+            total_berat: this.totalWeight,
+            total_biaya: this.totalSubtotal,
+            diskon: this.discount,
+            biaya_kirim: this.shipping,
+            net_total: this.netTotal,
+            metode_penerimaan: this.receiptSource1,
+            jml_penerimaan: this.receiptSourceTotal1,
+            metode_penerimaan2: this.receiptSource2,
+            jml_penerimaan2: this.receiptSourceTotal2,
+            jml_bayar: this.totalPayment,
+            sisa_bayar: this.changePayment,
+            nama_penerima: this.recipientName,
+            alamat_penerima: this.recipientAddress,
+            keterangan: this.information,
+            //seq: '',
+            termin_hutang: this.customer.debtDuration,
+            //kode_inv: '',
+            sub_total: this.mainSubtotal,
+            biaya_lain: this.paymentOther,
+            ket_biaya_lain: this.paymentOtherDescription,
+            deposit: this.deposit,
+            jenis_diskon: this.discountType,
+            keranjang: this.finalSelectedGoods,
+            seq: this.seq,
+            // sub_total_berat: this.totalWeight,
+          })
+          .then(function(response) {
+            vm.loading = false;
+            console.log(response);
+            swal({
+              title: 'Order Sukses !',
+              text: 'Auto Close...',
+              icon: 'success',
+              timer: 4000,
+              showConfirmButton: false,
+            })
+          })
+          .catch(function(error) {
+            vm.loading = false;
+            console.log(error);
+            swal({
+              title: 'Order Gagal !',
+              text: 'Auto Close...',
+              icon: 'error',
+              timer: 4000,
+              showConfirmButton: false,
+            })
+          });
+        // url: '<?php echo $this->baseUrl(); ?>/salecentral/kirimdata',
+      },
+      onClickButton: function() {
+        swal({
+          title: 'Order Sukses !',
+          text: 'Auto Close...',
+          icon: 'success',
+          timer: 4000,
+          showConfirmButton: false,
+        })
+      },
+      selectGood: function(e, good) {
+        console.log(e);
+        this.tempSelectedGoods.push(Object.assign(good, {
+          qty: 1,
+          free: 0,
+          subTotal: parseInt(good.hj_retail) * 1,
+          kode: this.determineTable(good).kode,
+          nama_tabel: this.determineTable(good).nama_tabel,
+        }));
+      },
+      determineTable: function(good) {
+        if (good.kode_barang && typeof(good.kode_barang) !== 'undefined') {
+          return {
+            kode: 'kode_barang',
+            nama_tabel: 'liquid',
+          };
+        }
+
+        if (good.kode_device && typeof(good.kode_device) !== 'undefined') {
+          return {
+            kode: 'kode_device',
+            nama_tabel: 'device',
+          };
+        }
+
+        if (good.kode_aksesoris && typeof(good.kode_aksesoris) !== 'undefined') {
+          return {
+            kode: 'kode_aksesoris',
+            nama_tabel: 'accessories',
+          };
+        }
+
+        if (good.kode_atomizer && typeof(good.kode_atomizer) !== 'undefined') {
+          return {
+            kode: 'kode_atomizer',
+            nama_tabel: 'atomizer',
+          };
+        }
+        // good.kode_barang || good.kode_device || good.kode_aksesoris || good.kode_atomizer
+      },
+      unselectGood: function(index) {
+        this.tempSelectedGoods.splice(index, 1);
+      },
+      setFinalGoods: function() {
+        this.finalSelectedGoods = [...this.finalSelectedGoods, ...this.tempSelectedGoods];
+        $('#tesModal').modal('hide');
+      },
+      deleteFinalGood: function(index) {
+        this.finalSelectedGoods.splice(index, 1);
+      },
+      calculateFinalGoods: function(item) {
+        item.subTotal = Number(item.qty) * Number(item.hj_retail);
+        // let stok = item.stok_pusat;
+        // item.stok_pusat = Number(item.stok_pusat) - Number(item.qty) - Number(item.free);
+      },
+      onSelectCustomer: function() {
+        let selectedCustomer = this.customers.filter(cust => cust.kode_customer == this.customer.name)[0]
+
+        if (selectedCustomer !== null) {
+          this.customer.address == selectedCustomer.alamat_customer;
+          this.customer.phone == selectedCustomer.no_tlp;
+          this.customer.whatsapp == selectedCustomer.no_hp;
+          this.customer.email == selectedCustomer.email;
+        }
+      }
+    },
+    computed: {
+      totalWeight: function() {
+        return this.finalSelectedGoods.map(good => Number(good.berat) * Number(good.qty)).reduce((acc, cur) => {
+          return acc + cur;
+        }, 0);
+      },
+      totalSubtotal: function() {
+        return this.finalSelectedGoods.map(good => Number(good.subTotal)).reduce((acc, cur) => {
+          return acc + cur;
+        }, 0);
+      },
+      mainSubtotal: function() {
+        if (this.discountType == 'persen') {
+          return this.totalSubtotal - (this.totalSubtotal * (Number(this.discount) / 100));
+        }
+
+        return this.totalSubtotal - this.discount;
+      },
+      netTotal: function() {
+        return this.mainSubtotal + Number(this.shipping) + Number(this.paymentOther) - Number(this.deposit);
+      },
+      totalPayment: function() {
+        return Number(this.receiptSourceTotal1) + Number(this.receiptSourceTotal2);
+      },
+      changePayment: function() {
+        return this.netTotal - this.totalPayment;
+      }
+    }
+  })
+</script>
+<script>
+  $(function() {
+    $('#tesModal').on('hidden.bs.modal', function(e) {
+      app.$data.tempSelectedGoods = [];
+    })
+
+    $('#shipment').on('select2:select', function(e) {
+      app.$data.shipment = e.params.data.id;
+    })
+
+    $('#kode_customer').on('select2:select', function(e) {
+      app.$data.customer.name = e.params.data.id;
+      let selectedCustomer = app.$data.customers.filter(cust => cust.kode_customer == app.$data.customer.name)[0]
+
+      if (selectedCustomer !== null) {
+        app.$data.customer.address = selectedCustomer.alamat_customer;
+        app.$data.customer.phone = selectedCustomer.no_tlp;
+        app.$data.customer.whatsapp = selectedCustomer.no_hp;
+        app.$data.customer.email = selectedCustomer.email;
+      }
+    })
+
+    $('#termin_hutang').on('select2:select', function(e) {
+      app.$data.customer.customer.debtDuration = e.params.data.id;
+
+    })
+
+    $("#tgl_invoice").datepicker({
+      onSelect: function(dateText) {
+        app.$data.invoiceDate = dateText;
+      }
+    });
+  })
+</script>
+
+<script>
+  $(".product").select2();
+</script>
+<script>
+  $(document).ready(function() {
+
+    $('#tgl_invoice').datepicker({
+      dateFormat: 'dd/mm/yy',
+      changeMonth: true,
+      changeYear: true
+    });
+
+
+
+  });
+</script>
+
+
+</body>
+
+</html>
