@@ -1,0 +1,79 @@
+<?php
+
+use \PhpOffice\PhpSpreadsheet\Spreadsheet;
+use \PhpOffice\PhpSpreadsheet\Writer\Xlsx;
+
+$spreadsheet = new Spreadsheet();
+$sheet = $spreadsheet->getActiveSheet();
+$sheet->setCellValue('A1', 'Kode Barang');
+$sheet->setCellValue('B1', 'Nama Barang');
+$sheet->setCellValue('C1', 'Nic');
+$sheet->setCellValue('D1', 'Vol');
+$sheet->setCellValue('E1', 'Stok Pusat');
+$sheet->setCellValue('F1', 'Stok Retail');
+$sheet->setCellValue('G1', 'Stok Studio');
+$sheet->setCellValue('H1', 'Bad Stock');
+$sheet->setCellValue('I1', 'Berat');
+$sheet->setCellValue('J1', 'Harga Beli');
+$sheet->setCellValue('K1', 'Harga Jual Agen');
+$sheet->setCellValue('L1', 'Harga Jual Ret');
+$sheet->setCellValue('M1', 'Harga Jual Whs');
+$sheet->setCellValue('N1', 'Nama Supplier');
+$sheet->setCellValue('O1', 'Tipe');
+
+$rowNum = 2;
+
+foreach ($this->data as $liquid) {
+
+  $supplier = $this->Liquid_Service->getdatasupplierid($liquid['kode_supplier']);
+
+  $sheet->setCellValue('A' . $rowNum, $liquid['kode_barang']);
+  $sheet->setCellValue('B' . $rowNum, $liquid['merk_barang'] . ' - ' . $liquid['nama_barang']);
+  $sheet->setCellValue('C' . $rowNum, $liquid['nic']);
+  $sheet->setCellValue('D' . $rowNum, $liquid['volume']);
+  $sheet->setCellValue('E' . $rowNum, $liquid['stok_pusat']);
+  $sheet->setCellValue('F' . $rowNum, $liquid['stok_retail']);
+  $sheet->setCellValue('G' . $rowNum, $liquid['stok_studio']);
+  $sheet->setCellValue('H' . $rowNum, $liquid['bad_stock']);
+  $sheet->setCellValue('I' . $rowNum, $liquid['berat']);
+  $sheet->setCellValue('J' . $rowNum, $liquid['harga_beli']);
+  $sheet->setCellValue('K' . $rowNum, $liquid['hj_agen']);
+  $sheet->setCellValue('L' . $rowNum, $liquid['hj_retail']);
+  $sheet->setCellValue('M' . $rowNum, $liquid['hj_whs']);
+  $sheet->setCellValue('N' . $rowNum, $supplier[0]['nama_supplier']);
+  $sheet->setCellValue('O' . $rowNum, $supplier[0]['tipe']);
+
+  // $spreadsheet->getActiveSheet()->getStyle('B' . $rowNum)->getNumberFormat()
+  //   ->setFormatCode('#,##0.00');
+
+  // $total += $sale['total'];
+
+  $rowNum++;
+}
+
+$styleArray = array(
+  'borders' => array(
+    'top' => array(
+      'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
+    ),
+    'bottom' => array(
+      'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
+    ),
+    'right' => array(
+      'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
+    ),
+    'left' => array(
+      'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
+    ),
+
+  ),
+);
+
+$borderRange = "A1:O" . ($rowNum - 1);
+
+$sheet = $sheet->getStyle($borderRange)->applyFromArray($styleArray);
+
+$writer = new Xlsx($spreadsheet);
+header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+header('Content-Disposition: attachment; filename="liquid.xlsx"');
+$writer->save("php://output");

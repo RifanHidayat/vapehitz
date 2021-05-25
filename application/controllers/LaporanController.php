@@ -113,6 +113,16 @@ class LaporanController extends Zend_Controller_Action {
 		$this->view->data10 = $this->Laporan_Service->getlistSaleCentral();
 		$this->view->menu = $this->Laporan_Service->getmenusupplier();
     }
+
+	public function supplierAction()
+	{
+		$this->_helper->layout->setLayout('target-column');
+		
+		$sessionlogin = new Zend_Session_Namespace('sessionlogin');
+		$this->view->permission = $sessionlogin->permission;
+		
+		$this->view->data = $this->Laporan_Service->getlistsupplier();
+	}
 	
 	public function xlssupplierAction() {
 		$this->_helper->layout->setLayout('target-column');

@@ -53,6 +53,8 @@ class LaporansalesbycustomerdetailController extends Zend_Controller_Action
     $sessionlogin = new Zend_Session_Namespace('sessionlogin');
     $this->view->permission = $sessionlogin->permission;
     $this->_helper->layout->setLayout('target-column');
+
+    $this->view->salesDetail = $this->Laporansalesbycustomerdetail_Service->getlistsales();
     // echo 'eds';
   }
 }

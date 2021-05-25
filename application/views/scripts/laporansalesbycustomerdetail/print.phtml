@@ -28,7 +28,7 @@ ob_start();
 
 <body>
   <div align="center">
-    <h2 align="center">Sales By Customer Detail (<?= count($this->salesDetail) ?>)</h2>
+    <h2 align="center">Sales By Customer Detail</h2>
     <table>
       <thead style="background-color: #4ECDC4; color: #fff;">
         <tr>
@@ -39,7 +39,7 @@ ob_start();
           <td>Description</td>
           <td>Qty</td>
           <td>Price</td>
-          <td>Amount (Discount not included)</td>
+          <td>Amount</td>
         </tr>
       </thead>
       <tbody>
@@ -48,6 +48,7 @@ ob_start();
 
         <?php foreach ($this->salesDetail as $sale) : ?>
           <tr>
+            
             <?php if($index > 0) : ?>
               <?php if($sale['nama_customer'] !== $this->salesDetail[$index - 1]['nama_customer']) : ?>
               <td><?= $sale['nama_customer'] ?></td>
@@ -57,6 +58,7 @@ ob_start();
             <?php else: ?>
             <td><?= $sale['nama_customer'] ?></td>
             <?php endif; ?>
+
             <?php if($index > 0) : ?>
               <?php if($sale['no_invoice'] !== $this->salesDetail[$index - 1]['no_invoice']) : ?>
               <td><?= $sale['no_invoice'] ?></td>
@@ -66,6 +68,7 @@ ob_start();
             <?php else: ?>
             <td><?= $sale['no_invoice'] ?></td>
             <?php endif; ?>
+
             <td><?= $sale['nama_barang'] ?></td>
             <td><?= date_format(date_create($sale['tgl_invoice']), "d-m-Y") ?></td>
             <td><?= $sale['keterangan'] ?></td>

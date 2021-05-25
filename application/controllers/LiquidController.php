@@ -2,6 +2,10 @@
 require_once 'Zend/Controller/Action.php';
 require_once 'service/Home_Service.php';
 require_once 'service/Liquid_Service.php';
+require './../vendor/autoload.php';
+
+use \PhpOffice\PhpSpreadsheet\Spreadsheet;
+use \PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 
 class LiquidController extends Zend_Controller_Action {
 
@@ -222,6 +226,16 @@ class LiquidController extends Zend_Controller_Action {
 		if(isset($_REQUEST['id_kode_barang'])){ $id_kode_barang = $_REQUEST['id_kode_barang'];}
 		
 		$this->view->id_kode_barang = $this->Liquid_Service->getSeq($id_kode_barang);
+	}
+
+	public function excelAction(){
+		// $this->_helper->viewRenderer->setNoRender(true);
+    $sessionlogin = new Zend_Session_Namespace('sessionlogin');
+    $this->view->permission = $sessionlogin->permission;
+    $this->_helper->layout->setLayout('target-column');
+		$this->view->Liquid_Service = $this->Liquid_Service;
+    $this->view->data = $this->Liquid_Service->getlistliquid();
+    // echo 'eds';
 	}
  
 }

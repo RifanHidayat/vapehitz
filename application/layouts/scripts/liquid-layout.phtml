@@ -26,10 +26,17 @@
 			<div id="listprogram" align="center"  class="col-xs-12">
 				<br>
 					<div id="page-content">
-						<div class="form-group form-group-bottom" align="left">
-						<?php if($serialize_permission) { if(in_array('tambahLiquid', $serialize_permission)) { ?>
-							<button class="right btn btn-success  btn-xs" onClick="open_url_to_div('/liquid/tambahdata')"><i class="fa fa-plus"></i>&nbsp;&nbsp;Tambah Isi Ulang Liquid</button>		
-						<?php } } ?>
+						<div class="row" style="margin-bottom: 1rem;">
+							<div class="col-md-6" align="left">
+							<?php if($serialize_permission) { if(in_array('tambahLiquid', $serialize_permission)) { ?>
+								<button class="right btn btn-success" onClick="open_url_to_div('/liquid/tambahdata')"><i class="fa fa-plus"></i>&nbsp;&nbsp;Tambah Isi Ulang Liquid</button>		
+							<?php } } ?>
+							</div>
+							<div class="col-md-6" align="right">
+							<?php if($serialize_permission) { if(in_array('laporanLiquid', $serialize_permission)) { ?>
+								<a href='/liquid/excel' class="btn btn-primary">Laporan (.xlsx)</a>	
+							<?php } } ?>
+							</div>
 						</div>
 						<table style="font-size:12px;" class="table table-striped table-bordered table-hover" id="dataTables-emp">
 							<thead>

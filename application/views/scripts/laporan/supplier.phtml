@@ -1,0 +1,201 @@
+<div id="layoutnya">
+<?php require('../application/layouts/scripts/partial/header.php');?>
+<?php require('../application/layouts/scripts/partial/menu.php');?>   
+<?php
+require_once 'Zend/View.php';
+require_once 'share/oa_page.php';
+$halaman = new oa_page();
+$ctrlFrm = new Zend_View();
+
+$currentPage  = $this->currentPage;
+?>
+<script>
+	$(document).ready(function () {
+		$('#dataTables-emp').dataTable({
+			"bPaginate": true,
+			"bLengthChange": true,
+			"bFilter": true,
+			"bInfo": true,
+			"bAutoWidth": true});
+	});
+	 
+</script>
+<link rel="stylesheet" href="<?php echo $this->baseUrl();?>/calendar/daterangepicker-master/daterangepicker.css" />
+    <!-- **********************************************************************************************************************************************************
+        MAIN CONTENT
+        *********************************************************************************************************************************************************** -->
+    <!--main content start-->
+	<?php $serialize_permission = unserialize($this->permission);?>
+    <section id="main-content">
+      <section class="wrapper">
+        <h3><i class="fa fa-angle-right"></i> Master Data Supplier</h3>
+        <div class="row mb">
+          <!-- page start-->
+          <div class="content-panel">
+            <div class="adv-table">
+			<div id="listprogram" align="center"  class="col-xs-12">
+				<br>
+					<div id="page-content">
+						<div class="col-md-6" align="left">
+						<?php if($serialize_permission) { if(in_array('tambahSupplier', $serialize_permission)) { ?>
+							<!-- <button class="right btn btn-success  btn-xs" onClick="open_url_to_div('/supplier/tambahdata')"><i class="fa fa-plus"></i>&nbsp;&nbsp;Tambah Supplier</button>		 -->
+						<?php } } ?>
+						</div>	
+						<div class="col-md-6" align="right">
+						<?php if($serialize_permission) { if(in_array('laporanSupplier', $serialize_permission)) { ?>
+							<a href ='/supplier/dataxls'><button class="right btn btn-success  btn-xs">Laporan</button></a>
+						<?php } } ?>
+						</div>	
+						<br><br>
+						<table style="font-size:12px;" class="table table-striped table-bordered table-hover" id="dataTables-emp">
+							<thead>
+							<tr bgcolor="#4ECDC4">
+								<!-- <th width="3%" style="text-align:center;">No</th> -->
+								<th width="11%" style="text-align:center;">Kode Supplier</th>
+								<th width="12%%" style="text-align:center;">Nama Supplier</th>
+								<th width="12%" style="text-align:center;">Alamat</th>
+								<th width="10%" style="text-align:center;">No Tlp</th>
+								<th width="10%" style="text-align:center;">No Handphone</th>
+								<th width="10%" style="text-align:center;">Email</th>
+								<th width="10%" style="text-align:center;">Tipe</th>
+								<!-- <th width="10%" style="text-align:center;">Status</th> -->
+								<!-- <th width="10%" style="text-align:center;">Edit</th>
+								<th width="10%" style="text-align:center;">Hapus</th> -->
+							</tr>
+							</thead>
+							<tbody>
+							<?php
+								 for($x=0; $x<count($this->data); $x++){
+										
+										$noUrut 		= ((($this->numPage * 1) - 1) * 10) + $x + 1;
+										$nomer			= $x+1;
+										$kode_supplier 	= $this->data[$x]['kode_supplier'];
+										$nama_supplier 	= $this->data[$x]['nama_supplier'];
+										$alamat_supplier = $this->data[$x]['alamat_supplier'];
+										$no_tlp 		= $this->data[$x]['no_tlp'];
+										$no_hp 			= $this->data[$x]['no_hp'];
+										$email 			= $this->data[$x]['email'];
+										$tipe 			= $this->data[$x]['tipe'];
+										$status 		= $this->data[$x]['status'];
+										if($status=='1'){
+											$stat = 'Active';
+										} else {
+											$stat = 'Inactive';
+										}
+									?>	
+											<!-- <td align="center"><?php echo $noUrut;?></td>	   -->
+											<td align="center"><?php echo $kode_supplier;?></td>
+											<td align="center"><?php echo $nama_supplier;?></td>
+											<td align="center"><?php echo $alamat_supplier;?></td>
+											<td align="center"><?php echo $no_tlp;?></td>
+											<td align="center"><?php echo $no_hp;?></td>
+											<td align="center"><?php echo $email;?></td>
+											<td align="center"><?php echo $tipe;?></td>
+											<td align="center"><?php echo $stat;?></td>
+											<td width="7%">
+											<?php if($serialize_permission) { if(in_array('editSupplier', $serialize_permission)) { ?>
+                                                <a href="#" title="Edit" onclick="open_url_to_div('/supplier/editdata?id=<?php echo $kode_supplier;?>')" class="btn-warning btn-sm mar-ed-button"><i class="fa fa-edit pad-ico-button"></i>Edit</a>
+                                            <?php } } ?>
+											</td>
+                                            <td width="8%">
+											<?php if($serialize_permission) { if(in_array('hapusSupplier', $serialize_permission)) { ?>
+												<a href="#" title="Hapus" onclick="hapusdata('<?php echo $kode_supplier; ?>')" class="btn-danger btn-sm mar-ed-button"><i class="fa fa-trash-o pad-ico-button"></i>Hapus</a>
+                                            <?php } } ?>
+											</td>	
+										</tr>	
+									<?php 
+										}
+									?>
+								
+							</tbody>
+						</table>
+					</div>
+				</div>
+            </div>
+          </div>
+          <!-- page end-->
+        </div>
+        <!-- /row -->
+      </section>
+      <!-- /wrapper -->
+    </section>
+    <!--main content end-->
+    <?php require('../application/layouts/scripts/partial/main-footer.php');?> 
+  </section>
+   <!-- js placed at the end of the document so the pages load faster -->
+  <script src="<?php echo $this->baseUrl(); ?>/lib/jquery/jquery.min.js"></script>
+  <script type="text/javascript" language="javascript" src="<?php echo $this->baseUrl(); ?>/lib/advanced-datatable/js/jquery.js"></script>
+  <script src="<?php echo $this->baseUrl(); ?>/lib/bootstrap/js/bootstrap.min.js"></script>
+  <script class="include" type="text/javascript" src="<?php echo $this->baseUrl(); ?>/lib/jquery.dcjqaccordion.2.7.js"></script>
+  <script src="<?php echo $this->baseUrl(); ?>/lib/jquery.scrollTo.min.js"></script>
+  <script src="<?php echo $this->baseUrl(); ?>/lib/jquery.nicescroll.js" type="text/javascript"></script>
+  <script type="text/javascript" language="javascript" src="<?php echo $this->baseUrl(); ?>/lib/advanced-datatable/js/jquery.dataTables.js"></script>
+  <script type="text/javascript" src="<?php echo $this->baseUrl(); ?>/lib/advanced-datatable/js/DT_bootstrap.js"></script>
+  <script type="text/javascript" src="<?php echo $this->baseUrl(); ?>/calendar/daterangepicker-master/moment.min.js"></script>
+  <script type="text/javascript" src="<?php echo $this->baseUrl(); ?>/calendar/daterangepicker-master/daterangepicker.js"></script>
+  <!--common script for all pages-->
+  <script src="<?php echo $this->baseUrl(); ?>/lib/common-scripts.js"></script>
+  <!--script for this page-->
+  <script type="text/javascript">
+	function getCari(){
+		var kata_kunci = document.getElementById('kata_kunci').value;
+		var perioddate = document.getElementById('perioddate').value;
+		
+		var url = "<?php echo $this->basePath; ?>/supplier/index";
+		var opt = {kata_kunci:kata_kunci, perioddate:perioddate};
+		
+		jQuery.get(url, opt, function(data) {
+			jQuery("#layoutnya").html(data);
+			//location.reload(true)
+		}); 
+	}
+  
+	function hapusdata(kode_supplier){
+			var r = confirm("Anda yakin akan menghapus data ini ?");
+			if (r == true) {
+					var url = "<?php echo $this->basePath; ?>/supplier/hapusdata";
+					var opt = {kode_supplier:kode_supplier}
+					
+					jQuery.get(url,opt, function(data) {	
+						location.reload(true)
+						//jQuery("div#example1").html(data);
+						//jQuery("#page-content").html(data);
+					})
+					//open_url_to_div('<?php echo $this->baseUrl(); ?>/pengaduan/index');
+					//location.reload(true)
+			} else {
+				close();
+			}
+		}
+	
+	function toXls(){
+		var proses = 'xls';
+		/* var n_dcr = document.getElementById('n_dcr').value;
+		var n_doc_number = document.getElementById('n_doc_number').value;
+		var e_title = document.getElementById('e_title').value; */
+		//alert ('sdasdas');
+		var modul = '<?php echo $this->basePath; ?>/supplier/dataxls';
+		windowOpens(modul);	
+	}
+	
+	$('#perioddate').daterangepicker({
+      autoUpdateInput: true,
+      "opens": "left",
+      locale: {
+        "format": "DD/MM/YYYY",
+        "separator": " - ",
+        "applyLabel": "Apply",
+        "cancelLabel": "Clear",
+        "firstDay": 1
+      }
+    });
+
+    $('#perioddate').on('cancel.daterangepicker', function(ev, picker) {
+      //do something, like clearing an input
+      $('#perioddate').val('');
+    });
+  </script>
+</div>
+</body>
+
+</html>
